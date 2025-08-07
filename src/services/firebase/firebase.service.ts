@@ -243,6 +243,10 @@ export class FirebaseMessagingService {
 
   private async sendTokenToServer(token: string) {
     try {
+      const cachedToken = await this.cacheService.get("Firebase_Token");
+      if(cachedToken == token){
+        return;
+      }
       const platform = this.getPlatform();
       this.deviceId = await this.getOrCreateDeviceId();
       console.log(`Sending FCM token to server for ${platform} device ${this.deviceId}`);
@@ -254,6 +258,7 @@ export class FirebaseMessagingService {
       },);
 
       console.log('FCM token sent to server successfully');
+      await this.cacheService.set("Firebase_Token", token);
     } catch (error) {
       console.error('Error sending FCM token to server:', error);
       // Consider implementing retry logic with exponential backoff
