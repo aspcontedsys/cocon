@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
+    <ion-title>Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="settings-page">
+
+  <div class="user-section">
+    <img class="avatar" [src]="user.image || 'assets/avatar-placeholder.png'" alt="Photo" />
+    <div class="welcome">
+      <div>{{ user.name }}</div>
+      <strong>Reg. No.: {{ user.unique_no }}</strong>
+    </div>
+  </div>
+
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>Registration Category</ion-label>
+      <ion-note slot="end">{{ user.category || '—' }}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-note slot="end">{{ user.email || '—' }}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>Mobile</ion-label>
+      <ion-note slot="end">{{ user.mobile || '—' }}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Designation</ion-label>
+      <ion-note slot="end">{{ user.designation || '—' }}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Company Name</ion-label>
+      <ion-note slot="end">{{ user.company_name || '—' }}</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Workshop</ion-label>
+      <ion-note slot="end">{{ user.workshop || '—' }}</ion-note>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

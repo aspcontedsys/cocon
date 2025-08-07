@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154241096735",
+    "project_id": "cocon-b4376",
+    "storage_bucket": "cocon-b4376.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154241096735:android:8bea2e76e02de651fd492a",
+        "android_client_info": {
+          "package_name": "com.tedsys.cocon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2ii4-hOCqP3eyNDp1-ouXuTamvI0npFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,64 @@
+// Bottom Tab Bar Styling
+
+.bottom-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+  // background: rgba(17, 24, 39, 0.9);
+  border-top: 1px solid #2a2a2a;
+  backdrop-filter: blur(12px);
+
+  .tab-button {
+    flex: 1;
+    color: #bbb;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    ion-icon,
+    .custom-tab-icon {
+      font-size: 1.6rem;
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 0 2px #8aff00);
+    }
+
+    span {
+      margin-top: 0.2rem;
+      font-size: 0.7rem;
+    }
+
+    &:active,
+    &:hover {
+      color: #8aff00;
+
+      ion-icon,
+      .custom-tab-icon {
+        filter: drop-shadow(0 0 4px #8aff00);
+      }
+    }
+  }
+}
+
+// Card Slide-in Animation
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,184 @@
+.splash-screen {
+  --background: transparent;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .background {
+    background: url('/assets/splash-bg.png') no-repeat center center;
+    background-size: cover;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      width: 180px;
+      margin-top: 40px;
+    }
+
+    .robot-hand {
+      width: 350px;
+      max-width: 90%;
+      margin-left: 100px;
+    }
+
+    .content-box {
+      width: 100%;
+      background: rgb(0, 0, 0);
+      padding: 28px 20px;
+      margin-top: -40px;
+      border-top-left-radius: 50px;
+      border-top-right-radius: 50px;
+      color: #fff;
+
+      h2 {
+        color: #9eff00;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 15px;
+        color: #ccc;
+        margin-bottom: 20px;
+      }
+
+      .info-cards {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        gap: 20px;
+
+        .card {
+          background: #000000;
+          border: 1px solid #333;
+          border-radius: 20px;
+          padding: 20px 24px;
+          display: block;
+          align-items: center;
+          gap: 16px;
+          min-width: 200px;
+          min-height: 80px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+
+          ion-icon {
+            font-size: 28px;
+            color: #9eff00;
+          }
+
+          .label-box {
+            margin-top: 10px;
+          }
+
+          .label {
+            color: #9eff00;
+            font-weight: 600;
+            font-size: 16px;
+          }
+
+          .sub-label {
+            font-size: 14px;
+            color: #ccc;
+          }
+
+          .custom-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  // -----------------------------
+  // 📱 Mobile (up to 599px)
+  // -----------------------------
+  @media (max-width: 599px) {
+    .background {
+      .logo {
+        width: 140px;
+        margin-top: 30px;
+      }
+
+      .robot-hand {
+        width: 330px;
+        margin-left: 80px;
+      }
+
+      .content-box {
+        padding: 20px 16px;
+
+        h2 {
+          font-size: 18px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+
+        .info-cards {
+          flex-direction: column;
+          align-items: center;
+
+          .card {
+            min-width: 100%;
+            padding: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  // -----------------------------
+  // 💻 Tablet (600px – 1023px)
+  // -----------------------------
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .background {
+      .robot-hand {
+        width: 280px;
+        margin-left: 0;
+      }
+
+      .content-box {
+        padding: 24px;
+
+        .info-cards {
+          justify-content: center;
+
+          .card {
+            min-width: 220px;
+          }
+        }
+      }
+    }
+  }
+
+  // -----------------------------
+  // 🖥️ Large Screens (1024px+)
+  // -----------------------------
+  @media (min-width: 1024px) {
+    .background {
+      .robot-hand {
+        width: 350px;
+        margin-left: 100px;
+      }
+
+      .content-box {
+        .info-cards {
+          .card {
+            min-width: 240px;
+          }
+        }
+      }
+    }
+  }
+}

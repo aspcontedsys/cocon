@@ -1,0 +1,36 @@
+<ion-content class="ion-padding">
+  <div class="otp-wrapper">
+    <h2>Enter OTP</h2>
+    <p>Enter the OTP sent to: {{ email }}</p>
+
+    <!-- OTP Input Boxes -->
+    <div class="otp-box-group">
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*"
+             [(ngModel)]="otp[0]" (input)="moveFocus($event, 0)" #otpInput>
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*"
+             [(ngModel)]="otp[1]" (input)="moveFocus($event, 1)" #otpInput>
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*"
+             [(ngModel)]="otp[2]" (input)="moveFocus($event, 2)" #otpInput>
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*"
+             [(ngModel)]="otp[3]" (input)="moveFocus($event, 3)" #otpInput>
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*"
+             [(ngModel)]="otp[4]" (input)="moveFocus($event, 4)" #otpInput>
+      <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*"
+             [(ngModel)]="otp[5]" (input)="moveFocus($event, 5)" #otpInput>
+    </div>
+
+    <ion-button expand="block" (click)="verifyOtp()" class="submit-button">Verify</ion-button>
+    <ion-button expand="block" fill="clear" color="medium" (click)="closeModal()">Cancel</ion-button>
+
+    <!-- Resend OTP Section -->
+    <p class="resend-text">
+      <ng-container *ngIf="resendCountdown > 0">
+        Resend OTP in {{ resendCountdown }}s
+      </ng-container>
+      <ng-container *ngIf="resendCountdown === 0">
+        Didn't receive the code?
+        <a (click)="resendOtp()" class="resend-link">Resend OTP</a>
+      </ng-container>
+    </p>
+  </div>
+</ion-content>

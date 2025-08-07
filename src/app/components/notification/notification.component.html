@@ -1,0 +1,16 @@
+<div class="notification-container" [ngClass]="type">
+  <div class="notification-content">
+    <span class="notification-icon">
+      <i [ngClass]="{
+        'fa-check-circle': type === 'success',
+        'fa-exclamation-circle': type === 'error',
+        'fa-info-circle': type === 'info',
+        'fa-exclamation-triangle': type === 'warning'
+      }" class="fas"></i>
+    </span>
+    <span class="notification-message">{{ message }}</span>
+    <button class="notification-close" (click)="close()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,134 @@
+:host {
+    --background: #51ff00;
+    color: #ff0000;
+    background-image: url('/assets/subpage-bg.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  ion-header,
+  ion-toolbar {
+    --ion-toolbar-background: #000 !important;
+    color: #fff !important;
+  
+    ion-title {
+      color: #97C93C;
+      text-align: left;
+      font-size: 20px;
+      padding-left: 30px;
+    }
+  
+    ion-icon {
+      color: #fff !important;
+      font-size: 30px;
+      filter: drop-shadow(0 0 2px #0f0);
+      padding-right: 10px;
+    }
+  }
+  
+  .exhibitors-content {
+    --padding-start: 30px;
+    --padding-end: 30px;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    top: 10%;
+    border-top-left-radius: 55px;
+    border-top-right-radius: 55px;    
+  }
+  
+  .exhibitors-wrapper {
+    padding-top: 10px;
+  }
+  
+  .exhibitor-card {
+    padding: 16px 0;
+  }
+  
+  .exhibitor-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #a4ff00;
+    margin-bottom: 4px;
+  }
+  
+  .exhibitor-desc {
+    font-size: 0.95rem;
+    color: #ccc;
+    margin-bottom: 6px;
+  }
+  
+  .exhibitor-location {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #aaa;
+  }
+  
+  ion-item.divider {
+    --color: #333;
+    margin: 12px 0;
+  }
+  
+  /* Bottom Tab Bar Styling */
+  .footer-tabs {
+    ion-tab-bar {
+      --background: #111;
+      --color: #aaa;
+      --color-selected: #0f0;
+    }
+  }
+  
+  .bottom-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-top: 1px solid #2a2a2a;
+    backdrop-filter: blur(12px);
+    // background-color: rgba(0, 0, 0, 0.7);
+  
+    .tab-button {
+      flex: 1;
+      color: #bbb;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      ion-icon,
+      .custom-tab-icon {
+        font-size: 1.6rem;
+        width: 26px;
+        height: 26px;
+        filter: drop-shadow(0 0 2px #8aff00);
+      }
+  
+      span {
+        margin-top: 0.2rem;
+        font-size: 0.7rem;
+      }
+  
+      &:active,
+      &:hover {
+        color: #8aff00;
+  
+        ion-icon,
+        .custom-tab-icon {
+          filter: drop-shadow(0 0 4px #8aff00);
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,46 @@
+<ion-content class="c0c0n-page" fullscreen>
+  <!-- Background Header Section -->
+  <ion-header>
+    <ion-toolbar style="--background: transparent; color: #fff;">
+      <ion-title>Sponsors</ion-title>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Curved Main Content Area -->
+  <div class="main-content-container internal-page">
+    <!-- Section: Program Schedule -->
+    <div class="section">
+      <div class="time-block" *ngFor="let sponserCategory of sponserCategories">
+        <div class="time-col">
+          <div class="main-time">
+            {{ sponserCategory.name }}
+          </div>
+        </div>
+        <div class="programs-col">
+          <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
+            <ion-accordion [value]="sponserCategory.id">
+              <ion-item slot="header" lines="none">
+                <ion-label class="session-title"></ion-label>
+              </ion-item>
+              <div class="session-body" slot="content" [ngClass]="{'active': openedAccordion === sponserCategory.id}">            
+                <div *ngFor="let sponser of sponserList" class="subsession">
+                  <div class="session-subtitle">{{ sponser.name }}</div>
+                <div class="speaker">
+                  <img [src]="sponser.image" class="avatar" />
+                  <span>{{ sponser.name }}</span>
+                </div>
+                </div>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+      </div>
+    </div>
+     <hr>
+   </div>  
+  </ion-content>

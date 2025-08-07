@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
+    <ion-title>Scientific program</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="scientific-content" fullscreen>
+
+  <!-- Date Tabs -->
+  <div class="date-tabs">
+    <div *ngFor="let day of eventDates" class="day-tab" [class.active]="day.active" (click)="selectDay(day)">
+      <div class="label">{{ day.label }}</div>
+      <div class="date">{{ day.date }}</div>
+    </div>
+  </div>
+
+  <!-- Hall Tabs -->
+  <div class="hall-tabs">
+    <div *ngFor="let hall of halls" class="hall-tab" [class.active]="hall.active" (click)="selectHall(hall)">
+      {{ hall.name }}
+    </div>
+  </div>
+
+  <!-- Timeline Header -->
+  <div class="timeline-header">
+    <div class="time-col">Time</div>
+    <div class="program-col">Program</div>
+  </div>
+
+  <!-- Schedule Timeline -->
+  <div class="schedule-container">
+    <div class="time-block" *ngFor="let slot of filteredSchedule">
+      <div class="time-col">
+        <div class="main-time">
+          {{ slot.time }}
+          <span *ngIf="slot.time2" class="time2">– {{ slot.time2 }}</span>
+        </div>
+      </div>
+      <div class="programs-col">
+        <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
+          <ion-accordion [value]="slot.time">
+            <ion-item slot="header" lines="none">
+              <ion-label class="session-title">{{ slot.title }}</ion-label>
+            </ion-item>
+            <div class="session-body" slot="content" [ngClass]="{'active': openedAccordion === slot.time}">
+              <!-- <div class="session-subtitle">{{ slot.session.subtitle }}</div>
+              <div class="speaker">
+                <img [src]="slot.session.speakerAvatar" class="avatar" />
+                <span>{{ slot.session.speaker }}</span>
+              </div> -->
+              <div *ngFor="let item of slot.roles" class="subsession">
+                <div class="sub-time">{{ item.role_name }}</div>
+                <div class="sub-details">
+                  <!-- <div class="sub-title">{{ item.title }}</div> -->
+                  <div *ngFor="let role of item.participants" class="sub-speaker">
+                    <!-- <img [src]="role.image" class="avatar" /> -->
+                    <span>{{ role.name }}</span>
+                    <span>{{ role.email }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+

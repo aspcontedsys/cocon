@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
+    <ion-title>Speakers</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="networking-content">
+  <div class="networking-wrapper">
+    <p class="networking-title">Search among speakers</p>
+    <div class="search-container">
+      <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search speakers..." color="light"
+        (ionFocus)="showCancel = true" (ionBlur)="hideCancel()" class="search-input"></ion-searchbar>
+
+      <button *ngIf="showCancel" class="cancel-btn" (click)="cancelSearch()">Cancel</button>
+    </div>
+
+    <div class="user-list">
+      <div class="user-item" *ngFor="let user of filteredUsers()" (click)="openProfile(user)">
+        <img [src]="user.photo" class="avatar" alt="User photo" />
+        <div class="user-name">{{ user.name }}</div>
+        <ion-icon name="ellipsis-vertical" class="options-icon"></ion-icon>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+
+<div class="profile-overlay" *ngIf="selectedUser">
+  <div class="profile-header">
+    <div class="avatar-lg">
+      <img [src]="selectedUser.photo"/>
+    </div>
+    <div class="profile-info">
+      <h2>{{ selectedUser.name }}</h2>
+      <p>{{ selectedUser.designation }}</p>
+    </div>
+    <ion-icon name="close-circle" class="close-icon" (click)="selectedUser = null"></ion-icon>
+  </div>
+  <div class="profile-body">
+    <h3>PROFILE</h3>
+    <p>{{ selectedUser.about }}</p>
+
+    <h3>TOPICS</h3>
+    <ul class="topics-list">
+      <li *ngFor="let topic of selectedUser.topics">
+        <div class="topic-header">
+          <span class="topic-title">{{ topic.title }}</span>
+        </div>
+        <span class="topic-time">{{ topic.date }} | {{ topic.time }} | {{ topic.venue }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

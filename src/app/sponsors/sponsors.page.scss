@@ -1,0 +1,39 @@
+:host {
+    --background: #000;
+    color: #fff;
+    background-image: url('/assets/subpage-bg.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  ion-header,
+  ion-toolbar {
+    color: #fff !important;
+  
+    ion-title {
+      color: #97C93C;
+      text-align: left;
+      font-size: 20px;
+      padding-left: 30px;
+    }
+  
+    ion-icon {
+      color: #fff !important;
+      font-size: 26px;
+      padding-right: 10px;
+      filter: drop-shadow(0 0 2px #0f0);
+    }
+  }
+  
+ .time-block{
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 16px;
+    padding: 12px;
+ }
+  
+    .time-col {
+      width: 20%;
+    }

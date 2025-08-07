@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
+    <ion-title>Attractions</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="attractions-content">
+  <div class="attractions-wrapper">
+    <p class="attractions-title">Attractions</p>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      <div *ngFor="let category of CategoryList">
+        <div class="tab" [class.active]="selectedTabName === category.name" (click)="selectTab(category.id)">{{ category.name }}</div>
+      </div>
+    </div>
+    <!-- <div class="category-tabs">
+      <div class="tab" [class.active]="selectedTab === 'heritage'" (click)="selectTab('heritage')">Heritage</div>
+      <div class="tab" [class.active]="selectedTab === 'beaches'" (click)="selectTab('beaches')">Beaches</div>
+      <div class="tab" [class.active]="selectedTab === 'religious'" (click)="selectTab('religious')">Religious Places</div>
+    </div> -->
+
+    <!-- Dynamic Slider Section -->
+    <div class="custom-slider" (mouseenter)="stopAutoplay()" (mouseleave)="startAutoplay()">
+      <ng-container *ngTemplateOutlet="sliderTemplate; context: { list: attractionList }"></ng-container>
+    </div>
+
+    <ng-template #sliderTemplate let-list="list">
+     
+      <div class="slider-pagination">
+        <div
+          class="bullet"
+          *ngFor="let item of list; let i = index"
+          [class.active]="i === currentSlide"
+          (click)="goToSlide(i)">
+        </div>
+      </div>
+
+      <!-- Autoplay Progress Bar -->
+      <div class="autoplay-progress-bar">
+        <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+      </div>
+
+      <!-- Slider Track -->
+      <div class="slider-window" >
+        <div class="slider-track" [ngStyle]="{ 'transform': 'translateX(-' + currentSlide * 100 + '%)' }">
+          <div class="slide" *ngFor="let place of list">
+            <div class="attraction-card">
+              <div class="location-title">{{ place.name }}</div>
+              <img [src]="place.image" [alt]="place.name" class="location-img" />
+              <div class="location-details">
+                <p class="location-address">{{ place.address }}</p>
+                <p class="highlight">{{ place.highlight1 }}</p>
+                <p class="description">{{ place.description }}</p>
+                <p class="highlight">{{ place.highlight2 }}</p>
+                <p class="description">{{ place.description2 }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>
+

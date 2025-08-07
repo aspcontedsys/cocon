@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; color: #fff;">
+    <ion-title>Exhibitors</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="exhibitors-content">
+  <div class="exhibitors-wrapper">
+    <div
+      *ngFor="let exhibitor of exhibitors; let i = index" class="exhibitor-card"[style.animationDelay]="(i * 0.1) + 's'">
+      <h2 class="exhibitor-name">{{ exhibitor.name }}</h2>
+      <p class="exhibitor-desc">{{ exhibitor.products }}</p>
+      <div class="exhibitor-location">
+        <span>{{ exhibitor.address }}</span>
+        <span>{{ exhibitor.phone }}</span>
+      </div>
+      <ion-item lines="full" class="divider" *ngIf="i !== exhibitors.length - 1"></ion-item>
+    </div>
+  </div>
+</ion-content>

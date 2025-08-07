@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
+    <ion-title>Networking</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <!-- <ion-icon name="arrow-back-outline"></ion-icon> -->
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="networking-content">
+  <div class="networking-wrapper">
+    <p class="networking-title">
+      Are you open to networking with other delegates?
+    </p>
+
+    <div class="toggle-wrapper">
+      <ion-toggle [(ngModel)]="isNetworkingOpen" color="success" (ionChange)="toggleNetworking($event)"></ion-toggle>
+    </div>
+    
+    <div *ngIf="isNetworkingOpen">
+    <!-- Tabs -->
+    <div class="tab-header">   
+      <div class="tab-btn" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">Users List</div>
+      <div class="tab-btn" [class.active]="activeTab === 'accepted'" (click)="activeTab = 'accepted'">Request Accepted</div>
+    </div>
+
+    <div class="user-list" *ngIf="activeTab === 'users'">
+      <div class="user-item" *ngFor="let user of openUsers; let i = index">
+        <img [src]="user.image" class="avatar" alt="User photo" />
+        <div class="user-name">{{ user.name }}</div>
+        <ion-icon name="ellipsis-vertical" class="options-icon" (click)="toggleDropdown(i)"></ion-icon>
+
+        <!-- Dropdown -->
+        <div class="dropdown" *ngIf="dropdownIndex === i">
+          <div *ngIf="user.status == 'open'" (click)="sendRequest(user)">Send Request</div>
+          <div *ngIf="user.status == 'requested'" class="cancel-option" (click)="cancelRequest(user)">❌ Cancel Request</div>
+        </div>
+      </div>
+    </div>
+    <div class="user-list" *ngIf="activeTab === 'accepted'">
+      <div class="user-item" *ngFor="let user of acceptedUsers" (click)="openChat(user)">
+        <img [src]="user.image" class="avatar" alt="User photo" />
+        <div class="user-name">{{ user.name }}</div>
+      </div>
+    </div>
+    </div>
+    <div *ngIf="!isNetworkingOpen">
+      <p class="network-noenabled">
+        You are not open to networking with other delegates. To start networking, please enable it.
+      </p>
+    </div>
+  </div>
+</ion-content>

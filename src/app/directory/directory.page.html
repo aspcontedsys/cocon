@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
+      <ion-title>Directory</ion-title>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content [fullscreen]="true" class="directory-page">
+    <div class="intro-section">
+      <img src="assets/banner-about.jpeg" alt="Directory Banner" />
+      <div class="overlay-text">
+        <h1>Welcome to C0C0N 2025 Directory</h1>
+        <p>Find people, teams, and departments</p>
+      </div>
+    </div>
+  
+    <section class="directory-content">
+      <div class="time-block" *ngFor="let directoryCategory of directoryCategories">
+        <div class="time-col">
+          <div class="main-time">
+            {{ directoryCategory.name }}
+          </div>
+        </div>
+        <div class="programs-col">
+          <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
+            <ion-accordion [value]="directoryCategory.id">
+              <ion-item slot="header" lines="none">
+                <ion-label class="session-title"></ion-label>
+              </ion-item>
+              <div class="session-body" slot="content" [ngClass]="{'active': openedAccordion === directoryCategory.id}">            
+                <div *ngFor="let directory of directoryList" class="subsession">
+                  <div class="session-subtitle">{{ directory.name }}</div>
+                <div class="speaker">
+                  <span>{{ directory.name }}</span>
+                  <span>{{ directory.phone }}</span>
+                </div>
+                </div>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+      </div>
+    </section>
+  </ion-content>
+  

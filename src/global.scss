@@ -1,0 +1,217 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.scroll-y {
+    --overflow: auto;
+    overflow-y: auto !important;
+    scroll-behavior: smooth;
+  }
+  html, body, ion-app, ion-router-outlet, ion-content {
+    height: 100%;
+    overflow: auto;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+    
+  .c0c0n-page {
+    background: url('/assets/subpage-bg.png') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    --ion-background-color: transparent;
+  
+    display: block; 
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  
+    ion-content {
+      --background: transparent;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+    }
+  
+    .header-section {
+      padding: 24px;
+      text-align: left;
+      color: #fff;
+      background: url('/assets/subpage-bg.png') no-repeat center center;
+      background-size: cover;
+      
+      h2 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+  
+      p {
+        font-size: 14px;
+        color: #ccc;
+        margin-bottom: 12px;
+      }
+  
+      .event-details {
+        font-size: 13px;
+        color: #bbb;
+  
+        ion-icon {
+          vertical-align: middle;
+          margin-right: 4px;
+        }
+  
+        span {
+          display: inline-block;
+          margin-bottom: 6px;
+          color: #b4ff00;
+        }
+  
+        b {
+          color: #fff;
+          font-weight: 500;
+        }
+      }
+      
+    }
+    
+  
+    .main-content-container {
+      background: #000;
+      height: auto; 
+      border-top-left-radius: 55px;
+      border-top-right-radius: 55px;
+      padding: 25px;
+      margin-top: 10%;
+      min-height: 100%;
+  
+      hr {
+        background-color: rgb(26, 26, 26);
+        border: none;
+        height: 2px;
+        margin: 24px 0;
+      }
+  
+      .section {
+        margin-bottom: 32px;
+  
+        h3 {
+          font-size: 16px;
+          color: #8aff00;
+          margin-bottom: 4px;
+        }
+  
+        p {
+          font-size: 13px;
+          color: #aaa;
+          margin-bottom: 16px;
+        }
+      }
+  
+      .carousel-track {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        padding-bottom: 8px;
+        cursor: grab;
+  
+        &:active {
+          cursor: grabbing;
+        }
+  
+        
+        &::-webkit-scrollbar {
+          height: 8px;
+        }
+  
+        &::-webkit-scrollbar-track {
+          background: #111;
+          border-radius: 4px;
+        }
+  
+        &::-webkit-scrollbar-thumb {
+          background-color: #252525;
+          border-radius: 4px;
+          border: 2px solid #111;
+        }
+  
+        
+        scrollbar-width: thin;
+        scrollbar-color: #252525 #111;
+  
+        .carousel-card {
+          flex: 0 0 auto;
+          min-width: 180px;
+          scroll-snap-align: start;
+          background: #1a1a1a;
+          color: #fff;
+          border-radius: 10px;
+          padding: 35px;
+          text-align: center;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+          animation: slideIn 0.6s ease-in-out;
+  
+          &:hover {
+            background-color: #222;
+            transform: scale(1.04);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+          }
+  
+          &:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+          }
+  
+          .carousel-title {
+            font-size: 14px;
+            margin-top: 8px;
+          }
+        }
+      }
+    }
+    .internal-page {
+      margin-top: 0%!important;
+    }
+  }

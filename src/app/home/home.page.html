@@ -1,0 +1,24 @@
+
+<!-- Router outlet for tab content -->
+<ion-router-outlet></ion-router-outlet>
+<!-- Custom Fixed Bottom Tab Bar -->
+<div class="bottom-tab-bar">
+  <div class="tab-button" (click)="router.navigate(['/home/dashboard'])">
+    <img src="assets/icon/home-icon.png" class="custom-tab-icon" />
+    <span>Home</span>
+  </div>
+  <div class="tab-button" (click)="router.navigate(['/home/schedule'])">
+    <ion-icon name="calendar-outline"></ion-icon>
+
+    <span>Schedule</span>
+  </div>
+  <div class="tab-button" (click)="router.navigate(['/home/delegates'])">
+    <!-- <ion-icon name="information-circle-outline"></ion-icon> -->
+    <img src="assets/icon/info.svg" class="custom-tab-icon" />
+    <span>Info</span>
+  </div>
+  <div class="tab-button" (click)="router.navigate(['/home/profile'])">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Profile</span>
+  </div>
+</div>

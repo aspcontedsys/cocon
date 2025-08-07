@@ -1,0 +1,144 @@
+// Modal container styles
+:host {
+  --width: 100%;
+  --height: 90%;
+  --border-radius: 16px 16px 0 0;
+  --box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+}
+
+// Modal content styles
+ion-content {
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --background: #000;
+  //border-radius: 16px 16px 0 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+// Header styles
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0;
+    --min-height: 56px;
+    border-radius: 16px 16px 0 0;
+    
+    ion-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      padding: 0;
+    }
+    
+    ion-buttons {
+      margin: 0;
+      
+      ion-button {
+        --padding-start: 8px;
+        --padding-end: 8px;
+        --ripple-color: var(--ion-color-medium);
+        
+        ion-icon {
+          font-size: 24px;
+          color: #1a1a1a;
+        }
+      }
+    }
+  }
+}
+
+// List styles
+ion-list {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  margin-top: 8px;
+  
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --min-height: 64px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+    
+    &:active {
+      --background: rgba(var(--ion-color-medium-rgb), 0.1);
+    }
+    
+    ion-avatar {
+      width: 48px;
+      height: 48px;
+      margin: 8px 16px 8px 0;
+      
+      ion-img {
+        border: 2px solid var(--ion-color-light);
+        border-radius: 50%;
+      }
+    }
+    
+    ion-label {
+      h2 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+      
+      p {
+        font-size: 14px;
+        color: var(--ion-color-medium);
+        margin: 0;
+      }
+    }
+  }
+}
+
+// Handle bar for modal
+ion-modal::part(handle) {
+  background: var(--ion-color-medium);
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  margin: 8px auto;
+  opacity: 0.5;
+}
+
+// Animation for modal entrance
+@keyframes modal-slide-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Animation for modal exit
+@keyframes modal-slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+// Apply animations to modal
+ion-modal {
+  &::part(content) {
+    animation: modal-slide-in 0.3s ease-out;
+  }
+  
+  &.ion-modal-dismissing::part(content) {
+    animation: modal-slide-out 0.25s ease-in;
+  }
+}

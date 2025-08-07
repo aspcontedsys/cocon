@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; color: #fff;">
+    <ion-title>Venue Layout</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="c0c0n-page" fullscreen>
+  <!-- Curved Main Content Area -->
+  <div class="main-content-container internal-page">
+    <!-- Section: Stall Layout -->
+    <div class="section">      
+      <!-- Loading State -->
+      <div *ngIf="loading" class="ion-padding ion-text-center">
+        <ion-spinner></ion-spinner>
+        <p>Loading layout...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error && !loading" class="ion-padding ion-text-center">
+        <ion-icon name="alert-circle-outline" style="font-size: 48px; color: var(--ion-color-medium);"></ion-icon>
+        <p>{{ error }}</p>
+        <ion-button (click)="ngOnInit()" fill="clear">
+          <ion-icon slot="start" name="refresh"></ion-icon>
+          Try Again
+        </ion-button>
+      </div>
+
+      <!-- PDF Viewer -->
+      <div *ngIf="pdfSrc && !loading" class="pdf-container">
+        <!-- PDF Controls -->
+        <div class="pdf-controls ion-padding-horizontal">
+          <ion-button size="small" (click)="prevPage()" [disabled]="page <= 1">
+            <ion-icon name="chevron-back"></ion-icon>
+          </ion-button>
+          <span class="page-info">
+            Page {{ page }} of {{ totalPages || '?' }}
+          </span>
+          <ion-button size="small" (click)="nextPage()" [disabled]="page >= totalPages">
+            <ion-icon name="chevron-forward"></ion-icon>
+          </ion-button>
+          
+          <div class="zoom-controls">
+            <ion-button size="small" (click)="zoomOut()">
+              <ion-icon name="remove"></ion-icon>
+            </ion-button>
+            <span class="zoom-level">{{ zoom * 100 }}%</span>
+            <ion-button size="small" (click)="zoomIn()">
+              <ion-icon name="add"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="pdf-viewer-container">
+          <pdf-viewer 
+            #pdfViewer
+            [src]="pdfSrc"
+            [render-text]="true"
+            [original-size]="false"
+            [autoresize]="true"
+            [zoom]="zoom"
+            [page]="page"
+            (after-load-complete)="onLoadComplete($event)"
+            style="display: block;"
+            class="pdf-viewer">
+          </pdf-viewer>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

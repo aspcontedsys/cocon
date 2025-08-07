@@ -1,0 +1,68 @@
+<ion-content class="c0c0n-page">
+<!-- Background Header Section -->
+<div class="header-section">
+  <ion-header>
+  <ion-toolbar> 
+    <ion-avatar slot="start">
+      <ion-img *ngIf="recipient?.image" [src]="recipient?.image" alt="{{recipient?.name}}"></ion-img>
+      <ion-img *ngIf="!recipient?.image" src="assets/icon/usericon.png" alt="User Icon"></ion-img>
+    </ion-avatar>
+    <h1>{{recipient?.name}}</h1>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+</div>
+  <!-- Curved Main Content Area -->
+  <div class="main-content-container internal-page">
+    <!-- Section: Program Schedule -->
+    <div class="section"> 
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.5" pullMin="100" pullMax="200">
+        <ion-refresher-content
+          pullingIcon="arrow-down"
+          refreshingSpinner="crescent">
+        </ion-refresher-content>
+      </ion-refresher>
+      <ion-content class="chat-content">
+        <div class="chat-wrapper">
+          <div *ngFor="let group of groupedMessages" class="message-group">
+            <div class="date-divider">
+              <span>{{ group.date }}</span>
+            </div>
+            <div *ngFor="let msg of group.messages" class="chat-bubble {{msg.sender_id === currentUser.id ? 'reply' : 'sender'}}">
+              <div class="message">
+                <p>{{msg.message}}</p>
+              </div>
+              <span class="timestamp">{{ msg.created_at | date:'hh:mm a'}}</span>
+            </div>
+          </div>
+        </div>
+      </ion-content>
+      <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="doRefresh($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="Loading more items...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll> -->
+      <ion-footer class="message-input-container">
+        <ion-toolbar>
+          <ion-item lines="none">
+            <ion-button (click)="attachFile()" fill="clear" slot="start">
+              <ion-icon slot="icon-only" name="attach"></ion-icon>
+            </ion-button>
+            <ion-input [(ngModel)]="message" style="color: white;"
+                      placeholder="Type a message" 
+                      (keydown)="handleKeyPress($event)">
+            </ion-input>
+            <ion-button (click)="sendMessage()" fill="clear">
+              <ion-icon slot="icon-only" name="send"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-toolbar>
+      </ion-footer>
+    </div>
+  </div>
+</ion-content>

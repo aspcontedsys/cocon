@@ -1,0 +1,153 @@
+<ion-content class="conference-page" fullscreen>
+
+  <!-- Header Section -->
+  <div class="header">
+    <h2>Join Us at <span>c0c0n 2025</span> –<br />Hacking & Cybersecurity Briefing</h2>
+    <p>Securing the Cyber Future Together</p>
+    <div class="event-details">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <span class="date">07–11 October, 2025</span>
+    </div>
+    <div class="event-details">
+      <ion-icon name="location-outline"></ion-icon>
+      <span>Grand Hyatt, Bolgatty, Kochi, Kerala, India</span>
+    </div>
+  </div>
+
+  <div class="main-content-container">
+
+    <!-- Conference Details Section -->
+<div class="section-box">
+  <h3>Conference Details</h3>
+  <p>Explore essential information about the event</p>
+
+  <div class="carousel-nav">
+    <button (click)="scrollCarousel('conference', 'prev')">‹</button>
+    <button (click)="scrollCarousel('conference', 'next')">›</button>
+  </div>
+
+  <div class="carousel" #conferenceCarousel>
+    <ion-card class="card" (click)="navigate('/home/about-conference')">
+      <ion-icon name="document-text-outline" class="caro-icon"></ion-icon>
+      <p>About the Conference</p>
+    </ion-card>    
+    <ion-card class="card" *ngIf="eventDetails.website_url" (click)="openWebsite(eventDetails.website_url)">
+      <ion-icon name="compass-outline" class="caro-icon"></ion-icon>
+      <p>Website</p>
+    </ion-card>
+    <ion-card class="card" (click)="navigate('/home/directory')">
+      <ion-icon name="folder-outline" class="caro-icon"></ion-icon>
+      <p>Directory </p>
+    </ion-card>
+    <ion-card class="card" (click)="navigate('/home/app-help')">
+      <ion-icon name="help-circle-outline" class="caro-icon"></ion-icon>
+      <p>App Help!</p>
+    </ion-card>
+  </div>
+</div>
+
+    <!-- Program Schedule Section -->
+    <div class="section-box">
+      <h3>Program Schedule</h3>
+      <p>Check the schedule to stay updated on each session</p>
+
+      <div class="carousel-nav">
+        <button (click)="scrollCarousel('program', 'prev')">‹</button>
+        <button (click)="scrollCarousel('program', 'next')">›</button>
+      </div>
+      <div class="carousel" #programCarousel>
+        <ion-card class="card" (click)="navigate('/home/today-schedule')">
+          <!-- <ion-icon name="calendar-number-outline"></ion-icon> -->
+          <img src="assets/icon/todays-program.svg" class="caro-icon">     
+          <p >Today’s Program</p>
+        </ion-card>
+        <ion-card class="card" (click)="navigate('/home/delegates')">
+          <!-- <ion-icon name="people-outline"></ion-icon> -->
+          <img src="assets/icon/our-speakers.svg" class="caro-icon">
+          <p>Speakers</p>
+        </ion-card>
+        <ion-card class="card" (click)="navigate('/home/schedule')">
+          <!-- <ion-icon name="time-outline"></ion-icon> -->
+         <img src="assets/icon/scientific-pro-icon.svg" class="caro-icon">
+          <p>Scientific Program</p>
+        </ion-card>
+      </div>
+    </div>
+    <!-- Delegate Badge Section -->
+    <div class="section-box">
+      <h3>Delegate Info</h3>
+      <h6>Please visit the Badge & Feedback area</h6>
+
+     
+      <div class="carousel-nav">
+        <button (click)="scrollCarousel('badge', 'prev')">‹</button>
+        <button (click)="scrollCarousel('badge', 'next')">›</button>
+      </div>
+
+      
+      <div class="carousel" #badgeCarousel>
+        <ion-card class="card" *ngIf="isLoggedIn()" (click)="openLoginModal()">
+          <!-- <ion-icon name="id-card-outline"></ion-icon> -->
+          
+         <img src="assets/icon/delegate-login.svg" class="caro-icon">
+          <p>Delegate Login </p>
+        </ion-card>        
+        <ion-card class="card" (click)="navigate('/home/profile')">
+          <!-- <ion-icon name="person-circle-outline"></ion-icon> -->
+          <img src="assets/icon/delegate-profile.svg" class="caro-icon">
+          <p>Delegate Profile </p>
+        </ion-card>
+        <ion-card class="card" (click)="navigate('/home/badge')">
+          <ion-icon name="ribbon-outline" class="caro-icon"></ion-icon>
+          <p>Virtual badge</p>
+        </ion-card>
+        <ion-card class="card" (click)="navigate('/home/chat')">
+          <ion-icon name="globe-outline" class="caro-icon"></ion-icon>
+          <p>Networking </p>
+        </ion-card>
+        <ion-card class="card" (click)="navigate('/home/feedback')">
+          <!-- <ion-icon name="chatbox-ellipses-outline"></ion-icon> -->
+          <img src="assets/icon/feedback.svg" class="caro-icon">
+          <p>Feedback</p>
+        </ion-card>
+      </div>
+    </div>
+
+
+
+<!-- At the Venue Section -->
+<div class="section-box">
+  <h3>At the Venue</h3>
+  <p>Facilities & support at Grand Hyatt</p>
+
+  <div class="carousel-nav">
+    <button (click)="scrollCarousel('venue', 'prev')">‹</button>
+    <button (click)="scrollCarousel('venue', 'next')">›</button>
+  </div>
+
+  <div class="carousel" #venueCarousel>
+    <ion-card class="card" (click)="navigate('/home/attraction')">
+      <ion-icon name="map-outline" class="caro-icon"></ion-icon>
+      <p>Attractions </p>
+    </ion-card>
+    <ion-card class="card" (click)="openPdfPage(eventDetails.venue_layout,'venue-layout')">
+      <ion-icon name="business-outline" class="caro-icon"></ion-icon>
+      <p>Venue Layout</p>
+    </ion-card>
+    <ion-card class="card" (click)="openPdfPage(eventDetails.stall_layout,'stall-layout')">
+      <ion-icon name="cube-outline" class="caro-icon"></ion-icon>
+      <p>Stall Layout</p>
+    </ion-card>
+    <ion-card class="card" (click)="navigate('/home/exhibitors')">
+      <ion-icon name="ticket-outline" class="caro-icon"></ion-icon>
+      <p>Exhibitors </p>
+    </ion-card>
+    <ion-card class="card" (click)="navigate('/home/sponsors')">
+      <ion-icon name="cash-outline" class="caro-icon"></ion-icon>
+      <p>Sponsors </p>
+    </ion-card>
+     
+  </div>
+</div>
+  </div>
+</ion-content>

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
+    <ion-title>Feedback</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="feedback-content">
+  <div class="feedback-container">
+    <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading; else loading">
+      <div class="submit-section">
+        <ion-button 
+          type="submit" 
+          expand="block" 
+          shape="round" 
+          class="submit-button"
+          [disabled]="feedbackForm.invalid || isLoading">
+          <ion-icon name="send-outline" slot="start"></ion-icon>
+          Submit Feedback
+        </ion-button>
+      </div>
+      <div class="form-section">
+        <div formArrayName="responses">
+          <div *ngFor="let question of questions; let i = index" class="question-container">
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>{{ question.feedback_head }}</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-item lines="full" class="question-item">
+              <ion-label position="stacked" class="question-text">
+                {{ i + 1 }}. {{ question.name }}
+                <span class="required-asterisk">*</span>
+              </ion-label>
+              
+              <!-- Text Input -->
+              <ion-textarea 
+                *ngIf="getQuestionType(i) === '2'"
+                [formControlName]="i"
+                rows="3"
+                placeholder="Your answer..."
+                class="answer-input"
+                required>
+              </ion-textarea>
+              
+              <!-- Radio Button Group for Single Selection -->
+              <div *ngIf="getQuestionType(i) === '1'" class="radio-group">
+                <ion-radio-group [formControlName]="i">
+                  <ion-item *ngFor="let option of options" lines="none">
+                    <ion-radio [value]="option" slot="start"></ion-radio>
+                    <ion-label>{{ option }}</ion-label>
+                  </ion-item>
+                </ion-radio-group>
+              </div>
+              
+              <div class="validation-error" *ngIf="responses.at(i).touched && responses.at(i).errors?.['required']">
+                <ion-icon name="warning-outline"></ion-icon>
+                <span>This field is required</span>
+              </div>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+
+      
+    </form>
+
+    <ng-template #loading>
+      <div class="loading-container">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Loading feedback form...</p>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>
