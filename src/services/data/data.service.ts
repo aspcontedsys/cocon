@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApiService, ApiResponse } from '../api/api.service';
 import { environment } from 'src/environments/environment';
 import { Speaker,EventDetails,DelegateProfile,VirtualBadge,
-  Schedule,Category,Sponsor,FeedbackQuestion,Exhibitor,Directory,
-  Attraction,AppHelp,AboutConference } from '../../app/models/cocon.models';
+  Schedule,SponsorsList,FeedbackQuestion,Exhibitor,DirectoryList,
+  Attractions,AppHelp,AboutConference } from '../../app/models/cocon.models';
 import { CacheService } from '../cache/cache.service';
 
 
@@ -73,16 +73,9 @@ export class DataService {
     let data:ApiResponse<Speaker[]> = await this.apiService.get<Speaker[]>(environment.endpoints.participants.api,environment.endpoints.participants.authenticationType );
     return data.data;
   }
-  async getSponserCategories(){
-    let data:ApiResponse<Category[]> = await this.apiService.get<Category[]>(environment.endpoints.sponserCategories.api,environment.endpoints.sponserCategories.authenticationType );
+  async getSponserWithCategoriesAndList(){
+    let data:ApiResponse<SponsorsList[]> = await this.apiService.get<SponsorsList[]>(environment.endpoints.sponserWithCategoriesAndList.api,environment.endpoints.sponserWithCategoriesAndList.authenticationType );
     return data.data;
-  }
-  async getSponserList(category_id:string){
-    let data  ={
-      "sponsor_category_id":category_id
-      };
-    let response :ApiResponse<Sponsor[]> = await this.apiService.get<Sponsor[]>(environment.endpoints.sponserList.api,environment.endpoints.sponserList.authenticationType,data );
-    return response.data;
   }
   async getFeedbackQuestionList(){
     let response :ApiResponse<FeedbackQuestion[]> = await this.apiService.get<FeedbackQuestion[]>(environment.endpoints.feedbackQuestionList.api,environment.endpoints.feedbackQuestionList.authenticationType );
@@ -96,26 +89,12 @@ export class DataService {
     let response :ApiResponse<Exhibitor[]> = await this.apiService.get<Exhibitor[]>(environment.endpoints.exhibitorsList.api,environment.endpoints.exhibitorsList.authenticationType );
     return response.data;
   }
-  async getDirectoryCategories(){
-    let response :ApiResponse<Category[]> = await this.apiService.get<Category[]>(environment.endpoints.directoryCategories.api,environment.endpoints.directoryCategories.authenticationType );
+  async getDirectorywithCategoriesAndList(){
+    let response :ApiResponse<DirectoryList[]> = await this.apiService.get<DirectoryList[]>(environment.endpoints.directorywithCategoriesAndList.api,environment.endpoints.directorywithCategoriesAndList.authenticationType );
     return response.data;
   }
-  async getDirectoryList(category_id:string){
-    let data  ={
-      "directory_category_id":category_id
-      };
-    let response :ApiResponse<Directory[]> = await this.apiService.get<Directory[]>(environment.endpoints.directoryList.api,environment.endpoints.directoryList.authenticationType,data );
-    return response.data;
-  }
-  async getAttractionCategories(){
-    let response :ApiResponse<Category[]> = await this.apiService.get<Category[]>(environment.endpoints.attractionCategories.api,environment.endpoints.attractionCategories.authenticationType );
-    return response.data;
-  }
-  async getAttractionList(category_id:string){
-    let data  ={
-      "attraction_category_id":category_id
-      };
-    let response :ApiResponse<Attraction[]> = await this.apiService.get<Attraction[]>(environment.endpoints.attractionList.api,environment.endpoints.attractionList.authenticationType,data );
+  async getAttractionWithCategoryAndList(){
+    let response :ApiResponse<Attractions[]> = await this.apiService.get<Attractions[]>(environment.endpoints.attractionWithCategoryAndList.api,environment.endpoints.attractionWithCategoryAndList.authenticationType );
     return response.data;
   }
 

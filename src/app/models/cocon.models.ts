@@ -51,10 +51,13 @@ export interface Speaker {
 }
 
 interface Topic {
-  title: string;
-  date: string;
-  time: string;
-  venue: string;
+  end_time: string;
+  event_date: string;
+  facility_id: number;
+  facility_name: string;
+  name: string;
+  start_time: string;
+  topic_duration: string;
 }
 
 export interface EventDetails {
@@ -81,6 +84,7 @@ export interface DelegateProfile {
 }
 
 export interface VirtualBadge {
+  category:string,
   name: string,
   designation: string,
   company_name: string,
@@ -116,9 +120,12 @@ interface Participant {
   email: string | null;
 }
 
-export interface Category {
+
+export interface SponsorsList {
   id: number;
   name: string;
+  image: string;
+  sponsors:Sponsor[]
 }
 
 export interface Sponsor {
@@ -140,10 +147,23 @@ export interface Exhibitor {
   phone: string;
   products: string;
 }
+
+export interface DirectoryList {
+  id: number;
+  name: string;
+  phone: string;
+  directories:Directory[]
+}
+
 export interface Directory {
   id: number;
   name: string;
   phone: string;
+}
+export interface Attractions {
+  id: number;
+  name: string;
+  attractions:Attraction[];
 }
 
 export interface Attraction {
