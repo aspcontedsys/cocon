@@ -12,7 +12,7 @@ import { Schedule } from '../models/cocon.models';
 })
 export class SchedulePage implements OnInit {
   schedules:Schedule[] = [];
-  eventDates:{label:string,date:string,active:boolean}[] = [];
+  eventDates:{label:string,formattedDate:string,date:string,active:boolean}[] = [];
   halls:{name:string,active:boolean}[] = [];
 
   openedAccordion: string | null = null;
@@ -27,7 +27,8 @@ export class SchedulePage implements OnInit {
   async getSchedules(){
     this.schedules = await this.dataService.getSchedules();    
     this.eventDates = this.schedules.map(schedule => ({
-      label: 'M',
+      label: new Date(schedule.event_date).toLocaleDateString('en-US', { weekday: 'short' }),
+      formattedDate:new Date(schedule.event_date).toLocaleDateString('en-GB').split('/').join('-'),
       date: schedule.event_date,
       active: false
     }));

@@ -2,31 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DataService } from '../../services/data/data.service';
 import { Speaker } from '../../app/models/cocon.models';
+
 @Component({
   selector: 'app-delegates',
   templateUrl: './delegates.page.html',
   styleUrls: ['./delegates.page.scss'],
-  standalone:false
+  standalone: false
 })
 export class DelegatesPage implements OnInit {
   searchTerm: string = '';
   showCancel: boolean = false;
 
   selectedUser: Speaker | null = null;
-  speakers:Speaker[] = [];
+  speakers: Speaker[] = [];
 
   constructor(
     private navCtrl: NavController,
-    private dataService:DataService
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
     this.getSpeakers();
   }
 
-  async getSpeakers(){
+  async getSpeakers() {
     this.speakers = await this.dataService.getParticipants();
   }
+
   goBack(): void {
     this.navCtrl.navigateBack('/home/dashboard', {
       animationDirection: 'back',
@@ -60,5 +62,9 @@ export class DelegatesPage implements OnInit {
 
   closeProfile(): void {
     this.selectedUser = null;
+  }
+
+  formattedDate(date: string): string {
+    return new Date(date).toLocaleDateString('en-GB').split('/').join('-');
   }
 }

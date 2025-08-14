@@ -37,6 +37,25 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
+/* Safe area padding for the entire app */
+ion-app, ion-content {
+  --padding-top: calc(env(safe-area-inset-top) + 10px);
+  --padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
+}
+
+/* Header adjustment for notch */
+ion-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Footer / bottom bar adjustment */
+ion-footer,
+.custom-bottom-bar {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+
+
 .scroll-y {
     --overflow: auto;
     overflow-y: auto !important;
@@ -110,12 +129,14 @@
   
     .main-content-container {
       background: #000;
-      height: auto; 
+      height: 100%; 
       border-top-left-radius: 55px;
       border-top-right-radius: 55px;
       padding: 25px;
-      margin-top: 10%;
+      top: 10%;
       min-height: 100%;
+     
+      
   
       hr {
         background-color: rgb(26, 26, 26);
@@ -135,7 +156,7 @@
   
         p {
           font-size: 13px;
-          color: #aaa;
+          color: #ffffff;
           margin-bottom: 16px;
         }
       }
@@ -212,6 +233,7 @@
       }
     }
     .internal-page {
-      margin-top: 0%!important;
+      margin-top: 10%!important;
     }
   }
+

@@ -1,13 +1,23 @@
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
-    <ion-title>Speakers</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+    
+    <!-- Left: Back icon + title -->
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
+      <span class="page-title">Speakers</span>
+    </div>
+     <!-- Right: Notification icon -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+      </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
+
 <ion-content [fullscreen]="true" class="networking-content">
   <div class="networking-wrapper">
     <p class="networking-title">Search among speakers</p>
@@ -26,32 +36,34 @@
       </div>
     </div>
   </div>
+
+  <div class="profile-overlay" *ngIf="selectedUser">
+    <div class="profile-header">
+      <div class="avatar-lg">
+        <img [src]="selectedUser.photo" />
+      </div>
+      <div class="profile-info">
+        <h2>{{ selectedUser.name }}</h2>
+        <p>{{ selectedUser.designation }}</p>
+      </div>
+      <ion-icon name="close-circle" class="close-icon" (click)="selectedUser = null"></ion-icon>
+    </div>
+
+    <div class="profile-body">
+      <h3>PROFILE</h3>
+      <p>{{ selectedUser.about }}</p>
+
+      <h3>TOPICS</h3>
+      <ul class="topics-list">
+        <li *ngFor="let topic of selectedUser.topics">
+          <div class="topic-header">
+            <span class="topic-title">{{ topic.name }}</span>
+          </div>
+          <span class="topic-time">
+            {{ formattedDate(topic.event_date) }} | {{ topic.start_time }} | {{ topic.end_time }} | {{ topic.facility_name }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </ion-content>
-
-
-<div class="profile-overlay" *ngIf="selectedUser">
-  <div class="profile-header">
-    <div class="avatar-lg">
-      <img [src]="selectedUser.photo"/>
-    </div>
-    <div class="profile-info">
-      <h2>{{ selectedUser.name }}</h2>
-      <p>{{ selectedUser.designation }}</p>
-    </div>
-    <ion-icon name="close-circle" class="close-icon" (click)="selectedUser = null"></ion-icon>
-  </div>
-  <div class="profile-body">
-    <h3>PROFILE</h3>
-    <p>{{ selectedUser.about }}</p>
-
-    <h3>TOPICS</h3>
-    <ul class="topics-list">
-      <li *ngFor="let topic of selectedUser.topics">
-        <div class="topic-header">
-          <span class="topic-title">{{ topic.title }}</span>
-        </div>
-        <span class="topic-time">{{ topic.date }} | {{ topic.time }} | {{ topic.venue }}</span>
-      </li>
-    </ul>
-  </div>
-</div>

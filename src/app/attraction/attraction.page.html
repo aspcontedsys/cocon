@@ -1,11 +1,23 @@
+
+
 <ion-header>
-  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
-    <ion-title>Attractions</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+  <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
+    
+    <!-- Left: Back icon + title -->
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
+      <span class="page-title">Attractions</span>
+    </div>
+
+    <!-- Right: Notification icon -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+      </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -15,8 +27,8 @@
 
     <!-- Category Tabs -->
     <div class="category-tabs">
-      <div *ngFor="let category of CategoryList">
-        <div class="tab" [class.active]="selectedTabName === category.name" (click)="selectTab(category.id)">{{ category.name }}</div>
+      <div *ngFor="let category of attractionsList">
+        <div class="tab" [class.active]="currentTabId === category.id" (click)="selectTab(category.id)">{{ category.name }}</div>
       </div>
     </div>
     <!-- <div class="category-tabs">
@@ -26,8 +38,8 @@
     </div> -->
 
     <!-- Dynamic Slider Section -->
-    <div class="custom-slider" (mouseenter)="stopAutoplay()" (mouseleave)="startAutoplay()">
-      <ng-container *ngTemplateOutlet="sliderTemplate; context: { list: attractionList }"></ng-container>
+    <div class="custom-slider">
+      <ng-container *ngTemplateOutlet="sliderTemplate; context: { list: currentAttractions }"></ng-container>
     </div>
 
     <ng-template #sliderTemplate let-list="list">
@@ -42,9 +54,9 @@
       </div>
 
       <!-- Autoplay Progress Bar -->
-      <div class="autoplay-progress-bar">
+      <!-- <div class="autoplay-progress-bar">
         <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
-      </div>
+      </div> -->
 
       <!-- Slider Track -->
       <div class="slider-window" >
@@ -56,9 +68,9 @@
               <div class="location-details">
                 <p class="location-address">{{ place.address }}</p>
                 <p class="highlight">{{ place.highlight1 }}</p>
-                <p class="description">{{ place.description }}</p>
+                <p class="description" [innerHTML]="place.description"></p>
                 <p class="highlight">{{ place.highlight2 }}</p>
-                <p class="description">{{ place.description2 }}</p>
+                <p class="description" [innerHTML]="place.description2"></p>
               </div>
             </div>
           </div>

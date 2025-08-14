@@ -170,8 +170,10 @@ export class UserChatPage implements OnInit, OnDestroy {
         conversation_id: this.conversationid,
         id: 0
       };
-      this.chatService.sendMessage(this.conversationid, this.recipientId, this.message);
-      this.updateMessageUI(newMessage);
+      this.chatService.sendMessage(this.conversationid, this.recipientId, this.message).then((message:any) => {
+        this.updateMessageUI(newMessage);
+      }).catch((error:any) => {
+      });
     }
   }
 

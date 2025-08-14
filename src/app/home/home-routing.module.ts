@@ -52,6 +52,10 @@ const routes: Routes = [
         path: 'attraction',
         loadChildren: () => import('../attraction/attraction.module').then(m => m.AttractionPageModule)
       },
+       {
+        path: 'accommodation',
+        loadChildren: () => import('../accommodation/accommodation.module').then( m => m.AccommodationPageModule)
+      },
       {
         path: 'venue-layout',
         loadChildren: () => import('../venue-layout/venue-layout.module').then(m => m.VenueLayoutPageModule)
@@ -88,6 +92,10 @@ const routes: Routes = [
       {
         path: 'about-conference',
         loadChildren: () => import('../about-conference/about-conference.module').then(m => m.AboutConferencePageModule)
+      },
+      {
+        path: 'notification',
+        loadChildren: () => import('../notification/notification.module').then(m => m.NotificationPageModule)
       }
     ]
   }

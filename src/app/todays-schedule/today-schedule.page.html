@@ -1,13 +1,25 @@
+
 <ion-header>
-  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
-    <ion-title>Scientific program</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="goBack()">
+  <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
+    
+    <!-- Left: Back icon + title -->
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
+      <span class="page-title">Scientific program</span>
+    </div>
+
+    <!-- Right: Notification icon -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+      </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content class="scientific-content" fullscreen>
 <div *ngIf="noEvent" class="no-event">

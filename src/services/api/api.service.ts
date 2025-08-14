@@ -71,15 +71,24 @@ export class ApiService {
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    console.error('API error:', error);
+    let errorMessage = '';
     
-    // Don't show notification for handled status codes
-    if (![401, 404, 500].includes(error.status)) {
-      this.notificationService.showNotification(
-        error.error?.message || 'An error occurred while processing your request',
-        'error'
-      );
+    if(error.status == 0){
+      errorMessage ='No Internet provided';
     }
+    else if(error.status == 401){
+      errorMessage ='User not Authorized. Please login';
+    }
+    else if(error.status == 404){
+      errorMessage ='Service seems to be incorrect please check you internet conenction or try again after a few minutes.';
+    }
+    if (![401, 404, 500].includes(error.status)) {
+      errorMessage =error.error?.message
+    }
+    this.notificationService.showNotification(
+      errorMessage || 'An error occurred while processing your request',
+      'error'
+    );
 
     // Hide loading
     this.loadingService.hideLoadingForApiCall();

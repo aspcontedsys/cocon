@@ -1,9 +1,18 @@
 :host {
-  display: block;
-  height: 100%;
-  background: #f5f5f5;
+  --background: #51ff00;
+  background-image: url('/assets/subpage-bg.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: #fff;
+
+ion-content::part(background) {
+  display: none !important;
+}
 
   ion-content {
+    --keyboard-offset: 0px; // allow Ionic to push content when keyboard appears
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -33,20 +42,18 @@
   }
 
   .content-wrapper {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: #fff;
-    padding:50px 20px;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
+    padding: 50px 20px;
+    border-radius: 40px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    margin-top: 23%; 
+    margin-bottom: env(safe-area-inset-bottom); 
 
     @media (min-width: 768px) {
-      top: 50%;
       max-width: 500px;
+      margin: auto; 
+      border-radius: 20px;
     }
 
     @media (min-width: 1024px) {
@@ -65,7 +72,8 @@
       font-size: 25px;
       font-weight: 600;
       color: #000;
-      margin: 0;
+      margin: 0 auto;
+      
     }
 
     .close-icon {
@@ -74,6 +82,7 @@
       cursor: pointer;
     }
   }
+
   .logo-container {
     display: flex;
     justify-content: center;
@@ -84,6 +93,7 @@
       filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.15));
     }
   }
+
   .title {
     font-size: 20px;
     font-weight: 600;
@@ -116,9 +126,11 @@
   ion-label {
     color: #555;
   }
+
   ion-input {
     color: #000;
   }
+
   .submit-button {
     --background: #000000;
     border-radius: 12px;
@@ -127,4 +139,5 @@
     margin-top: 10px;
     color: #fff;
   }
+  .error-message { color: red; font-weight: 500;}
 }

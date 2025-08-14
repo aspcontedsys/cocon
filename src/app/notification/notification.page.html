@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <!-- Left: Back button + Title -->
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <span class="page-title">Notifications</span>
+    </div>
+
+    <!-- Right: Search icon -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleSearch()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Animated Search Bar -->
+  <ion-searchbar
+    *ngIf="isSearchVisible"
+    placeholder="Search notifications..."
+    [(ngModel)]="searchTerm"
+    (ionInput)="filterNotifications()"
+    animated="true"
+    showCancelButton="never"
+    color="light"
+    class="custom-searchbar">
+  </ion-searchbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="app-page">
+  <section class="app-content">
+    <h2 class="section-title">Latest Updates</h2>
+
+    <!-- No results -->
+    <div *ngIf="filteredNotifications.length === 0" class="no-results">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>No matching notifications found.</p>
+    </div>
+
+    <!-- Notifications List -->
+    <div
+      *ngFor="let note of filteredNotifications; let i = index"
+      class="notification-card"
+      [style.animation-delay]="i * 0.1 + 's'">
+      
+      <div class="note-header">
+        <div class="note-title">
+          <ion-icon name="notifications-outline" style="margin-right:6px; font-size:18px;"></ion-icon>
+          {{ note.title }}
+        </div>
+        <div class="note-time">{{ note.time }}</div>
+      </div>
+
+      <p class="note-body">{{ note.body }}</p>
+    </div>
+  </section>
+</ion-content>

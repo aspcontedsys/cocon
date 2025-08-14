@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DataService } from '../../services/data/data.service';
-import { Category ,Attraction} from '../models/cocon.models';
+import { Attractions} from '../models/cocon.models';
 
 @Component({
   selector: 'app-attraction',
@@ -10,76 +10,75 @@ import { Category ,Attraction} from '../models/cocon.models';
   styleUrls: ['./attraction.page.scss'],
   standalone:false
 })
-export class AttractionPage implements OnInit {
-  selectedTabName: string = 'beaches';
-  currentSlide: number = 0;
-  autoplayInterval: any;
+export class AttractionPage implements OnInit,OnDestroy {
+  currentSlide = 0;
   progress = 0;
-  autoplayDuration = 2000;
-  autoplayStep = 100;
-
-  CategoryList:Category[]=[];
-  attractionList:Attraction[]=[];
-  currentTabId:number=0;  
+  autoplayDuration = 5000; // Increased duration for better user experience
+  autoplayStep = 50;
+  autoplayInterval: any;
+  progressInterval: any;
+  
+  attractionsList: Attractions[] = [];
+  currentTabId: number | null = null;
+  currentAttractions: any[] = [];  
 
   constructor(private router: Router, private location: Location,private dataService:DataService) {}
-
-  ngOnInit() {
-    this.ionViewDidEnter();
-    this.startAutoplay();
+ngOnInit() {
+    this.loadAttractions();
   }
 
-  async ionViewDidEnter() {
-    this.CategoryList = await this.dataService.getAttractionCategories();
-    this.selectTab(this.CategoryList[0].id);
+  async loadAttractions() {
+    try {
+      this.attractionsList = await this.dataService.getAttractionWithCategoryAndList();
+      if (this.attractionsList.length > 0) {
+        this.selectTab(this.attractionsList[0].id);
+      }
+    } catch (error) {
+      console.error('Error loading attractions:', error);
+    }
+  }
+
+  ionViewDidEnter() {
+    //this.startAutoplay();
   }
 
   ngOnDestroy() {
     this.stopAutoplay();
   }
 
-  navigate(path: string) {
-    this.router.navigate([path]);
-  }
-
-  goBack() {
-    this.location.back();
-  }
-
-  async selectTab(id: number) {
+  selectTab(id: number) {
     this.currentTabId = id;
     this.currentSlide = 0;
     this.stopAutoplay();
-    this.attractionList = await this.dataService.getAttractionList(this.currentTabId.toString());
-    this.startAutoplay();
+    
+    const selectedCategory = this.attractionsList.find(cat => cat.id === id);
+    this.currentAttractions = selectedCategory?.attractions || [];
+    
+    //this.startAutoplay();
   }
 
   nextSlide() {
-    const activeList = this.attractionList;
-
-    this.currentSlide = (this.currentSlide + 1) % activeList.length;
-    this.resetProgress();
+    if (this.currentAttractions.length === 0) return;
+    this.currentSlide = (this.currentSlide + 1) % this.currentAttractions.length;
+    //this.resetProgress();
   }
 
   goToSlide(index: number) {
     this.currentSlide = index;
-    this.resetProgress();
-  }
-
-  resetProgress() {
-    this.progress = 0;
+    //this.resetProgress();
   }
 
   startAutoplay() {
     this.stopAutoplay();
-    let elapsed = 0;
-    this.progress = 0;
+    
     this.autoplayInterval = setInterval(() => {
-      elapsed += this.autoplayStep;
-      this.progress = Math.min((elapsed / this.autoplayDuration) * 100, 100);
-      if (elapsed >= this.autoplayDuration) {
-        this.nextSlide();
-        elapsed = 0;
+      this.nextSlide();
+    }, this.autoplayDuration);
+
+    this.progressInterval = setInterval(() => {
+      this.progress += (100 / (this.autoplayDuration / this.autoplayStep));
+      if (this.progress >= 100) {
+        this.progress = 0;
       }
     }, this.autoplayStep);
   }
@@ -87,9 +86,17 @@ export class AttractionPage implements OnInit {
   stopAutoplay() {
     if (this.autoplayInterval) {
       clearInterval(this.autoplayInterval);
-      this.autoplayInterval = null;
+      clearInterval(this.progressInterval);
+      this.progress = 0;
     }
+  }
+
+  resetProgress() {
     this.progress = 0;
   }
 
+  goBack() {
+    this.location.back();
+  }
+  
 }

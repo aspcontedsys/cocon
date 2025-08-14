@@ -1,28 +1,32 @@
-  <ion-content class="ion-padding" >
-    <div class="content-wrapper">
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="content-wrapper">
   
-      <!-- Custom Heading + Close Button -->
-      <div class="top-bar">
-        <h1 class="custom-heading">Delegate Login</h1>
-        <ion-icon name="close-outline" class="close-icon" (click)="dismiss()"></ion-icon>
-      </div>
-      <!-- Logo -->
-      <div class="logo-container">
-        <img src="assets/cocon-logo.png" alt="Logo" />
-      </div>
-      <!-- Title/Subheading -->
-      <h2 class="title">Sign in to your Account</h2>
-      <p class="subtitle">Let’s sign in to your account and get started</p>
-      <!-- Login Form -->
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">  
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input name="email" type="email" formControlName="email" required></ion-input>
-        </ion-item>
-        <div class="error-message" *ngIf="emailError">
-          {{ emailError }}
-        </div>
-        <ion-button expand="block" type="submit" class="submit-button">Sign in</ion-button>
-      </form>
+    
+    <div class="top-bar">
+      <h1 class="custom-heading">Delegate Login</h1>
+      <!-- <ion-icon name="close-outline" class="close-icon" (click)="dismiss()"></ion-icon> -->
     </div>
-  </ion-content>
+
+    <!-- Logo -->
+    <div class="logo-container">
+      <img src="assets/cocon-logo.png" alt="Logo" />
+    </div>
+
+    <!-- Title/Subheading -->
+    <h2 class="title">Sign in to your Account</h2>
+    <p class="subtitle">Let’s sign in to your account and get started</p>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">  
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input name="email" type="email" formControlName="email" required></ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="emailError">
+        {{ emailError }}
+      </div>
+
+      <ion-button expand="block" type="submit" class="submit-button">Sign in</ion-button>
+    </form>
+  </div>
+</ion-content>

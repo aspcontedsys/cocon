@@ -9,6 +9,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+
 ion-header,
 ion-toolbar {
   --ion-toolbar-background: #000 !important;
@@ -16,18 +17,63 @@ ion-toolbar {
 
   ion-title {
     color: #97C93C;
-    text-align: left;
     font-size: 20px;
-    padding-left: 30px;
+    padding-left: 8px; 
+    text-align: left;
   }
 
   ion-icon {
     color: #fff !important;
-    font-size: 30px;
+    font-size: 26px;
     filter: drop-shadow(0 0 2px #0f0);
-    padding-right: 10px;
   }
 }
+.toolbar-left {
+  display: flex;
+  align-items: center;
+
+  ion-button {
+    --padding-start: 0;
+    --padding-end: 0;
+    margin-right: 8px;
+  }
+
+  .page-title {
+    color: #97C93C;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 auto;
+  }
+}
+
+.notification-wrapper {
+  position: relative;
+  cursor: pointer;
+  padding-right: 10px;
+
+  ion-icon {
+    font-size: 26px;
+    color: #fff;
+    filter: drop-shadow(0 0 2px #0f0);
+  }
+
+  .badge {
+    position: absolute;
+    top: -4px;
+    right: 5px;
+    background: red;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 10px;
+    min-width: 16px;
+    text-align: center;
+    box-shadow: 0 0 4px rgba(255, 0, 0, 0.8);
+  }
+}
+
+
 
 .networking-content {
   --background: #000000;
@@ -79,8 +125,8 @@ ion-toolbar {
 
     .user-list {
       margin-top: 10px;
-      height: 800px;
-      overflow-x: auto;
+      height: 400px;
+      overflow: auto;
 
       .user-item {
         display: flex;
@@ -122,7 +168,7 @@ ion-toolbar {
 
 .profile-overlay {
   position: fixed;
-  top: 0;
+  top: 19%;
   right: 0;
   width: 100%;
   max-width: 450px;
@@ -251,7 +297,6 @@ ion-toolbar {
   }
 }
 
-// ✅ Bottom tab bar styles
 .footer-tabs {
   ion-tab-bar {
     --background: #111;

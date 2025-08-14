@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <span class="page-title">Accommodation</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="accommo-content">
+  <div class="accommo-wrapper">
+
+    <!-- Search -->
+    <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search by name or location..." debounce="300" (ionInput)="applyFilter()"></ion-searchbar>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+      <ion-chip *ngFor="let category of categories" (click)="filterByCategory(category)">
+        <ion-label>{{ category }}</ion-label>
+      </ion-chip>
+    </div>
+
+    <p class="accommo-title">Find Your Stay</p>
+
+    <!-- Accommodation Cards -->
+    <ion-card class="accommodation-card" *ngFor="let item of filteredAccommodations">
+      <ion-img [src]="item.image" alt="{{item.name}}"></ion-img>
+
+      <ion-card-header>
+        <ion-card-title>{{ item.name }}</ion-card-title>
+        <ion-card-subtitle>{{ item.location }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="price">From ₹{{ item.price }}/night</p>
+        <p>{{ item.description }}</p>
+
+        <div class="card-actions">
+          <ion-button size="small" fill="outline" color="success" (click)="viewOnMap(item)">
+            View on Map
+          </ion-button>
+          <ion-button size="small" color="tertiary" (click)="bookNow(item)">
+            Book Now
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

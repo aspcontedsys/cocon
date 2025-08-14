@@ -1,14 +1,66 @@
-ion-content {
+ion-content.c0c0n-page {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 0;
   --padding-end: 0;
-  --background: #000;
+  --background: radial-gradient(circle at 20% 20%, #0a0a0a, #000);
   --overflow: hidden;
   max-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
+
+/* Hide default Ionic background */
+ion-content::part(background) {
+  display: none !important;
+}
+
+ion-header ion-toolbar {
+  backdrop-filter: blur(12px);
+  // background: rgba(0, 0, 0, 0.4);
+  // border-bottom: 1px solid rgba(0, 255, 170, 0.2);
+  // box-shadow: 0 4px 10px rgba(0, 255, 170, 0.15);
+  padding: 0 8px;
+  animation: fadeInDown 0.5s ease;
+
+  ion-avatar {
+    width: 40px;
+    height: 40px;
+    margin: 0 8px 0 0;
+    ion-img {
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  h1 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #00ffaa, #00f0ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  ion-buttons ion-button {
+    --padding-start: 6px;
+    --padding-end: 6px;
+    --ripple-color: #ffffff;
+    ion-icon {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+/* CHAT CONTENT */
 .chat-content {
   flex: 1;
   display: flex;
@@ -19,35 +71,49 @@ ion-content {
 
   .chat-wrapper {
     height: 100%;
-    overflow: overlay;
+    overflow-y: auto;
     text-align: left;
     padding: 15px;
     padding-top: 25px;
+    animation: fadeIn 0.4s ease;
+
+    /* Scrollbar glow */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #00ffaa, #00f0ff);
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
     .chat-bubble {
-      max-width: 90%;
+      max-width: 85%;
       padding: 12px 16px;
       border-radius: 15px;
       margin-bottom: 28px;
       position: relative;
       line-height: 1.4;
       font-size: 15px;
-      box-shadow: 0 0 4px rgba(0, 255, 0, 0.2);
+      box-shadow: 0 0 6px rgba(0, 255, 170, 0.15);
+      animation: slideUp 0.3s ease;
 
       .message {
         color: #ddd;
       }
 
       &.sender {
-        background: #222;
-        color: #fff;
-        border-top-left-radius: 0;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(0, 255, 170, 0.15);
+        backdrop-filter: blur(6px);
+        box-shadow: 0 0 8px rgba(0, 255, 170, 0.15);
 
         .user-header {
           display: flex;
           align-items: center;
           margin-bottom: 6px;
-          background: transparent; // removed background color
           padding: 0;
 
           .avatar {
@@ -66,15 +132,16 @@ ion-content {
       }
 
       &.reply {
-        background: #111;
-        color: #8aff00;
+        background: linear-gradient(135deg, #17a83d,rgba(0, 255, 170, 0.568));
+        color: #000;
         margin-left: auto;
         border-top-right-radius: 0;
+        box-shadow: 0 0 12px rgba(0, 255, 170, 0.4);
       }
 
       .timestamp {
         font-size: 11px;
-        color: #777;
+        color: rgba(255, 255, 255, 0.6);
         position: absolute;
         bottom: -20px;
         right: 10px;
@@ -83,84 +150,7 @@ ion-content {
   }
 }
 
-.messages-container {
-  flex: 1;
-  overflow-y: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  contain: content;
-  display: flex;
-  flex-direction: column;
-  max-height: 90%;
-  scroll-behavior: smooth;
-  
-  /* Ensure messages take full width */
-  .message {
-    width: 100%;
-    
-    &.sent {
-      align-self: flex-end;
-    }
-    
-    &.received {
-      align-self: flex-start;
-    }
-  }
-  
-  /* For WebKit browsers (Chrome, Safari) */
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-  }
-}
-
-.message {
-  margin: 10px 0;
-  max-width: 70%;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  &.sent {
-    margin-left: auto;
-    background-color: #0083ff;
-    color: white;
-  }
-
-  &.received {
-    background-color: #f5f5f5;
-    color: #333;
-  }
-
-  .message-content {
-    p {
-      margin: 0;
-    }
-
-    small {
-      font-size: 0.7em;
-      opacity: 0.7;
-    }
-  }
-}
-
-.message-group {
-  width: 100%;
-  margin-bottom: 16px;
-}
-
+/* DATE DIVIDER */
 .date-divider {
   display: flex;
   justify-content: center;
@@ -179,62 +169,54 @@ ion-content {
   }
   
   span {
-    background: #333;
+    background: rgba(0, 0, 0, 0.6);
     padding: 4px 12px;
     border-radius: 12px;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
+    color: #00ffaa;
     position: relative;
     z-index: 2;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 170, 0.3);
+    backdrop-filter: blur(8px);
   }
 }
 
-ion-footer {
-  padding: 0;
+
+ion-footer.message-input-container {
   ion-toolbar {
+    --background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0, 255, 170, 0.2);
     --padding-start: 0;
     --padding-end: 0;
   }
+  ion-item {
+    border-radius: 25px;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    margin: 6px;
+  }
+
+  ion-button {
+    color: #00ffaa;
+  }
+
+  ion-input {
+    color: white;
+  }
 }
 
-ion-header {
-  ion-toolbar {
-    --background: transparent;
-    --color: #ffffff;
-    padding: 0 8px;
-    
-    ion-avatar {
-      width: 32px;
-      height: 32px;
-      margin: 0 8px 0 0;
-      
-      ion-img {
-        border: 2px solid #ffffff;
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    
-    h1 {
-      font-size: 1rem;
-      font-weight: 500;
-      margin: 0;
-      padding: 0;
-    }
-    
-    ion-buttons {
-      ion-button {
-        --padding-start: 6px;
-        --padding-end: 6px;
-        --ripple-color: #ffffff;
-        
-        ion-icon {
-          font-size: 1.25rem;
-        }
-      }
-    }
-  }
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeIn {
+  from { opacity: 0;}
+  to { opacity: 1;}
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px);}
+  to { opacity: 1; transform: translateY(0);}
 }

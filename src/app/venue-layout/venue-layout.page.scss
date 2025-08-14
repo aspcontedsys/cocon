@@ -8,23 +8,66 @@
   color: #fff;
 }
 
+
 ion-header,
 ion-toolbar {
   --ion-toolbar-background: #000 !important;
+  color: #fff !important;
 
   ion-title {
     color: #97C93C;
-    text-align: left;
-    padding-left: 35px;
     font-size: 20px;
-    
+    padding-left: 8px; 
+    text-align: left;
   }
 
   ion-icon {
-    font-size: 30px;
+    color: #fff !important;
+    font-size: 26px;
+    filter: drop-shadow(0 0 2px #0f0);
+  }
+}
+.toolbar-left {
+  display: flex;
+  align-items: center;
+
+  ion-button {
+    --padding-start: 0;
+    --padding-end: 0;
+    margin-right: 8px;
+  }
+
+  .page-title {
+    color: #97C93C;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 auto;
+  }
+}
+
+.notification-wrapper {
+  position: relative;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 26px;
     color: #fff;
     filter: drop-shadow(0 0 2px #0f0);
-    padding-right: 10px;
+  }
+
+  .badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: red;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 10px;
+    min-width: 16px;
+    text-align: center;
+    box-shadow: 0 0 4px rgba(255, 0, 0, 0.8);
   }
 }
 
@@ -84,7 +127,7 @@ ion-toolbar {
     backdrop-filter: blur(16px);
     border-top-left-radius: 55px;
     border-top-right-radius: 55px;
-    height: 75vh;
+    height: 100%;
     overflow: auto;
     padding: 24px;
     animation: fadeInUp 1.4s ease-out;

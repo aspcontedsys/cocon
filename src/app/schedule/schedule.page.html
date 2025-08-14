@@ -1,13 +1,25 @@
+
 <ion-header>
-  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
-    <ion-title>Scientific program</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="goBack()">
+  <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
+    
+    <!-- Left: Back icon + title -->
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
+      <span class="page-title">Scientific program</span>
+    </div>
+
+    <!-- Right: Notification icon -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+      </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content class="scientific-content" fullscreen>
 
@@ -15,7 +27,7 @@
   <div class="date-tabs">
     <div *ngFor="let day of eventDates" class="day-tab" [class.active]="day.active" (click)="selectDay(day)">
       <div class="label">{{ day.label }}</div>
-      <div class="date">{{ day.date }}</div>
+      <div class="date">{{ day.formattedDate }}</div>
     </div>
   </div>
 
@@ -42,6 +54,7 @@
         </div>
       </div>
       <div class="programs-col">
+        <ng-container *ngIf="slot.roles && slot.roles.length > 0">
         <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
           <ion-accordion [value]="slot.time">
             <ion-item slot="header" lines="none">
@@ -67,6 +80,12 @@
             </div>
           </ion-accordion>
         </ion-accordion-group>
+        </ng-container>
+        <ng-container *ngIf="!slot.roles || slot.roles.length === 0">
+          <ion-item slot="header" style="border-radius: 16px;background: #fff;color: #000;font-weight: 600;font-size: 14px;" lines="none">
+            <ion-label class="session-title">{{ slot.title }}</ion-label>
+          </ion-item>
+        </ng-container>
       </div>
     </div>
   </div>

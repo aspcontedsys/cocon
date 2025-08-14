@@ -38,4 +38,6 @@ export class AboutConferencePage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
+
+  
 }

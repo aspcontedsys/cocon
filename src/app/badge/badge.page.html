@@ -1,11 +1,23 @@
+
+
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
-    <ion-title>Badge</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="goBack()" slot="icon-only">
+    
+    <!-- Left: Back icon + title -->
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
+      <span class="page-title">Badge</span>
+    </div>
+
+    <!-- Right: Notification icon -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+      </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +27,7 @@
     <div class="badge-card">
       <!-- Badge Header -->
       <div class="badge-header">
-        <h2>CONFERENCE BADGE</h2>
+        <h2>{{userDetails.category}}</h2>
       </div>
       
       <!-- Badge Content -->

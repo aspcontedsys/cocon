@@ -1,28 +1,46 @@
+
+
 <ion-header>
-    <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
-      <ion-title>About Conference</ion-title>
-      <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="goBack()" slot="icon-only">
-          <ion-icon name="chevron-back-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
+    
+    <!-- Left: Back icon + title -->
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <span class="page-title">About the Conference</span>
+    </div>
+
+    <!-- Right: Notification icon -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+  
   
   <ion-content [fullscreen]="true" class="app-page">
     <div class="intro-section">
-      <img src="assets/banner-about.jpeg" alt="App Help Banner" />
+      <!-- <img src="assets/banner-about.jpeg" alt="App Help Banner" /> -->
       <div class="overlay-text">
-        <h1>Welcome to C0C0N 2025 App</h1>
+        <h1>Welcome to C0C0N 2025 </h1>
         <p>Your Guide to Navigate and Explore</p>
       </div>
     </div>
   
-    <section class="app-content" style="color: #fff;text-align: center;">
-      <h2>About this App</h2>
-      <div *ngIf="aboutConference" [innerHTML]="aboutConference.about_conference"></div>
+    <section class="app-content " >
+      <div class="abt-para">
+      <h2>About the Conference</h2>
+      <div *ngIf="aboutConference" [innerHTML]="aboutConference.about_conference" >
+          
+      </div>
       <div *ngIf="!aboutConference">
         <div>Page not available. Please check back later.</div>
+      </div>
       </div>
     </section>
   </ion-content>
