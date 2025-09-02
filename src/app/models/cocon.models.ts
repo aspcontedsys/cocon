@@ -56,7 +56,7 @@ export interface Speaker {
   photo: string;
   role: string;
   topics: Topics[];
-  linkedin?: string;
+  linkedin_url?: string;
 }
 
 interface Topics {

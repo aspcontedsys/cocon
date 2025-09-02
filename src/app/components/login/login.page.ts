@@ -120,8 +120,8 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/home/dashboard']); // adjust route if needed
   }
 
-  // onGuestRegister() {
-  //   console.log('Guest Register Now clicked');
-  //   this.router.navigate(['/register']); // adjust route if needed
-  // }
+  onGuestRegister() {
+    console.log('Guest Register Now clicked');
+    this.router.navigate(['/register']); // adjust route if needed
+  }
 }

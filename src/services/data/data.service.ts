@@ -62,9 +62,14 @@ export class DataService {
     return data.data;
   }
   async getSchedules(){
-    let user_id = await this.cacheService.get('userDetails').then(user => user.id)??0;
+    let user = await this.cacheService.get('userDetails')
+    let user_id = 0;
+    if(user){
+      user_id = user.id;
+    }
     let data:ApiResponse<Schedule[]> = await this.apiService.get<Schedule[]>(environment.endpoints.schedules.api,environment.endpoints.schedules.authenticationType,{delegate_id:user_id},true );
     return data.data;
+    
   }
   async getFavouriteSchedules(){
     let data:ApiResponse<Schedule[]> = await this.apiService.get<Schedule[]>(environment.endpoints.fetchFavouriteSchedules.api,environment.endpoints.fetchFavouriteSchedules.authenticationType);
