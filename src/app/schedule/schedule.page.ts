@@ -89,9 +89,9 @@ export class SchedulePage implements OnInit {
       const isBreak = this.isBreakTopic(topic.topic_name);
       return {
         id: `${selectedDay.date}-${selectedHall.name}-${topic.topic_name}`, // unique id
-        time: topic.start_time,
-        time2: topic.end_time,
-        title: topic.topic_name,
+        start_time: topic.start_time,
+        end_time: topic.end_time,
+        topic_name: topic.topic_name,
         speaker: isBreak ? '' : 'To be announced',
         description: isBreak ? '' : 'To be announced',
         duration: isBreak ? '' : '60 min',
