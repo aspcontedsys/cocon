@@ -5,6 +5,8 @@ import { LoginService } from '../../../services/login/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { OtpComponent } from '../otp/otp.component';
+import { Browser } from '@capacitor/browser';
+import { CacheService } from '../../../services/cache/cache.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +29,8 @@ export class LoginPage implements OnInit {
     private loginService: LoginService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private cacheService: CacheService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -120,8 +123,11 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/home/dashboard']); // adjust route if needed
   }
 
-  onGuestRegister() {
-    console.log('Guest Register Now clicked');
-    this.router.navigate(['/register']); // adjust route if needed
+  async onGuestRegister() {
+    this.cacheService.get('event_details').then((eventDetails: any) => {
+      if (eventDetails) {
+        Browser.open({ url: eventDetails.data.website_url + 'register' });
+      }
+    });
   }
 }
