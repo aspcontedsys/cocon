@@ -73,7 +73,7 @@
                   <ion-label class="session-title">{{ slot.title }}</ion-label>
 
                   <!-- ❤️ Favorite -->
-                  <ion-button fill="clear" class="favorite-btn" (click)="toggleFavorite(slot)">
+                  <ion-button fill="clear" class="favorite-btn" *ngIf="isLoggedIn()" (click)="toggleFavorite(slot)">
                     <ion-icon [name]="isFavorite(slot) ? 'heart' : 'heart-outline'"
                               class="favorite-icon"></ion-icon>
                   </ion-button>
@@ -100,7 +100,7 @@
           <ng-template #noRolesSession>
             <ion-item lines="none" class="simple-session">
               <ion-label class="session-title">{{ slot.title }}</ion-label>
-              <ion-button fill="clear" class="favorite-btn" (click)="toggleFavorite(slot)">
+              <ion-button *ngIf="isLoggedIn()" fill="clear" class="favorite-btn" (click)="toggleFavorite(slot)">
                 <ion-icon [name]="isFavorite(slot) ? 'heart' : 'heart-outline'"
                           class="favorite-icon"></ion-icon>
               </ion-button>

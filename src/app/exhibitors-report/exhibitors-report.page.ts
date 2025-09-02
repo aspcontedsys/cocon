@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule, NavController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface Exhibitor {
-  fullName: string;
-  city: string;
-  phone: string;
-  date: string; 
-}
+import { DelegateVisitorList } from 'src/app/models/cocon.models';
+import { DataService } from '../../services/data/data.service';
 
 @Component({
   selector: 'app-exhibitors-report',
@@ -19,33 +14,34 @@ interface Exhibitor {
 })
 export class ExhibitorsReportPage implements OnInit {
 
-  exhibitors: Exhibitor[] = [
-    { fullName: 'Arjun Nair', city: 'Kochi', phone: '+91 9876543210', date: '2025-08-20' },
-    { fullName: 'Priya Sharma', city: 'Bangalore', phone: '+91 9123456780', date: '2025-08-22' },
-    { fullName: 'Rahul Menon', city: 'Hyderabad', phone: '+91 9988776655', date: '2025-08-23' },
-    { fullName: 'Sneha Iyer', city: 'Chennai', phone: '+91 8877665544', date: '2025-08-24' }
-  ];
+  exhibitors: DelegateVisitorList[] = [];
 
-  filteredExhibitors: Exhibitor[] = [];
+  filteredExhibitors: DelegateVisitorList[] = [];
   selectedDate: string | null = null;
   allowedDates: string[] = [];   //  valid exhibitor dates
   highlightedDates: any[] = [];  //  for calendar highlight
 
   constructor(
     private navCtrl: NavController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private dataService: DataService
   ) {}
 
   ngOnInit() {
-    this.filteredExhibitors = this.exhibitors;
+    this.getDelegateList();
+  }
 
-  
-    this.allowedDates = this.exhibitors.map(e => e.date);
-    this.highlightedDates = this.allowedDates.map(d => ({
-      date: d,
-      textColor: '#fff',
-      backgroundColor: '#97C93C'
-    }));
+  getDelegateList(){
+    this.dataService.fetchDelegateVisitors().then((data) => {
+      this.exhibitors = data;
+      this.filteredExhibitors = this.exhibitors;
+      this.allowedDates = this.exhibitors.map(e => e.created_at);
+      this.highlightedDates = this.allowedDates.map(d => ({
+        date: d,
+        textColor: '#fff',
+        backgroundColor: '#97C93C'
+      }));
+    });
   }
 
   goBack() {
@@ -68,7 +64,7 @@ export class ExhibitorsReportPage implements OnInit {
       const date = picked.split('T')[0];
       if (this.allowedDates.includes(date)) {
         this.selectedDate = date;
-        this.filteredExhibitors = this.exhibitors.filter(u => u.date === date);
+        this.filteredExhibitors = this.exhibitors.filter(u => u.created_at === date);
       }
     }
   }
@@ -82,7 +78,7 @@ export class ExhibitorsReportPage implements OnInit {
     let csvContent = "data:text/csv;charset=utf-8,";
     csvContent += "Full Name,City,Phone,Date\n";
     this.filteredExhibitors.forEach(user => {
-      csvContent += `${user.fullName},${user.city},${user.phone},${user.date}\n`;
+      csvContent += `${user.name},${user.address},${user.phone},${user.created_at}\n`;
     });
 
     const fileName = this.selectedDate

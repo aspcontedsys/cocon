@@ -48,6 +48,7 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<boolean> {
+    this.checkToken();
     return this.authState.asObservable();
   }
 
@@ -56,6 +57,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
+    //this.checkToken();
     return this.authState.value;
   }
 

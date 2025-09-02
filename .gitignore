@@ -68,3 +68,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+android/app/release/output-metadata.json
+android/app/release/baselineProfiles/0/app-release.dm
+android/app/release/baselineProfiles/1/app-release.dm

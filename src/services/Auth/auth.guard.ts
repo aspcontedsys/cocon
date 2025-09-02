@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
         cssClass: 'login-modal'
       });
       await modal.present();
-    }
+  }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

@@ -70,7 +70,7 @@
          <img src="assets/icon/scientific-pro-icon.svg" class="caro-icon">
           <p>Scientific Program</p>
         </ion-card>
-        <ion-card class="card" (click)="navigate('/home/favourites')">
+        <ion-card class="card" *ngIf="isLoggedIn()" (click)="navigate('/home/favourites')">
           <!-- <ion-icon name="heart-outline" class="caro-icon"></ion-icon> -->
           <svg class="caro-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <path d="M352.92,80C288,80,256,144,256,144s-32-64-96.92-64C106.32,80,64.54,124.14,64,176.81c-1.1,109.33,86.73,187.08,183,252.42a16,16,0,0,0,18,0c96.26-65.34,184.09-143.09,183-252.42C447.46,124.14,405.68,80,352.92,80Z"
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="section-box">
+    <div class="section-box" *ngIf="isLoggedIn()">
       <h3>Delegate Info</h3>
       <h6>Please visit the Badge & Feedback area</h6>
 
@@ -94,7 +94,7 @@
 
       
       <div class="carousel" #badgeCarousel>
-        <ion-card class="card" *ngIf="isLoggedIn()" (click)="openLoginModal()">
+        <ion-card class="card" *ngIf="!isLoggedIn()" (click)="openLoginModal()">
           <!-- <ion-icon name="id-card-outline"></ion-icon> -->
           
          <img src="assets/icon/delegate-login.svg" class="caro-icon">
@@ -113,7 +113,7 @@
           <ion-icon name="globe-outline" class="caro-icon"></ion-icon>
           <p style="padding-top: 6px;">Networking </p>
         </ion-card>
-        <ion-card class="card" (click)="navigate('/home/feedback')">
+        <ion-card class="card" (click)="updateFeedback()">
           <!-- <ion-icon name="chatbox-ellipses-outline"></ion-icon> -->
           <img src="assets/icon/feedback.svg" class="caro-icon">
           <p>Feedback</p>
@@ -170,7 +170,7 @@
 
 
  <!-- Exhibitors Section -->
-    <div class="section-box">
+    <div class="section-box" *ngIf="isLoggedIn()">
       <h3>Exhibitors</h3>
       <p>Facilities & support at Grand Hyatt</p>
 
@@ -181,7 +181,7 @@
 
       
       <div class="carousel" #exhibitorsCarousel>
-        <ion-card class="card" (click)="navigate('/home/scan')">
+        <ion-card class="card" (click)="startScan()">
           <ion-icon name="scan-outline" class="caro-icon"></ion-icon>
           <p>Scan </p>
         </ion-card>

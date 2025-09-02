@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/Auth/auth.service';
 import { ModalController } from '@ionic/angular';
@@ -6,7 +6,8 @@ import { LoginPage } from '../components/login/login.page';
 import { DataService } from '../../services/data/data.service';
 import { EventDetails } from '../../app/models/cocon.models';
 import { Browser } from '@capacitor/browser';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NotificationService } from '../../services/notification/notification.service';
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +16,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   standalone: false,
   providers: [ModalController]
 })
-export class DashboardPage {
+export class DashboardPage implements OnInit {
   eventDetails: EventDetails = {} as EventDetails;
   
   constructor(
@@ -23,7 +24,7 @@ export class DashboardPage {
     private authService: AuthService,
     private modalCtrl: ModalController,
     private dataService: DataService,
-    private sanitizer: DomSanitizer
+    private notificationService: NotificationService
   ) { }
 
   async ngOnInit() {
@@ -110,10 +111,81 @@ export class DashboardPage {
   }
 
   isLoggedIn(): boolean {
-    return !this.authService.isLoggedIn();
+    return this.authService.isLoggedIn();
+  }
+
+  async startScan() {
+    const result = await this.checkAndOpenScanner();
+    if(result?.success){
+      try {
+        await this.dataService.addExhibitorFavourite({ badge_number: result?.data });
+        this.notificationService.showNotification('Successfully added to favorites!');
+      } catch (error) {
+        console.error('Error adding favorite:', error);
+        this.notificationService.showNotification('Failed to add to favorites');
+      }}
+  }
+  async updateFeedback() {
+   const result = await this.checkAndOpenScanner();
+   if(result?.success){
+    this.router.navigate(['/home/feedback'], { queryParams: { topic_id: result?.data } });
+   }
+  }
+
+  async checkAndOpenScanner(){
+
+    let result = {success: false, data:''};
+    try {
+        let data: string | null = null;
+        const barcodescannerinstalled = await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
+        if(!barcodescannerinstalled.available){
+          await BarcodeScanner.installGoogleBarcodeScannerModule();
+        }
+        if(barcodescannerinstalled.available){
+        // Check camera permission
+        let status = await BarcodeScanner.checkPermissions();
+        
+        if (status.camera === 'prompt') {
+          // If permission is not determined, request it
+          status = await BarcodeScanner.requestPermissions();
+        }
+
+        if (status.camera !== 'granted') {
+          this.notificationService.showNotification('Camera permission is required for scanning');
+          return;
+        }
+
+        // Hide everything except the scanner
+        document.body.style.background = 'transparent';
+        document.querySelectorAll('ion-header, ion-content, ion-footer, ion-tab-bar')
+          .forEach(element => (element as HTMLElement).style.display = 'none');
+        
+        try {
+          const { barcodes } = await BarcodeScanner.scan();
+          if (barcodes.length > 0) {
+            data = barcodes[0].rawValue ?? null;
+          }
+        } finally {
+          // Always show the UI elements again
+          document.body.style.background = '';
+          document.querySelectorAll('ion-header, ion-content, ion-footer, ion-tab-bar')
+            .forEach(element => (element as HTMLElement).style.display = '');
+        }
+        
+        if (data){
+          result.success = true;
+          result.data = data;
+        }
+        return result;
+      }
+    }
+    catch (error) {
+      console.error('Scan error:', error);
+      this.notificationService.showNotification('Error accessing camera: ' + (error as Error).message);
+      return result;
+    }
+    finally {
+     return result; 
+    }
   }
 }
-
-
-
-

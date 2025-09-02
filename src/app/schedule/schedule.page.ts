@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { NavController } from '@ionic/angular';
 import { DataService } from '../../services/data/data.service';
 import { Schedule } from '../models/cocon.models';
+import { AuthService } from '../../services/Auth/auth.service';
 
 @Component({
   selector: 'app-schedule',
@@ -23,7 +24,8 @@ export class SchedulePage implements OnInit {
   constructor(
     private location: Location,
     private navCtrl: NavController,
-    private dataService: DataService
+    private dataService: DataService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -94,7 +96,9 @@ export class SchedulePage implements OnInit {
         description: isBreak ? '' : 'To be announced',
         duration: isBreak ? '' : '60 min',
         roles: topic.roles,
-        isBreak
+        isBreak,
+        favourite_status: topic.favourite_status,
+        day_wise_facility_session_schedule_id: topic.day_wise_facility_session_schedule_id
       };
     });
   }
@@ -117,15 +121,41 @@ export class SchedulePage implements OnInit {
 
   
   toggleFavorite(topic: any) {
-    if (this.favorites.has(topic.id)) {
-      this.favorites.delete(topic.id);
-    } else {
-      this.favorites.add(topic.id);
-    }
+    // Create a new reference to trigger change detection
+    const status = topic.favourite_status === 1 ? 0 : 1;
+    
+    // Update the topic with a new object reference
+    const updatedTopic = {
+      ...topic,
+      favourite_status: status
+    };
+    
+    // Find and update the topic in the schedule data
+    this.schedules = this.schedules.map(day => ({
+      ...day,
+      halls: day.halls.map(hall => ({
+        ...hall,
+        topics: hall.topics.map(t => 
+          t.day_wise_facility_session_schedule_id === topic.day_wise_facility_session_schedule_id ? updatedTopic : t
+        )
+      }))
+    }));
+    
+    // Send the update to the server
+    const data = {
+      day_wise_facility_session_schedule_id: topic.day_wise_facility_session_schedule_id,
+      favourite_status: status
+    };
+    
+    this.dataService.storeDelegateFavouriteSchedule(data);
   }
 
   
   isFavorite(topic: any): boolean {
-    return this.favorites.has(topic.id);
+    return topic.favourite_status == 1;
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 }

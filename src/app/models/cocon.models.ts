@@ -10,7 +10,7 @@ export interface ChatListUsers extends RegisteredUser {
   conversation_id: number;
 
   // 🔹 New optional fields
-  linkedin?: string;     // LinkedIn profile URL
+  linkedin_url?: string;     // LinkedIn profile URL
   requestSent?: boolean; // Local state for request toggle
 }
 
@@ -19,7 +19,7 @@ export interface OpenListUsers extends ChatListUsers {
 }
 
 export interface ChatHistory {
-  id: number;
+  // id: number;
   sender_id: number;
   message: string;
   message_type: string;
@@ -55,11 +55,11 @@ export interface Speaker {
   about: string;
   photo: string;
   role: string;
-  topics: Topic[];
+  topics: Topics[];
   linkedin?: string;
 }
 
-interface Topic {
+interface Topics {
   end_time: string;
   event_date: string;
   facility_id: number;
@@ -105,26 +105,32 @@ export interface Schedule {
   halls: Hall[];
 }
 
-interface Hall {
+export interface Hall {
   hall_id: number;
   hall_name: string;
   topics: Topic[];
 }
 
-interface Topic {
+export interface Topic {
+  topic_id: number;
   topic_name: string;
   start_time: string;
   end_time: string;
   roles: Role[];
+  is_favourite: boolean;
+  favourite_status: number;
+  day_wise_facility_session_schedule_id: number;
 }
-
-interface Role {
+export interface favouriteTopic extends Topic{
+  event_date: string;
+}
+export interface Role {
   role_id: number;
   role_name: string;
   participants: Participant[];
 }
 
-interface Participant {
+export interface Participant {
   id: number;
   name: string;
   email: string | null;
@@ -190,4 +196,57 @@ export interface AppHelp {
 
 export interface AboutConference {
   about_conference: string;
+}
+
+export interface Accommodation {
+  hotel_category: string,
+  hotel: accommodationDetails[]
+}
+
+export interface accommodationDetails {
+  hotel_id: number,
+  hotel_name: string,
+  image: string,
+  hotel_description: string,
+  hotel_location: string,
+  distance_from_venue: string,
+  distance_from_airport: string,
+  hotel_google_map: string,
+  rooms: roomDetails[]
+}
+
+export interface roomDetails{
+  room_name: string,
+  capacity: string,
+  delegate_price: string,
+  image: string,
+  description: string
+}
+
+export interface itinery{
+category_name: string,
+itineraries: itineraries[]
+}
+
+
+export interface itineraries{
+  itinerary_name: string,
+  pickup_location: string,
+  dropoff_location: string,
+  vehicle_name: string,
+  vehicle_registered_no: string,
+  itinerary_details: ItineraryDetails[]
+}
+
+export interface ItineraryDetails{
+  place_name: string,
+  pickup_time: string
+}
+
+export interface DelegateVisitorList{
+  id: number,
+  name: string,
+  address: string,
+  phone: string 
+  created_at :string
 }

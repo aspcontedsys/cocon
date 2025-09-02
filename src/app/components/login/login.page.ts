@@ -85,9 +85,9 @@ export class LoginPage implements OnInit {
 
     await modal.present();
     const { data } = await modal.onDidDismiss();
-    if (data?.otp) {
+    //if (data?.otp) {
       this.dismiss();
-    }
+    //}
   }
 
   private validateEmail() {
@@ -116,11 +116,12 @@ export class LoginPage implements OnInit {
   //  Guest actions
   onGuestContinue() {
     console.log('Guest Continue clicked');
-    this.router.navigate(['/home']); // adjust route if needed
+    this.dismiss();
+    this.router.navigate(['/home/dashboard']); // adjust route if needed
   }
 
-  onGuestRegister() {
-    console.log('Guest Register Now clicked');
-    this.router.navigate(['/register']); // adjust route if needed
-  }
+  // onGuestRegister() {
+  //   console.log('Guest Register Now clicked');
+  //   this.router.navigate(['/register']); // adjust route if needed
+  // }
 }

@@ -115,7 +115,7 @@ export class FirebaseMessagingService {
             // Navigate to chat page with user and conversation IDs
             await this.router.navigate(['/home/chatpage', data.senduser_id, data.conversation_id]);
           } else {
-            console.warn('Notification data missing required fields for navigation');
+            await this.router.navigate(['/home/notification']);
           }
         });
       } else {

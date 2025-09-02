@@ -24,34 +24,45 @@
 
     <p class="accommo-title">Find Your Stay</p>
 
-    
-    <ion-card class="accommodation-card" *ngFor="let item of filteredAccommodations">
-      <ion-img [src]="item.image" alt="{{item.name}}"></ion-img>
-      <ion-card-header>
-        <ion-card-title>{{ item.name }}</ion-card-title>
-        <ion-card-subtitle>{{ item.location }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-         <p class="hotel-description">{{ item.description }}</p>
-        
-        <div class="distance-info">
-          <p><ion-icon name="pin-outline"></ion-icon> {{ item.distanceVenue }} from Venue</p>
-          <p><ion-icon name="airplane-outline"></ion-icon> {{ item.distanceAirport }} from Airport</p>
-        </div>
+    <!-- Updated to handle nested hotel data -->
+    <ng-container *ngFor="let category of filteredAccommodations">
+      <h3 class="category-title">{{ category.hotel_category }}</h3>
+      
+      <ion-card class="accommodation-card" *ngFor="let hotel of category.hotel">
+        <ion-img [src]="hotel.image" [alt]="hotel.hotel_name"></ion-img>
+        <ion-card-header>
+          <ion-card-title>{{ hotel.hotel_name }}</ion-card-title>
+          <ion-card-subtitle>{{ hotel.location }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="hotel-description">{{ hotel.description }}</p>
+          
+          <div class="distance-info">
+            <p *ngIf="hotel.distance_venue">
+              <ion-icon name="pin-outline"></ion-icon> {{ hotel.distance_venue }} from Venue
+            </p>
+            <p *ngIf="hotel.distance_airport">
+              <ion-icon name="airplane-outline"></ion-icon> {{ hotel.distance_airport }} from Airport
+            </p>
+          </div>
 
-        
-        <div class="room-details">
-          <p><strong>Room Type:</strong> {{ item.roomType }}</p>
-          <p><strong>Occupancy:</strong> {{ item.occupancy }}</p>
-          <p><strong>Rate:</strong> ₹{{ item.rate }}/night</p>
-        </div>
+          <div class="room-details" *ngIf="hotel.rooms?.length">
+            <p><strong>Rooms Available:</strong></p>
+            <div *ngFor="let room of hotel.rooms" class="room-item">
+              <p><strong>Type:</strong> {{ room.room_name }}</p>
+              <p><strong>Capacity:</strong> {{ room.capacity }}</p>
+              <p><strong>Price:</strong> ₹{{ room.delegate_price }}/night</p>
+              <p>{{ room.description }}</p>
+            </div>
+          </div>
 
-        <div class="card-actions">
-          <ion-button size="small" fill="outline" color="success" (click)="viewOnMap(item)">
-            View on Map
-          </ion-button>
-        </div>
-      </ion-card-content>
-    </ion-card>
+          <div class="card-actions">
+            <ion-button size="small" fill="outline" color="success" (click)="viewOnMap(hotel)" *ngIf="hotel.map_url">
+              View on Map
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
   </div>
 </ion-content>

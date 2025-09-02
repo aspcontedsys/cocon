@@ -87,30 +87,14 @@ export class ChatPage implements OnInit {
 
     this.acceptedUsers = this.allUsers.filter(user => user.status == 'accepted');
     this.openUsers = this.allUsers.filter(user => user.status == 'open');
-
-    //  Ensure LinkedIn always exists (dummy if not provided)
-    this.openUsers.forEach(user => {
-      if (!user.linkedin || typeof user.linkedin !== 'string') {
-        user.linkedin = "https://linkedin.com/in/dummyprofile";
-      }
-    });
-
-    this.acceptedUsers.forEach(user => {
-      if (!user.linkedin || typeof user.linkedin !== 'string') {
-        user.linkedin = "https://linkedin.com/in/dummyprofile";
-      }
-    });
-
     this.activeTab = this.acceptedUsers.length > 0 ? 'accepted' : 'users';
   }
 
   async saveLinkedIn(): Promise<void> {
-    if (!this.linkedinUrl || !this.linkedinUrl.startsWith('http')) {
-      this.notificationService.showNotification('Please enter a valid LinkedIn URL');
-      return;
-    }
-    await this.cacheService.set('linkedin_url', this.linkedinUrl);
-    this.notificationService.showNotification('LinkedIn profile saved');
+    this.chatService.updateLinkedinUrl(this.linkedinUrl).then((res)=>{
+      this.cacheService.set('linkedin_url', this.linkedinUrl);
+      this.notificationService.showNotification('LinkedIn profile saved');
+    })
   }
 
   async loadLinkedIn(): Promise<void> {
@@ -119,6 +103,6 @@ export class ChatPage implements OnInit {
 
   //  Only opens LinkedIn in new tab
   openLinkedIn(url: string): void {
-    window.open(url || "https://linkedin.com/in/dummyprofile", '_blank');
+    window.open(url, '_blank');
   }
 }

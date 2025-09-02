@@ -27,8 +27,8 @@
       <div *ngFor="let fav of groupedFavorites[date]" class="fav-item animated-card">
         <ion-item lines="none">
           <ion-label>
-            <div class="session-time">{{ fav.time }} – {{ fav.time2 }}</div>
-            <div class="session-title">{{ fav.title }}</div>
+            <div class="session-time">{{ fav.start_time }} – {{ fav.end_time }}</div>
+            <div class="session-title">{{ fav.topic_name }}</div>
           </ion-label>
           <ion-icon class="favorite-icon active" name="heart"></ion-icon>
         </ion-item>

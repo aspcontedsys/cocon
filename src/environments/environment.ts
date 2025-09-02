@@ -31,6 +31,13 @@ export const environment = {
     fcmToken: { api: 'api/update-phone-identifier', method: 'post', authenticationType: 'OAuth' },
     appHelp: { api: 'api/fetch-app-help', method: 'get', authenticationType: 'appkey' },
     aboutConference: { api: 'api/fetch-about-conference', method: 'get', authenticationType: 'appkey' },
+    fetchhotels: { api: 'api/fetch-hotels', method: 'get', authenticationType: 'appkey' },    
+    fetchitearies:{api:'api/fetch-itineraries',method:'get',authenticationType:'appkey'},
+    updateLinkedinUrl:{api:'api/update-linkedin-url',method:'post',authenticationType:'OAuth'},
+    storeDelegateFavouriteSchedule:{api:'api/store-delegate-favourite-schedule',method:'post',authenticationType:'OAuth'},
+    fetchFavouriteSchedules:{api:'api/fetch-favourite-schedules',method:'get',authenticationType:'OAuth'},                                                                   
+    fetchDelegateVisitors:{api:'api/fetch-favourite-exhibitors',method:'get',authenticationType:'OAuth'},
+    addExhibitorFavourite:{api:'api/store-delegate-favourite-exhibitor',method:'post',authenticationType:'OAuth'}
   }
 };
 

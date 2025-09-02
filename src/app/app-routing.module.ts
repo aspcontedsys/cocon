@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { NavigationStart, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AuthGuard } from '../services/Auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -17,17 +17,7 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
-    path: 'favourites',
-    loadChildren: () => import('./favourites/favourites.module').then( m => m.FavouritesPageModule)
-  },
-
-
-
- 
-
- 
-
+  }
 ];
 
 @NgModule({

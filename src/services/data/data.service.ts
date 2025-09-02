@@ -3,7 +3,7 @@ import { ApiService, ApiResponse } from '../api/api.service';
 import { environment } from 'src/environments/environment';
 import { Speaker,EventDetails,DelegateProfile,VirtualBadge,
   Schedule,SponsorsList,FeedbackQuestion,Exhibitor,DirectoryList,
-  Attractions,AppHelp,AboutConference } from '../../app/models/cocon.models';
+  Attractions,AppHelp,AboutConference,Accommodation,itinery,DelegateVisitorList } from '../../app/models/cocon.models';
 import { CacheService } from '../cache/cache.service';
 
 
@@ -62,12 +62,21 @@ export class DataService {
     return data.data;
   }
   async getSchedules(){
-    let data:ApiResponse<Schedule[]> = await this.apiService.get<Schedule[]>(environment.endpoints.schedules.api,environment.endpoints.schedules.authenticationType,undefined,true );
+    let user_id = await this.cacheService.get('userDetails').then(user => user.id)??0;
+    let data:ApiResponse<Schedule[]> = await this.apiService.get<Schedule[]>(environment.endpoints.schedules.api,environment.endpoints.schedules.authenticationType,{delegate_id:user_id},true );
+    return data.data;
+  }
+  async getFavouriteSchedules(){
+    let data:ApiResponse<Schedule[]> = await this.apiService.get<Schedule[]>(environment.endpoints.fetchFavouriteSchedules.api,environment.endpoints.fetchFavouriteSchedules.authenticationType);
     return data.data;
   }
   async getTodaySchedules(){
     let data:ApiResponse<Schedule[]> = await this.apiService.get<Schedule[]>(environment.endpoints.todaySchedule.api,environment.endpoints.todaySchedule.authenticationType,undefined,true );
     return data.data;
+  }
+  async storeDelegateFavouriteSchedule(data:any){
+    let response:ApiResponse<any> = await this.apiService.post<any>(environment.endpoints.storeDelegateFavouriteSchedule.api,environment.endpoints.storeDelegateFavouriteSchedule.authenticationType,data,true );
+    return response.data;
   }
   async getParticipants(){
     let data:ApiResponse<Speaker[]> = await this.apiService.get<Speaker[]>(environment.endpoints.participants.api,environment.endpoints.participants.authenticationType );
@@ -77,8 +86,11 @@ export class DataService {
     let data:ApiResponse<SponsorsList[]> = await this.apiService.get<SponsorsList[]>(environment.endpoints.sponserWithCategoriesAndList.api,environment.endpoints.sponserWithCategoriesAndList.authenticationType );
     return data.data;
   }
-  async getFeedbackQuestionList(){
-    let response :ApiResponse<FeedbackQuestion[]> = await this.apiService.get<FeedbackQuestion[]>(environment.endpoints.feedbackQuestionList.api,environment.endpoints.feedbackQuestionList.authenticationType );
+  async getFeedbackQuestionList(topic_id:string){
+    let requestdata = {
+      "badge_number":topic_id
+    }
+    let response :ApiResponse<FeedbackQuestion[]> = await this.apiService.get<FeedbackQuestion[]>(environment.endpoints.feedbackQuestionList.api,environment.endpoints.feedbackQuestionList.authenticationType,requestdata );
     return response.data;
   }
   async saveFeedbackSubmit(data :{[key:string]:string}[]){
@@ -107,4 +119,21 @@ export class DataService {
     let response :ApiResponse<AboutConference> = await this.apiService.get<AboutConference>(environment.endpoints.aboutConference.api,environment.endpoints.aboutConference.authenticationType );
     return response.data;
   }
+  async getHotels(){
+    let response :ApiResponse<Accommodation[]> = await this.apiService.get<Accommodation[]>(environment.endpoints.fetchhotels.api,environment.endpoints.fetchhotels.authenticationType );
+    return response.data;
+  }
+  async getItineraries(){
+    let response :ApiResponse<itinery[]> = await this.apiService.get<itinery[]>(environment.endpoints.fetchitearies.api,environment.endpoints.fetchitearies.authenticationType );
+    return response.data;
+  }
+  async addExhibitorFavourite(data:any){
+    let response :ApiResponse<any> = await this.apiService.post<any>(environment.endpoints.addExhibitorFavourite.api,environment.endpoints.addExhibitorFavourite.authenticationType,data );
+    return response.data;
+  }
+  async fetchDelegateVisitors(){
+    let response :ApiResponse<DelegateVisitorList[]> = await this.apiService.get<DelegateVisitorList[]>(environment.endpoints.fetchDelegateVisitors.api,environment.endpoints.fetchDelegateVisitors.authenticationType );
+    return response.data;
+  }
+
 }

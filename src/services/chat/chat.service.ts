@@ -84,7 +84,7 @@ export class ChatService {
         attachment_path: '',
         attachment_type: '',
         conversation_id: conversation_id,
-        id: 0
+        // id: 0
       };
 
       const response = await this.apiService.post<any>(
@@ -108,6 +108,22 @@ export class ChatService {
         "access_network":status?'Y':'N'
       }
       const response = await this.apiService.post<any>(environment.endpoints.networkingStatusUpdated.api,environment.endpoints.networkingStatusUpdated.authenticationType,data);
+      if(response.status){
+        return response.data;
+      }
+      return [];
+    } catch (error) {
+      console.error('Error updating networking status:', error);
+      throw error;
+    }
+  }
+  async updateLinkedinUrl(linkedInUrl:string){
+    try {
+      let data = {
+        "linkedin_url":linkedInUrl
+    }
+    
+      const response = await this.apiService.post<any>(environment.endpoints.updateLinkedinUrl.api,environment.endpoints.updateLinkedinUrl.authenticationType,data);
       if(response.status){
         return response.data;
       }
