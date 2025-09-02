@@ -53,7 +53,7 @@ export class TodaySchedulePage implements OnInit {
       // Map halls and set first one as active
       this.halls = selectedSchedule.halls.map((hall, index) => ({
         name: hall.hall_name,
-        active: index === 0 // Set first hall as active by default
+        active: index === 0 
       }));
     } else {
       this.halls = [];
@@ -93,15 +93,7 @@ export class TodaySchedulePage implements OnInit {
     const hall = selectedSchedule.halls.find(h => h.hall_name === selectedHall.name);
     if (!hall || !hall.topics) return [];
     
-    // Map topics to the format expected by the template
-    // return hall.topics.map(topic => ({
-    //   time: topic.start_time,
-    //   title: topic.topic_name,
-    //   speaker: topic.speaker_name || 'To be announced',
-    //   description: topic.description || '',
-    //   duration: topic.duration || '60 min'
-    //      roles:topic.roles
-    // }));
+   
     return hall.topics.map(topic => ({
       time: topic.start_time,
       time2: topic.end_time,

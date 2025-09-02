@@ -9,7 +9,6 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-
 ion-header,
 ion-toolbar {
   --ion-toolbar-background: #000 !important;
@@ -28,6 +27,7 @@ ion-toolbar {
     filter: drop-shadow(0 0 2px #0f0);
   }
 }
+
 .toolbar-left {
   display: flex;
   align-items: center;
@@ -46,34 +46,7 @@ ion-toolbar {
   }
 }
 
-.notification-wrapper {
-  position: relative;
-  cursor: pointer;
-  padding-right: 10px;
-
-  ion-icon {
-    font-size: 26px;
-    color: #fff;
-    filter: drop-shadow(0 0 2px #0f0);
-  }
-
-  .badge {
-    position: absolute;
-    top: -4px;
-    right: 5px;
-    background: red;
-    color: white;
-    font-size: 0.7rem;
-    font-weight: bold;
-    padding: 2px 5px;
-    border-radius: 10px;
-    min-width: 16px;
-    text-align: center;
-    box-shadow: 0 0 4px rgba(255, 0, 0, 0.8);
-  }
-}
-
-.network-noenabled{
+.network-noenabled {
   font-size: 1.1rem;
   margin-bottom: 12px;
   color: #ccc;
@@ -109,6 +82,40 @@ ion-toolbar {
       justify-content: center;
       align-items: center;
       margin: 12px 0;
+    }
+
+    .linkedin-section {
+      margin: 20px 0;
+      text-align: center;
+
+      ion-item {
+        --background: #111;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        --color: #fff;
+
+        ion-input {
+          --placeholder-color: #888;
+          color: #fff;
+          font-size: 0.95rem;
+          padding-left: 8px;
+        }
+      }
+
+      ion-button {
+        --background: #97C93C;
+        --background-activated: #7ab22f;
+        --border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: none;
+        padding: 0 16px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+
+        &:hover {
+          filter: brightness(1.1);
+        }
+      }
     }
 
     .tab-header {
@@ -162,6 +169,33 @@ ion-toolbar {
           color: white;
         }
 
+        .linkedin-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          cursor: pointer;
+          margin-right: 12px;
+          max-width: 180px;
+
+          .linkedin-icon {
+            font-size: 22px;
+            color: #0a66c2;
+            transition: 0.2s;
+            &:hover {
+              filter: brightness(1.3) drop-shadow(0 0 4px #0a66c2);
+            }
+          }
+
+          .linkedin-text {
+            font-size: 0.8rem;
+            color: #0a66c2;
+            text-decoration: underline;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
         .options-icon {
           font-size: 20px;
           color: #999;
@@ -200,82 +234,5 @@ ion-toolbar {
         }
       }
     }
-
-    .sent-disabled {
-      color: #4caf50;
-      font-weight: bold;
-      cursor: not-allowed;
-      padding: 8px 12px;
-    }
   }
-}
-
-.bottom-tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5rem 0;
-  border-top: 1px solid #2a2a2a;
-  backdrop-filter: blur(12px);
-
-
-  .tab-button {
-    flex: 1;
-    color: #bbb;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.75rem;
-    transition: all 0.2s ease;
-    cursor: pointer;
-
-    ion-icon,
-    .custom-tab-icon {
-      font-size: 1.6rem;
-      width: 26px;
-      height: 26px;
-      filter: drop-shadow(0 0 2px #8aff00);
-    }
-
-    span {
-      margin-top: 0.2rem;
-      font-size: 0.7rem;
-    }
-
-    &:active,
-    &:hover {
-      color: #8aff00;
-
-      ion-icon,
-      .custom-tab-icon {
-        filter: drop-shadow(0 0 4px #8aff00);
-      }
-    }
-  }
-}
-
-::ng-deep .centered-toast {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  z-index: 9999;
-  text-align: center;
-  min-width: 220px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  animation: fadeInOut 2s ease-in-out;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, -60%); }
-  10% { opacity: 1; transform: translate(-50%, -50%); }
-  90% { opacity: 1; transform: translate(-50%, -50%); }
-  100% { opacity: 0; transform: translate(-50%, -60%); }
 }

@@ -1,22 +1,22 @@
-<ion-content class="ion-padding" [fullscreen]="true">
+<!-- <ion-content class="ion-padding" [fullscreen]="true">
   <div class="content-wrapper">
   
     
     <div class="top-bar">
       <h1 class="custom-heading">Delegate Login</h1>
-      <!-- <ion-icon name="close-outline" class="close-icon" (click)="dismiss()"></ion-icon> -->
+       <ion-icon name="close-outline" class="close-icon" (click)="dismiss()"></ion-icon> 
     </div>
 
-    <!-- Logo -->
+  
     <div class="logo-container">
       <img src="assets/cocon-logo.png" alt="Logo" />
     </div>
 
-    <!-- Title/Subheading -->
+ 
     <h2 class="title">Sign in to your Account</h2>
     <p class="subtitle">Let’s sign in to your account and get started</p>
 
-    <!-- Login Form -->
+    
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">  
       <ion-item>
         <ion-label position="floating">Email</ion-label>
@@ -29,4 +29,72 @@
       <ion-button expand="block" type="submit" class="submit-button">Sign in</ion-button>
     </form>
   </div>
+</ion-content> -->
+
+
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="content-wrapper">
+
+    <div class="top-bar">
+      <h1 class="custom-heading">Login</h1>
+    </div>
+
+   
+    <div class="logo-container">
+      <img src="assets/cocon-logo.png" alt="Logo" />
+    </div>
+
+   
+    <div class="login-tabs">
+      <div 
+        class="tab" 
+        [class.active]="activeTab === 'delegates'" 
+        (click)="setActiveTab('delegates')">
+        Registered Delegates
+      </div>
+      <div 
+        class="tab" 
+        [class.active]="activeTab === 'guests'" 
+        (click)="setActiveTab('guests')">
+        Guest User
+      </div>
+    </div>
+
+   
+    <h2 class="title">
+      {{ activeTab === 'delegates' ? 'Sign in to your Account' : 'Guest Access' }}
+    </h2>
+    <p class="subtitle">
+      {{ activeTab === 'delegates' 
+        ? 'Please enter the email address you used when registering for the conference' 
+        : 'To enjoy full access to all mobile app features, please register for the conference else click on "Continue" button to get basic features. '}}
+    </p>
+
+   
+    <form *ngIf="activeTab === 'delegates'" [formGroup]="loginForm" (ngSubmit)="onSubmit()">  
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input name="email" type="email" formControlName="email" required></ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="emailError">  
+        {{ emailError }}
+      </div>
+
+      <ion-button expand="block" type="submit" class="submit-button">Sign in</ion-button>
+    </form>
+
+   
+    <div class="guest-actions" *ngIf="activeTab === 'guests'">
+      <ion-button class="contin" expand="block" fill="outline"  (click)="onGuestContinue()">
+        Continue
+      </ion-button>
+      <ion-button class="reg" expand="block"  (click)="onGuestRegister()">
+        Register Now
+      </ion-button>
+    </div>
+  </div>
 </ion-content>
+
+
+

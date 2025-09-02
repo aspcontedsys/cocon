@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; --ion-toolbar-background: transparent; color: #fff;">
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <span class="page-title">Favourites</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="favo-content">
+  <div class="favo-wrapper">
+
+    <!--  Empty state -->
+    <div *ngIf="favorites.length === 0" class="empty-state">
+      <ion-icon name="heart-outline"></ion-icon>
+      <p>No favourites yet</p>
+    </div>
+
+    <!--  Date-wise grouped favourites -->
+    <div *ngFor="let date of getDates()" class="fav-date-group">
+      <div class="date-banner">
+        <h3>{{ date | date:'fullDate' }}</h3>
+      </div>
+
+      <div *ngFor="let fav of groupedFavorites[date]" class="fav-item animated-card">
+        <ion-item lines="none">
+          <ion-label>
+            <div class="session-time">{{ fav.time }} – {{ fav.time2 }}</div>
+            <div class="session-title">{{ fav.title }}</div>
+          </ion-label>
+          <ion-icon class="favorite-icon active" name="heart"></ion-icon>
+        </ion-item>
+
+        <div class="session-body" *ngIf="fav.roles && fav.roles.length > 0">
+          <div *ngFor="let role of fav.roles" class="subsession">
+            <div class="sub-time">{{ role.role_name }}</div>
+            <div class="sub-details">
+              <div *ngFor="let p of role.participants" class="sub-speaker">
+                <span>{{ p.name }}</span>
+                <span class="email">{{ p.email }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

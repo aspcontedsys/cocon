@@ -1,29 +1,35 @@
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
-    
-    <!-- Left: Back icon + title -->
+
     <div class="toolbar-left">
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
       <span class="page-title">Speakers</span>
     </div>
-     <!-- Right: Notification icon -->
+
+
     <ion-buttons slot="end">
       <ion-button fill="clear">
         <!-- <ion-icon name="notifications-outline"></ion-icon> -->
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="networking-content">
   <div class="networking-wrapper">
     <p class="networking-title">Search among speakers</p>
+
     <div class="search-container">
-      <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search speakers..." color="light"
-        (ionFocus)="showCancel = true" (ionBlur)="hideCancel()" class="search-input"></ion-searchbar>
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        placeholder="Search speakers..."
+        color="light"
+        (ionFocus)="showCancel = true"
+        (ionBlur)="hideCancel()"
+        class="search-input">
+      </ion-searchbar>
 
       <button *ngIf="showCancel" class="cancel-btn" (click)="cancelSearch()">Cancel</button>
     </div>
@@ -32,11 +38,24 @@
       <div class="user-item" *ngFor="let user of filteredUsers()" (click)="openProfile(user)">
         <img [src]="user.photo" class="avatar" alt="User photo" />
         <div class="user-name">{{ user.name }}</div>
+
+        <!-- LinkedIn Icon -->
+        <a *ngIf="user.linkedin"
+           [href]="user.linkedin"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="linkedin-icon"
+           (click)="$event.stopPropagation()">
+          <ion-icon name="logo-linkedin"></ion-icon>
+        </a>
+
+      
         <ion-icon name="ellipsis-vertical" class="options-icon"></ion-icon>
       </div>
     </div>
   </div>
 
+  <!-- Profile Overlay -->
   <div class="profile-overlay" *ngIf="selectedUser">
     <div class="profile-header">
       <div class="avatar-lg">
@@ -46,12 +65,20 @@
         <h2>{{ selectedUser.name }}</h2>
         <p>{{ selectedUser.designation }}</p>
       </div>
-      <ion-icon name="close-circle" class="close-icon" (click)="selectedUser = null"></ion-icon>
+      <ion-icon name="close-circle" class="close-icon" (click)="closeProfile()"></ion-icon>
     </div>
 
     <div class="profile-body">
       <h3>PROFILE</h3>
       <p>{{ selectedUser.about }}</p>
+
+      <!-- LinkedIn link  -->
+      <div class="social-links" *ngIf="selectedUser.linkedin">
+        <a [href]="selectedUser.linkedin" target="_blank" rel="noopener noreferrer">
+          <ion-icon name="logo-linkedin"></ion-icon>
+          <span>View LinkedIn</span>
+        </a>
+      </div>
 
       <h3>TOPICS</h3>
       <ul class="topics-list">

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatService } from '../../services/chat/chat.service';
-import { ModalController, NavController } from '@ionic/angular';
-import { UsersListModalComponent, usersListModalOptions } from '../components/users-list-modal/users-list-modal.component';
-import { RegisteredUser,OpenListUsers,ChatListUsers } from '../../app/models/cocon.models';
+import { NavController } from '@ionic/angular';
+import { ChatListUsers } from '../../app/models/cocon.models';
 import { NotificationService } from '../../services/notification/notification.service';
 import { CacheService } from '../../services/cache/cache.service';
 
@@ -11,16 +10,18 @@ import { CacheService } from '../../services/cache/cache.service';
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
-  standalone:false
+  standalone: false
 })
 export class ChatPage implements OnInit {
-  isNetworkingOpen :boolean = false;
-  allUsers :ChatListUsers[] = [];
-
-  acceptedUsers :ChatListUsers[] = [];
-  openUsers :ChatListUsers[] = [];
+  isNetworkingOpen: boolean = false;
+  allUsers: ChatListUsers[] = [];
+  acceptedUsers: ChatListUsers[] = [];
+  openUsers: ChatListUsers[] = [];
   activeTab: 'users' | 'accepted' = 'users';
   dropdownIndex: number | null = null;
+
+  linkedinUrl: string = '';
+
   constructor(
     private router: Router,
     private navCtrl: NavController,
@@ -32,6 +33,7 @@ export class ChatPage implements OnInit {
   ngOnInit(): void {
     this.checkNetworkingStatus();
     this.getUserList();
+    this.loadLinkedIn();
   }
 
   navigate(path: string): void {
@@ -52,24 +54,28 @@ export class ChatPage implements OnInit {
   async sendRequest(user: any): Promise<void> {
     user.requestSent = true;
     this.dropdownIndex = null;
-    this.chatService.updateChatRequest(user.id,user.requestSent);
+    this.chatService.updateChatRequest(user.id, user.requestSent);
     this.notificationService.showNotification(`Request sent to ${user.name}`);
   }
 
   async cancelRequest(user: any): Promise<void> {
     user.requestSent = false;
     this.dropdownIndex = null;
-    this.chatService.updateChatRequest(user.id,user.requestSent);
+    this.chatService.updateChatRequest(user.id, user.requestSent);
     this.notificationService.showNotification(`Request to ${user.name} has been canceled`);
   }
 
   openChat(user: any): void {
-    this.router.navigate(['/home/chatpage', user.id,user.conversation_id]);
+    this.router.navigate(['/home/chatpage', user.id, user.conversation_id]);
   }
 
   toggleNetworking(event: any): void {
     this.isNetworkingOpen = event.detail.checked;
     this.chatService.updateNetworkingStatus(this.isNetworkingOpen);
+    if (!this.isNetworkingOpen) {
+      this.linkedinUrl = ''; 
+      this.cacheService.remove('linkedin_url');
+    }
   }
 
   async checkNetworkingStatus(): Promise<void> {
@@ -78,8 +84,41 @@ export class ChatPage implements OnInit {
 
   async getUserList(): Promise<void> {
     this.allUsers = await this.chatService.getUsers();
+
     this.acceptedUsers = this.allUsers.filter(user => user.status == 'accepted');
     this.openUsers = this.allUsers.filter(user => user.status == 'open');
+
+    //  Ensure LinkedIn always exists (dummy if not provided)
+    this.openUsers.forEach(user => {
+      if (!user.linkedin || typeof user.linkedin !== 'string') {
+        user.linkedin = "https://linkedin.com/in/dummyprofile";
+      }
+    });
+
+    this.acceptedUsers.forEach(user => {
+      if (!user.linkedin || typeof user.linkedin !== 'string') {
+        user.linkedin = "https://linkedin.com/in/dummyprofile";
+      }
+    });
+
     this.activeTab = this.acceptedUsers.length > 0 ? 'accepted' : 'users';
+  }
+
+  async saveLinkedIn(): Promise<void> {
+    if (!this.linkedinUrl || !this.linkedinUrl.startsWith('http')) {
+      this.notificationService.showNotification('Please enter a valid LinkedIn URL');
+      return;
+    }
+    await this.cacheService.set('linkedin_url', this.linkedinUrl);
+    this.notificationService.showNotification('LinkedIn profile saved');
+  }
+
+  async loadLinkedIn(): Promise<void> {
+    this.linkedinUrl = await this.cacheService.get('linkedin_url') || '';
+  }
+
+  //  Only opens LinkedIn in new tab
+  openLinkedIn(url: string): void {
+    window.open(url || "https://linkedin.com/in/dummyprofile", '_blank');
   }
 }

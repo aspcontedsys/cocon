@@ -170,7 +170,7 @@ ion-toolbar {
   }
 }
 
-// Bottom Tab Bar
+
 .bottom-tab-bar {
   position: fixed;
   bottom: 0;
@@ -222,7 +222,7 @@ ion-toolbar {
   }
 }
 
-// Animations
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -243,7 +243,7 @@ ion-toolbar {
   }
 }
 
-// Responsive for mobile
+
 @media screen and (max-width: 480px) {
   .about-page {
     .intro-section {
@@ -277,7 +277,7 @@ ion-toolbar {
   }
 }
 
-/* PDF Viewer Container */
+
 .pdf-container {
     display: flex;
     flex-direction: column;
@@ -287,7 +287,7 @@ ion-toolbar {
     box-sizing: border-box;
   }
   
-  /* PDF Controls */
+  
   .pdf-controls {
     display: flex;
     align-items: center;
@@ -319,7 +319,7 @@ ion-toolbar {
     }
   }
   
-  /* PDF Viewer */
+ 
   .pdf-viewer-container {
     flex: 1;
     min-height: 70vh;
@@ -337,7 +337,7 @@ ion-toolbar {
     }
   }
   
-  /* Make sure the PDF content is visible */
+
   ::ng-deep {
     .ng2-pdf-viewer-container {
       overflow: auto;
@@ -354,7 +354,7 @@ ion-toolbar {
     }
   }
   
-  /* Responsive adjustments */
+  
   @media (max-width: 768px) {
     .pdf-controls {
       flex-wrap: wrap;
@@ -373,7 +373,7 @@ ion-toolbar {
     }
   }
   
-  /* Add some spacing for the page content */
+
   ion-content {
     --padding-start: 0;
     --padding-end: 0;

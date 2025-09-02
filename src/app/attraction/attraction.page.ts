@@ -13,7 +13,7 @@ import { Attractions} from '../models/cocon.models';
 export class AttractionPage implements OnInit,OnDestroy {
   currentSlide = 0;
   progress = 0;
-  autoplayDuration = 5000; // Increased duration for better user experience
+  autoplayDuration = 5000; 
   autoplayStep = 50;
   autoplayInterval: any;
   progressInterval: any;

@@ -5,22 +5,30 @@ export interface RegisteredUser {
     image: string;
     status: string;
 }
+
 export interface ChatListUsers extends RegisteredUser {
-  conversation_id:number;
+  conversation_id: number;
+
+  // 🔹 New optional fields
+  linkedin?: string;     // LinkedIn profile URL
+  requestSent?: boolean; // Local state for request toggle
 }
+
 export interface OpenListUsers extends ChatListUsers {
-  unread_count:number;
+  unread_count: number;
 }
+
 export interface ChatHistory {
-  id:number;
-  sender_id:number;
-  message:string;
-  message_type:string;
-  created_at:Date,
-  attachment_path:string;
-  attachment_type:string;
-  read_at:Date;
+  id: number;
+  sender_id: number;
+  message: string;
+  message_type: string;
+  created_at: Date;
+  attachment_path: string;
+  attachment_type: string;
+  read_at: Date;
 }
+
 export interface Conversations {
   id: number;
   from_id: number;
@@ -29,25 +37,26 @@ export interface Conversations {
   last_messaged_at: Date;
 }
 
-export interface sendModel extends ChatHistory{
+export interface sendModel extends ChatHistory {
   conversation_id: number;
   to_id: number;
 }
 
 export interface loginResponse {
   token: string;
-  data:RegisteredUser;
+  data: RegisteredUser;
 }
 
 export interface Speaker {
-  salutation:string,
-  name:string,
-  designation:string,
-  company_name:string,
-  about:string,
-  photo:string,
-  role:string,
-  topics:Topic[]
+  salutation: string;
+  name: string;
+  designation: string;
+  company_name: string;
+  about: string;
+  photo: string;
+  role: string;
+  topics: Topic[];
+  linkedin?: string;
 }
 
 interface Topic {
@@ -61,35 +70,36 @@ interface Topic {
 }
 
 export interface EventDetails {
-  id:number,
-  name:string,
-  website_url:string,
-  about_conference:string,
-  app_help:string,
-  venue_layout:string,
-  stall_layout:string
+  id: number;
+  name: string;
+  website_url: string;
+  about_conference: string;
+  app_help: string;
+  venue_layout: string;
+  stall_layout: string;
 }
 
 export interface DelegateProfile {
-  category: string,
-  name: string,
-  short_name: string,
-  unique_no: string,
-  email: string,
-  mobile: string,
-  designation: string,
-  company_name: string,
-  workshop: string,
-  image: string
+  category: string;
+  name: string;
+  short_name: string;
+  unique_no: string;
+  email: string;
+  mobile: string;
+  designation: string;
+  company_name: string;
+  workshop: string;
+  image: string;
 }
 
 export interface VirtualBadge {
-  category:string,
-  name: string,
-  designation: string,
-  company_name: string,
-  qr_code: string
+  category: string;
+  name: string;
+  designation: string;
+  company_name: string;
+  qr_code: string;
 }
+
 export interface Schedule {
   event_date: string;
   halls: Hall[];
@@ -120,12 +130,11 @@ interface Participant {
   email: string | null;
 }
 
-
 export interface SponsorsList {
   id: number;
   name: string;
   image: string;
-  sponsors:Sponsor[]
+  sponsors: Sponsor[];
 }
 
 export interface Sponsor {
@@ -133,6 +142,7 @@ export interface Sponsor {
   name: string;
   image: string;
 }
+
 export interface FeedbackQuestion {
   id: number;
   feedback_head: string;
@@ -152,7 +162,7 @@ export interface DirectoryList {
   id: number;
   name: string;
   phone: string;
-  directories:Directory[]
+  directories: Directory[];
 }
 
 export interface Directory {
@@ -160,10 +170,11 @@ export interface Directory {
   name: string;
   phone: string;
 }
+
 export interface Attractions {
   id: number;
   name: string;
-  attractions:Attraction[];
+  attractions: Attraction[];
 }
 
 export interface Attraction {
@@ -174,9 +185,9 @@ export interface Attraction {
 }
 
 export interface AppHelp {
-  app_help:string
+  app_help: string;
 }
 
 export interface AboutConference {
-  about_conference:string
+  about_conference: string;
 }

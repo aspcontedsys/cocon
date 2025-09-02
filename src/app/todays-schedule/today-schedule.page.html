@@ -2,7 +2,7 @@
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
     
-    <!-- Left: Back icon + title -->
+    
     <div class="toolbar-left">
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -10,7 +10,7 @@
       <span class="page-title">Scientific program</span>
     </div>
 
-    <!-- Right: Notification icon -->
+   
     <ion-buttons slot="end">
       <ion-button fill="clear">
         <!-- <ion-icon name="notifications-outline"></ion-icon> -->
@@ -28,7 +28,7 @@
     <p>There are no events scheduled for today.</p>
 </div>
 <div *ngIf="!noEvent">
-  <!-- Date Tabs -->
+  
   <div class="date-tabs">
     <div *ngFor="let day of eventDates" class="day-tab" [class.active]="day.active" (click)="selectDay(day)">
       <div class="label">{{ day.label }}</div>
@@ -36,20 +36,20 @@
     </div>
   </div>
 
-  <!-- Hall Tabs -->
+
   <div class="hall-tabs">
     <div *ngFor="let hall of halls" class="hall-tab" [class.active]="hall.active" (click)="selectHall(hall)">
       {{ hall.name }}
     </div>
   </div>
 
-  <!-- Timeline Header -->
+
   <div class="timeline-header">
     <div class="time-col">Time</div>
     <div class="program-col">Program</div>
   </div>
 
-  <!-- Schedule Timeline -->
+  
   <div class="schedule-container">
     <div class="time-block" *ngFor="let slot of filteredSchedule">
       <div class="time-col">

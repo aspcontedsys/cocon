@@ -9,7 +9,6 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-
 ion-header,
 ion-toolbar {
   --ion-toolbar-background: #000 !important;
@@ -28,6 +27,7 @@ ion-toolbar {
     filter: drop-shadow(0 0 2px #0f0);
   }
 }
+
 .toolbar-left {
   display: flex;
   align-items: center;
@@ -72,8 +72,6 @@ ion-toolbar {
     box-shadow: 0 0 4px rgba(255, 0, 0, 0.8);
   }
 }
-
-
 
 .networking-content {
   --background: #000000;
@@ -152,6 +150,24 @@ ion-toolbar {
           color: white;
         }
 
+        .linkedin-icon {
+          margin-right: 12px;
+          display: flex;
+          align-items: center;
+
+          ion-icon {
+            font-size: 22px;
+            color: #0e76a8;
+            filter: drop-shadow(0 0 2px rgba(14, 118, 168, 0.6));
+            transition: color 0.2s ease, transform 0.2s ease;
+          }
+
+          &:hover ion-icon {
+            color: #33a0d6;
+            transform: scale(1.1);
+          }
+        }
+
         .options-icon {
           font-size: 20px;
           color: #999;
@@ -164,7 +180,6 @@ ion-toolbar {
     }
   }
 }
-
 
 .profile-overlay {
   position: fixed;
@@ -241,6 +256,33 @@ ion-toolbar {
       margin-bottom: 20px;
     }
 
+    .social-links {
+      margin: 15px 0;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #0e76a8; 
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s;
+
+        ion-icon {
+          font-size: 22px;
+          color: #0e76a8;
+          filter: drop-shadow(0 0 2px rgba(14, 118, 168, 0.6));
+        }
+
+        &:hover {
+          color: #33a0d6;
+          ion-icon {
+            color: #33a0d6;
+          }
+        }
+      }
+    }
+
     .topics-list {
       list-style: none;
       padding-left: 0;
@@ -278,6 +320,7 @@ ion-toolbar {
             color: #fff;
           }
         }
+
         .topic-time {
           font-size: 0.8rem;
           color: #aaa;

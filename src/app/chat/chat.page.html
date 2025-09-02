@@ -1,9 +1,5 @@
-
-
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
-    
-    <!-- Left: Back icon + title -->
     <div class="toolbar-left">
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -11,13 +7,11 @@
       <span class="page-title">Networking</span>
     </div>
 
-    <!-- Right: Notification icon -->
     <ion-buttons slot="end">
       <ion-button fill="clear">
-        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+        <!-- notifications placeholder -->
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
@@ -32,32 +26,76 @@
     </div>
     
     <div *ngIf="isNetworkingOpen">
-    <!-- Tabs -->
-    <div class="tab-header">   
-      <div class="tab-btn" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">Users List</div>
-      <div class="tab-btn" [class.active]="activeTab === 'accepted'" (click)="activeTab = 'accepted'">Request Accepted</div>
-    </div>
+      
+      <div class="linkedin-section">
+        <ion-item lines="none">
+          <ion-input 
+            placeholder="Enter your LinkedIn profile URL"
+            [(ngModel)]="linkedinUrl"
+            type="url">
+          </ion-input>
+        </ion-item>
+        <ion-button expand="block" shape="round" color="success" (click)="saveLinkedIn()">
+          Save LinkedIn
+        </ion-button>
+      </div>
 
-    <div class="user-list" *ngIf="activeTab === 'users'">
-      <div class="user-item" *ngFor="let user of openUsers; let i = index">
-        <img [src]="user.image" class="avatar" alt="User photo" />
-        <div class="user-name">{{ user.name }}</div>
-        <ion-icon name="ellipsis-vertical" class="options-icon" (click)="toggleDropdown(i)"></ion-icon>
+    
+      <div class="tab-header">   
+        <div class="tab-btn" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">Users List</div>
+        <div class="tab-btn" [class.active]="activeTab === 'accepted'" (click)="activeTab = 'accepted'">Request Accepted</div>
+      </div>
 
-        <!-- Dropdown -->
-        <div class="dropdown" *ngIf="dropdownIndex === i">
-          <div *ngIf="user.status == 'open'" (click)="sendRequest(user)">Send Request</div>
-          <div *ngIf="user.status == 'requested'" class="cancel-option" (click)="cancelRequest(user)">❌ Cancel Request</div>
+    
+      <div class="user-list" *ngIf="activeTab === 'users'">
+        <div class="user-item" *ngFor="let user of openUsers; let i = index">
+          <img [src]="user.image" class="avatar" alt="User photo" />
+          <div class="user-name">{{ user.name }}</div>
+
+        
+          <div class="linkedin-wrapper" *ngIf="user.linkedin">
+            <ion-icon
+              name="logo-linkedin"
+              class="linkedin-icon"
+              (click)="openLinkedIn(user.linkedin)">
+            </ion-icon>
+            <!-- <span class="linkedin-text" (click)="openLinkedIn(user.linkedin)">
+              {{ user.linkedin }}
+            </span> -->
+          </div>
+
+       
+          <ion-icon name="ellipsis-vertical" class="options-icon" (click)="toggleDropdown(i)"></ion-icon>
+
+         
+          <div class="dropdown" *ngIf="dropdownIndex === i">
+            <div *ngIf="user.status == 'open'" (click)="sendRequest(user)">Send Request</div>
+            <div *ngIf="user.status == 'requested'" class="cancel-option" (click)="cancelRequest(user)">❌ Cancel Request</div>
+          </div>
+        </div>
+      </div>
+
+   
+      <div class="user-list" *ngIf="activeTab === 'accepted'">
+        <div class="user-item" *ngFor="let user of acceptedUsers" (click)="openChat(user)">
+          <img [src]="user.image" class="avatar" alt="User photo" />
+          <div class="user-name">{{ user.name }}</div>
+
+        
+          <div class="linkedin-wrapper" *ngIf="user.linkedin">
+            <ion-icon
+              name="logo-linkedin"
+              class="linkedin-icon"
+              (click)="openLinkedIn(user.linkedin)">
+            </ion-icon>
+            <!-- <span class="linkedin-text" (click)="openLinkedIn(user.linkedin)">
+              {{ user.linkedin }}
+            </span> -->
+          </div>
         </div>
       </div>
     </div>
-    <div class="user-list" *ngIf="activeTab === 'accepted'">
-      <div class="user-item" *ngFor="let user of acceptedUsers" (click)="openChat(user)">
-        <img [src]="user.image" class="avatar" alt="User photo" />
-        <div class="user-name">{{ user.name }}</div>
-      </div>
-    </div>
-    </div>
+
     <div *ngIf="!isNetworkingOpen">
       <p class="network-noenabled">
         You are not open to networking with other delegates. To start networking, please enable it.

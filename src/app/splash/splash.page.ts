@@ -24,6 +24,6 @@ export class SplashPage implements OnInit {
   private navigateToHome() {
     setTimeout(() => {
       this.router.navigate(['/home/dashboard']);
-    }, 300); // Small delay for smooth transition
+    }, 300); 
   }
 }

@@ -213,7 +213,7 @@ ion-toolbar {
           transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
   
           &.active {
-            max-height: 800px; // adjust based on your expected content height
+            max-height: 800px;
             opacity: 1;
             padding: 12px;
           }

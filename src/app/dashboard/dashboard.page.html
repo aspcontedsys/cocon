@@ -1,6 +1,5 @@
 <ion-content class="conference-page" fullscreen>
 
-  <!-- Header Section -->
   <div class="header">
     <h2>Join Us at <span>c0c0n 2025</span> –<br />Hacking & Cybersecurity Briefing</h2>
     <p>Securing the Cyber Future Together</p>
@@ -16,7 +15,7 @@
 
   <div class="main-content-container">
 
-    <!-- Conference Details Section -->
+  
 <div class="section-box">
   <h3>Conference Details</h3>
   <p>Explore essential information about the event</p>
@@ -46,7 +45,7 @@
   </div>
 </div>
 
-    <!-- Program Schedule Section -->
+
     <div class="section-box">
       <h3>Program Schedule</h3>
       <p>Check the schedule to stay updated on each session</p>
@@ -71,9 +70,18 @@
          <img src="assets/icon/scientific-pro-icon.svg" class="caro-icon">
           <p>Scientific Program</p>
         </ion-card>
+        <ion-card class="card" (click)="navigate('/home/favourites')">
+          <!-- <ion-icon name="heart-outline" class="caro-icon"></ion-icon> -->
+          <svg class="caro-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M352.92,80C288,80,256,144,256,144s-32-64-96.92-64C106.32,80,64.54,124.14,64,176.81c-1.1,109.33,86.73,187.08,183,252.42a16,16,0,0,0,18,0c96.26-65.34,184.09-143.09,183-252.42C447.46,124.14,405.68,80,352.92,80Z"
+        fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+</svg>
+
+          <p>Favorites</p>
+        </ion-card>
       </div>
     </div>
-    <!-- Delegate Badge Section -->
+
     <div class="section-box">
       <h3>Delegate Info</h3>
       <h6>Please visit the Badge & Feedback area</h6>
@@ -81,7 +89,7 @@
      
       <div class="carousel-nav">
         <button (click)="scrollCarousel('badge', 'prev')">‹</button>
-        <button (click)="scrollCarousel('badge', 'next')">›</button>
+        <button (click)="scrollCarousel('badge', 'next')">›</button> 
       </div>
 
       
@@ -98,12 +106,12 @@
           <p>Delegate Profile </p>
         </ion-card>
         <ion-card class="card" (click)="navigate('/home/badge')">
-          <ion-icon name="ribbon-outline" class="caro-icon"></ion-icon>
-          <p>Virtual badge</p>
+          <ion-icon name="ribbon-outline" class="caro-icon" ></ion-icon>
+          <p style="padding-top: 6px;">Virtual badge</p>
         </ion-card>
         <ion-card class="card" (click)="navigate('/home/chat')">
           <ion-icon name="globe-outline" class="caro-icon"></ion-icon>
-          <p>Networking </p>
+          <p style="padding-top: 6px;">Networking </p>
         </ion-card>
         <ion-card class="card" (click)="navigate('/home/feedback')">
           <!-- <ion-icon name="chatbox-ellipses-outline"></ion-icon> -->
@@ -115,7 +123,7 @@
 
 
 
-<!-- At the Venue Section -->
+
 <div class="section-box">
   <h3>At the Venue</h3>
   <p>Facilities & support at Grand Hyatt</p>
@@ -151,8 +159,37 @@
       <ion-icon name="cash-outline" class="caro-icon"></ion-icon>
       <p>Sponsors </p>
     </ion-card>
+    <ion-card class="card" (click)="navigate('/home/shuttle-service')">
+      <ion-icon name="bus-outline" class="caro-icon"></ion-icon>
+      <p>Shuttle Service </p>
+    </ion-card>
      
   </div>
 </div>
-  </div>
-</ion-content>
+
+
+
+ <!-- Exhibitors Section -->
+    <div class="section-box">
+      <h3>Exhibitors</h3>
+      <p>Facilities & support at Grand Hyatt</p>
+
+      <div class="carousel-nav">
+        <button (click)="scrollCarousel('exhibitors', 'prev')">‹</button>
+        <button (click)="scrollCarousel('exhibitors', 'next')">›</button>
+      </div>
+
+      
+      <div class="carousel" #exhibitorsCarousel>
+        <ion-card class="card" (click)="navigate('/home/scan')">
+          <ion-icon name="scan-outline" class="caro-icon"></ion-icon>
+          <p>Scan </p>
+        </ion-card>
+        <ion-card class="card" (click)="navigate('/home/exhibitors-report')">
+          <ion-icon name="document-text-outline" class="caro-icon"></ion-icon>
+          <p>Report</p>
+        </ion-card>
+      </div>
+    </div>
+</div>
+</ion-content> 

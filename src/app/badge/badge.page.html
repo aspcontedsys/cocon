@@ -3,7 +3,7 @@
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
     
-    <!-- Left: Back icon + title -->
+
     <div class="toolbar-left">
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -11,7 +11,7 @@
       <span class="page-title">Badge</span>
     </div>
 
-    <!-- Right: Notification icon -->
+
     <ion-buttons slot="end">
       <ion-button fill="clear">
         <!-- <ion-icon name="notifications-outline"></ion-icon> -->
@@ -23,35 +23,35 @@
 
 <ion-content class="ion-padding" [fullscreen]="true">
   <div class="badge-container">
-    <!-- Badge Card -->
+   
     <div class="badge-card">
-      <!-- Badge Header -->
+   
       <div class="badge-header">
         <h2>{{userDetails.category}}</h2>
       </div>
       
-      <!-- Badge Content -->
+
       <div class="badge-content">
-        <!-- User Photo Placeholder -->
+       
         <div class="user-photo">
           <ion-icon name="person-circle" class="photo-icon"></ion-icon>
         </div>
         
-        <!-- User Details -->
+        
         <div class="user-details">
           <h1 class="user-name">{{ userDetails.name }}</h1>
           <p class="user-designation">{{ userDetails.designation }}</p>
           <p class="user-company">{{ userDetails.company_name }}</p>
         </div>
         
-        <!-- QR Code -->
+        
         <div class="qr-code">
           <img [src]="userDetails.qr_code" alt="QR Code">
           <p class="scan-text">Scan to verify</p>
         </div>
       </div>
       
-      <!-- Badge Footer -->
+     
       <div class="badge-footer">
         <p>Thank you for attending!</p>
       </div>

@@ -12,7 +12,7 @@ ion-content.c0c0n-page {
   overflow: hidden;
 }
 
-/* Hide default Ionic background */
+
 ion-content::part(background) {
   display: none !important;
 }
@@ -60,7 +60,6 @@ ion-header ion-toolbar {
   }
 }
 
-/* CHAT CONTENT */
 .chat-content {
   flex: 1;
   display: flex;
@@ -77,7 +76,7 @@ ion-header ion-toolbar {
     padding-top: 25px;
     animation: fadeIn 0.4s ease;
 
-    /* Scrollbar glow */
+
     &::-webkit-scrollbar {
       width: 6px;
     }
@@ -150,7 +149,7 @@ ion-header ion-toolbar {
   }
 }
 
-/* DATE DIVIDER */
+
 .date-divider {
   display: flex;
   justify-content: center;

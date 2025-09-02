@@ -3,7 +3,7 @@
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
     
-    <!-- Left: Back icon + title -->
+    
     <div class="toolbar-left">
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -11,10 +11,10 @@
       <span class="page-title">Venue Layout</span>
     </div>
 
-    <!-- Right: Notification icon -->
+    
     <ion-buttons slot="end">
       <ion-button fill="clear">
-        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+    <!-- <ion-icon name="notifications-outline"></ion-icon> -->
       </ion-button>
     </ion-buttons>
 
@@ -22,17 +22,17 @@
 </ion-header>
 
 <ion-content class="c0c0n-page" fullscreen>
-  <!-- Curved Main Content Area -->
+ 
   <div class="main-content-container internal-page">
-    <!-- Section: Stall Layout -->
+  
     <div class="section">      
-      <!-- Loading State -->
+     
       <div *ngIf="loading" class="ion-padding ion-text-center">
         <ion-spinner></ion-spinner>
         <p>Loading layout...</p>
       </div>
 
-      <!-- Error State -->
+      
       <div *ngIf="error && !loading" class="ion-padding ion-text-center">
         <ion-icon name="alert-circle-outline" style="font-size: 48px; color: var(--ion-color-medium);"></ion-icon>
         <p>{{ error }}</p>
@@ -42,9 +42,9 @@
         </ion-button>
       </div>
 
-      <!-- PDF Viewer -->
+    
       <div *ngIf="pdfSrc && !loading" class="pdf-container">
-        <!-- PDF Controls -->
+        
         <div class="pdf-controls ion-padding-horizontal">
           <ion-button size="small" (click)="prevPage()" [disabled]="page <= 1">
             <ion-icon name="chevron-back"></ion-icon>
@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <!-- PDF Viewer -->
+
         <div class="pdf-viewer-container">
           <pdf-viewer 
             #pdfViewer

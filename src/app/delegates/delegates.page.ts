@@ -25,10 +25,13 @@ export class DelegatesPage implements OnInit {
     this.getSpeakers();
   }
 
+  /** Fetch all speakers from the data service */
   async getSpeakers() {
     this.speakers = await this.dataService.getParticipants();
+   
   }
 
+  /** Navigate back to dashboard */
   goBack(): void {
     this.navCtrl.navigateBack('/home/dashboard', {
       animationDirection: 'back',
@@ -36,6 +39,7 @@ export class DelegatesPage implements OnInit {
     });
   }
 
+  /** Filter speakers by search term */
   filteredUsers() {
     if (!this.searchTerm.trim()) {
       return this.speakers;
@@ -45,26 +49,38 @@ export class DelegatesPage implements OnInit {
     );
   }
 
+  /** Cancel search input */
   cancelSearch(): void {
     this.searchTerm = '';
     this.showCancel = false;
   }
 
+  /** Hide the cancel button if input is empty */
   hideCancel(): void {
     if (!this.searchTerm.trim()) {
       this.showCancel = false;
     }
   }
 
+  /** Open speaker profile overlay */
   openProfile(user: Speaker): void {
     this.selectedUser = user;
   }
 
+  /** Close speaker profile overlay */
   closeProfile(): void {
     this.selectedUser = null;
   }
 
+  
   formattedDate(date: string): string {
     return new Date(date).toLocaleDateString('en-GB').split('/').join('-');
+  }
+
+  /** Open LinkedIn profile in a new tab */
+  openLinkedIn(url: string | undefined): void {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   }
 }

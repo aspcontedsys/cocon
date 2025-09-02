@@ -1,4 +1,4 @@
-// Modal container styles
+
 :host {
   --width: 100%;
   --height: 90%;
@@ -6,7 +6,7 @@
   --box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
 }
 
-// Modal content styles
+
 ion-content {
   --padding-top: 16px;
   --padding-bottom: 16px;
@@ -18,7 +18,7 @@ ion-content {
   overflow: hidden;
 }
 
-// Header styles
+
 ion-header {
   ion-toolbar {
     --background: #ffffff;
@@ -50,7 +50,7 @@ ion-header {
   }
 }
 
-// List styles
+
 ion-list {
   background: transparent;
   padding: 0;
@@ -98,7 +98,7 @@ ion-list {
   }
 }
 
-// Handle bar for modal
+
 ion-modal::part(handle) {
   background: var(--ion-color-medium);
   width: 40px;
@@ -108,7 +108,6 @@ ion-modal::part(handle) {
   opacity: 0.5;
 }
 
-// Animation for modal entrance
 @keyframes modal-slide-in {
   from {
     transform: translateY(100%);
@@ -120,7 +119,7 @@ ion-modal::part(handle) {
   }
 }
 
-// Animation for modal exit
+
 @keyframes modal-slide-out {
   from {
     transform: translateY(0);
@@ -132,7 +131,7 @@ ion-modal::part(handle) {
   }
 }
 
-// Apply animations to modal
+
 ion-modal {
   &::part(content) {
     animation: modal-slide-in 0.3s ease-out;

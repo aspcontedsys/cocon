@@ -42,17 +42,16 @@ export class FeedbackPage implements OnInit {
     try {
       this.questions = await this.dataService.getFeedbackQuestionList();
       
-      // Clear existing form array
+     
       const formArray = this.feedbackForm.get('responses') as FormArray;
       formArray.clear();
 
-      // Initialize form controls based on question type
       this.questions.forEach(question => {
         if (question.answer_type === '1') {
-          // For radio buttons, initialize with null (no selection)
+         
           formArray.push(this.fb.control(null, Validators.required));
         } else {
-          // For text inputs
+          
           formArray.push(this.fb.control('', Validators.required));
         }
       });
@@ -88,7 +87,7 @@ export class FeedbackPage implements OnInit {
     try {
       await loading.present();
       
-      // Prepare the response data as an object with question_index keys
+     
       const formResponses: { [key: string]: string }[] = [];
       this.responses.value.forEach((response: any, index: number) => {
         formResponses.push({[`question_${index + 1}`]: response});

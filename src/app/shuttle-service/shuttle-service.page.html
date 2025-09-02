@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <span class="page-title">Shuttle Service Information</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="shuttle-content">
+  <div class="shuttle-wrapper">
+  
+    <ion-segment [(ngModel)]="segment" mode="md" scrollable value="hotel-venue" class="shuttle-segment">
+      <ion-segment-button value="hotel-venue">
+        <ion-label>Hotel → Venue</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="venue-hotel">
+        <ion-label>Venue → Hotel</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="vehicle-details">
+        <ion-label>Vehicle Details</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- TAB 1: Hotel ➝ Venue -->
+    <ng-container *ngIf="segment === 'hotel-venue'">
+      <ion-accordion-group>
+        <ion-accordion *ngFor="let route of hotelToVenueRoutes" [value]="route.name">
+          <ion-item slot="header">
+            <ion-label>
+              <h2>{{ route.name }}</h2>
+              <p>Vehicle: {{ route.vehicle }} | Driver: {{ route.driver }}</p>
+            </ion-label>
+          </ion-item>
+          <div slot="content" class="accordion-content">
+            <div *ngFor="let stop of route.stops" class="timeline">
+              <div class="timeline-dot"
+                   [ngClass]="{
+                     'completed': stop.status==='arrived',
+                     'upcoming': stop.status==='upcoming'
+                   }"></div>
+              <div class="timeline-content">
+                <h3>{{ stop.hotel }}</h3>
+                <p><strong>Planned:</strong> {{ stop.time }}</p>
+                <p><strong>ETA:</strong> {{ stop.eta }}</p>
+                <span class="status"
+                      [ngClass]="{
+                        'arrived': stop.status==='arrived',
+                        'upcoming': stop.status==='upcoming'
+                      }">
+                  {{ stop.status | titlecase }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ng-container>
+
+    <!-- TAB 2: Venue ➝ Hotel -->
+    <ng-container *ngIf="segment === 'venue-hotel'">
+      <ion-accordion-group>
+        <ion-accordion *ngFor="let route of venueToHotelRoutes" [value]="route.name">
+          <ion-item slot="header">
+            <ion-label>
+              <h2>{{ route.name }}</h2>
+              <p>Vehicle: {{ route.vehicle }} | Driver: {{ route.driver }}</p>
+            </ion-label>
+          </ion-item>
+          <div slot="content" class="accordion-content">
+            <div *ngFor="let stop of route.stops" class="timeline">
+              <div class="timeline-dot"
+                   [ngClass]="{
+                     'completed': stop.status==='arrived',
+                     'upcoming': stop.status==='upcoming'
+                   }"></div>
+              <div class="timeline-content">
+                <h3>{{ stop.hotel }}</h3>
+                <p><strong>Planned:</strong> {{ stop.time }}</p>
+                <p><strong>ETA:</strong> {{ stop.eta }}</p>
+                <span class="status"
+                      [ngClass]="{
+                        'arrived': stop.status==='arrived',
+                        'upcoming': stop.status==='upcoming'
+                      }">
+                  {{ stop.status | titlecase }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ng-container>
+
+    <!-- TAB 3: Vehicle Details -->
+    <ng-container *ngIf="segment === 'vehicle-details'">
+      <ion-list>
+        <ion-item *ngFor="let shuttle of hotelToEvent">
+          <ion-label>
+            <h2>{{ shuttle.code }} — {{ shuttle.plate }}</h2>
+            <p>Capacity: {{ shuttle.capacity }} | Driver: {{ shuttle.driver }}</p>
+            <p><strong>Time:</strong> {{ shuttle.time }}</p>
+          </ion-label>
+          <ion-button fill="outline" size="small" color="success" (click)="callDriver(shuttle.phone)">
+            <ion-icon slot="icon-only" name="call"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </div>
+</ion-content>

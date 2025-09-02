@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'schedule',
         loadChildren: () => import('../schedule/schedule.module').then(m => m.SchedulePageModule)
       },
+      { 
+        path: 'favourites',
+        loadChildren:() => import('../favourites/favourites.module').then(m => m.FavouritesPageModule)
+      },
       {
         path: 'delegates',
         loadChildren: () => import('../delegates/delegates.module').then(m => m.DelegatesPageModule)
@@ -48,6 +52,7 @@ const routes: Routes = [
         path: 'feedback',
         loadChildren: () => import('../feedback/feedback.module').then(m => m.FeedbackPageModule)
       },
+
       {
         path: 'attraction',
         loadChildren: () => import('../attraction/attraction.module').then(m => m.AttractionPageModule)
@@ -96,7 +101,17 @@ const routes: Routes = [
       {
         path: 'notification',
         loadChildren: () => import('../notification/notification.module').then(m => m.NotificationPageModule)
+      },
+      {
+        path: 'shuttle-service',
+        loadChildren:() => import ('../shuttle-service/shuttle-service-routing.module').then (m => m.ShuttleServicePageRoutingModule)
+      },
+      {
+        path: 'exhibitors-report',
+        loadChildren:() => import ('../exhibitors-report/exhibitors-report-routing.module').then (m => m.ExhibitorsReportPageRoutingModule)
       }
+      
+      
     ]
   }
 ];

@@ -85,8 +85,7 @@ export class StallLayoutPage implements OnInit {
   }
 
   rotate(angle: number) {
-    // Note: Rotation might not be supported in all versions of ng2-pdf-viewer
-    // This is a placeholder in case you want to implement rotation
+   
   }
 
   goBack() {

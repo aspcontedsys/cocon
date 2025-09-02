@@ -1,22 +1,36 @@
 <ion-header>
   <ion-toolbar class="custom-toolbar">
-    <!-- Left: Back button + Title -->
-    <div class="toolbar-left">
-      <ion-button fill="clear" (click)="goBack()" slot="start">
+    
+    <!-- Back button (Left) -->
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
-      <span class="page-title">Notifications</span>
-    </div>
+    </ion-buttons>
 
-    <!-- Right: Search icon -->
+    <!-- Title (Center) -->
+    <ion-title class="page-title">Notifications</ion-title>
+
+    <!-- Search button (Right) -->
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="toggleSearch()">
         <ion-icon name="search-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 
-  <!-- Animated Search Bar -->
+  <!-- Segment below header -->
+  <ion-segment [(ngModel)]="selectedTab" (ionChange)="filterByTab()" class="custom-segment">
+    <ion-segment-button value="default">
+      <ion-label>App Notifications</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="messages">
+      <ion-label>Messages</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Searchbar -->
   <ion-searchbar
     *ngIf="isSearchVisible"
     placeholder="Search notifications..."
@@ -29,17 +43,19 @@
   </ion-searchbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true" class="app-page">
   <section class="app-content">
-    <h2 class="section-title">Latest Updates</h2>
+    <h2 class="section-title">
+      {{ selectedTab === 'default' ? 'All Notifications' : 'Messages' }}
+    </h2>
 
-    <!-- No results -->
+    
     <div *ngIf="filteredNotifications.length === 0" class="no-results">
       <ion-icon name="alert-circle-outline"></ion-icon>
       <p>No matching notifications found.</p>
     </div>
 
-    <!-- Notifications List -->
     <div
       *ngFor="let note of filteredNotifications; let i = index"
       class="notification-card"

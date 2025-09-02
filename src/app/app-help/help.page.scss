@@ -193,7 +193,7 @@ ion-toolbar {
   text-shadow: 0 0 4px #6f0;
 }
 
-// Bottom Tab Bar
+
 .bottom-tab-bar {
   position: fixed;
   bottom: 0;
@@ -245,7 +245,7 @@ ion-toolbar {
   }
 }
 
-// Animations
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -266,7 +266,7 @@ ion-toolbar {
   }
 }
 
-// Responsive for mobile
+
 @media screen and (max-width: 480px) {
   .about-page {
     .intro-section {

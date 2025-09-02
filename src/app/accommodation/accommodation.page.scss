@@ -43,12 +43,18 @@ ion-toolbar {
   border-top-left-radius: 55px;
   border-top-right-radius: 55px;
   padding: 20px;
-  top:10%;
+  top: 10%;
 
   .accommo-wrapper {
     padding: 15px;
     margin-bottom: 130px;
   }
+
+.hotel-description {
+  font-size: 0.9rem;
+  color: #ccc;
+  padding-bottom: 5px;
+}
 
   ion-searchbar {
     --background: rgba(255, 255, 255, 0.05);
@@ -60,7 +66,6 @@ ion-toolbar {
     margin-bottom: 10px;
   }
 
-  
   .filter-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -103,10 +108,9 @@ ion-toolbar {
 
     ion-img {
       width: 100%;
-      height: 160px;
+      height: 300px;
       object-fit: cover;
     }
-
     ion-card-title {
       font-size: 1.2rem;
       color: #97C93C;
@@ -117,34 +121,68 @@ ion-toolbar {
       font-size: 0.9rem;
     }
 
-    .price {
-      font-weight: bold;
-      color: #00ff7f;
-      font-size: 1rem;
-      margin-bottom: 8px;
+   
+    .room-details {
+      margin: 10px 0;
+
+      .room-type {
+        display: inline-block;
+        background: rgba(0, 255, 0, 0.1);
+        border: 1px solid rgba(0, 255, 0, 0.3);
+        border-radius: 12px;
+        padding: 4px 10px;
+        font-size: 0.85rem;
+        color: #97C93C;
+        margin-bottom: 6px;
+      }
+
+      p {
+        margin: 2px 0;
+        color: #eee;
+        font-size: 0.9rem;
+
+        strong {
+          color: #97C93C;
+        }
+      }
     }
 
-    
-    .card-actions {
+  
+    .distance-info {
+      font-size: 0.9rem;
+      margin-top: 8px;
       display: flex;
       justify-content: space-between;
-      margin-top: 10px;
+
+      p {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin: 2px 0;
+        color: #bbb;
+
+        ion-icon {
+          color: #97C93C;
+          font-size: 16px;
+        }
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 12px;
 
       ion-button {
         font-size: 0.85rem;
         --border-radius: 8px;
-        --padding-start: 10px;
-        --padding-end: 10px;
+        --padding-start: 12px;
+        --padding-end: 12px;
         text-transform: none;
 
         &.ion-color-success {
           --color: #00ff7f;
           --border-color: #00ff7f;
-        }
-
-        &.ion-color-tertiary {
-          --color: #97C93C;
-          --background: rgba(151, 201, 60, 0.1);
         }
       }
     }

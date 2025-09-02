@@ -5,7 +5,6 @@ import { LoginService } from '../../../services/login/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { OtpComponent } from '../otp/otp.component';
-import { async } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +19,9 @@ export class LoginPage implements OnInit {
   currentuser: RegisteredUser = {} as RegisteredUser;
   private returnUrl: string = '/home/dashboard';
 
+  //  Track which tab is active
+  activeTab: 'delegates' | 'guests' = 'delegates';
+
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
@@ -28,14 +30,10 @@ export class LoginPage implements OnInit {
     private modalCtrl: ModalController
   ) {
     this.loginForm = this.formBuilder.group({
-      email: ['', [
-        Validators.required,
-        Validators.email
-      ]],
+      email: ['', [Validators.required, Validators.email]],
       otp: ['']
     });
 
-    // Check for redirect URL in query params
     this.route.queryParams.subscribe(params => {
       if (params['returnUrl']) {
         this.returnUrl = params['returnUrl'];
@@ -44,7 +42,6 @@ export class LoginPage implements OnInit {
       }
     });
 
-    // Subscribe to form value changes to update error messages
     this.loginForm.get('email')?.valueChanges.subscribe(() => {
       this.validateEmail();
     });
@@ -53,8 +50,8 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async ngOnInit() {
-  }
+  async ngOnInit() {}
+
   dismiss() {
     this.modalCtrl.dismiss();
   }
@@ -66,7 +63,7 @@ export class LoginPage implements OnInit {
 
     if (this.loginForm.valid) {
       try {
-        await this.loginService.getOtp(this.loginForm.value).then((response:Boolean) => {
+        await this.loginService.getOtp(this.loginForm.value).then((response: Boolean) => {
           if (response) {
             this.showOtpModal();
           }
@@ -75,10 +72,9 @@ export class LoginPage implements OnInit {
         console.error('Login failed:', error);
       }
     }
-   }
+  }
 
-  private async showOtpModal(){
-    // 👉 Show OTP modal popup
+  private async showOtpModal() {
     const modal = await this.modalCtrl.create({
       component: OtpComponent,
       componentProps: { email: this.loginForm.value.email },
@@ -102,6 +98,7 @@ export class LoginPage implements OnInit {
       this.emailError = '';
     }
   }
+
   private validateOtp() {
     const otpControl = this.loginForm.get('otp');
     if (otpControl?.errors?.['required']) {
@@ -109,5 +106,21 @@ export class LoginPage implements OnInit {
     } else {
       this.otpError = '';
     }
+  }
+
+  //  Tab switching
+  setActiveTab(tab: 'delegates' | 'guests') {
+    this.activeTab = tab;
+  }
+
+  //  Guest actions
+  onGuestContinue() {
+    console.log('Guest Continue clicked');
+    this.router.navigate(['/home']); // adjust route if needed
+  }
+
+  onGuestRegister() {
+    console.log('Guest Register Now clicked');
+    this.router.navigate(['/register']); // adjust route if needed
   }
 }

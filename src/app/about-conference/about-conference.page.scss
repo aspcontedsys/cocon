@@ -184,7 +184,7 @@ ion-content::part(background) {
   text-shadow: 0 0 4px #6f0;
 }
 
-// Bottom Tab Bar
+
 .bottom-tab-bar {
   position: fixed;
   bottom: 0;
@@ -236,7 +236,7 @@ ion-content::part(background) {
   }
 }
 
-// Animations
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -257,7 +257,6 @@ ion-content::part(background) {
   }
 }
 
-// Responsive for mobile
 @media screen and (max-width: 480px) {
   .about-page {
     .intro-section {

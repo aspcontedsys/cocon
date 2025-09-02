@@ -3,7 +3,7 @@
     <h2>Enter OTP</h2>
     <p>Enter the OTP sent to: {{ email }}</p>
 
-    <!-- OTP Input Boxes -->
+   
     <div class="otp-box-group">
       <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*"
              [(ngModel)]="otp[0]" (input)="moveFocus($event, 0)" #otpInput>
@@ -22,7 +22,7 @@
     <ion-button expand="block" (click)="verifyOtp()" class="submit-button">Verify</ion-button>
     <ion-button expand="block" fill="clear" color="medium" (click)="closeModal()">Cancel</ion-button>
 
-    <!-- Resend OTP Section -->
+    
     <p class="resend-text">
       <ng-container *ngIf="resendCountdown > 0">
         Resend OTP in {{ resendCountdown }}s

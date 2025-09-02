@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="toolbar-left">
+      <ion-button fill="clear" (click)="goBack()" slot="start">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <span class="page-title">Exhibitors Report</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="exhibitors-content">
+  <div class="exhibitors-wrapper">
+
+
+    <div class="action-row">
+      <ion-datetime-button datetime="dateFilter"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            id="dateFilter"
+            presentation="date"
+            [highlightedDates]="highlightedDates"
+            [isDateEnabled]="isDateEnabledFn"
+            (ionChange)="filterByDate($event)">
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+
+    
+      <ion-button fill="clear" (click)="exportCSV()">
+        <ion-icon name="download-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Selected date info -->
+    <div class="date-info" *ngIf="selectedDate">
+      <span>Showing report for: <strong>{{ selectedDate }}</strong></span>
+      <ion-button fill="clear" size="small" color="light" (click)="clearFilter()">Clear</ion-button>
+    </div>
+
+    <!-- Exhibitors List -->
+    <ion-list class="exhibitors-list">
+      <ion-item *ngFor="let user of filteredExhibitors">
+        <ion-avatar slot="start">
+          <ion-icon name="person-circle-outline" class="avatar-icon"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ user.fullName }}</h2>
+          <p>{{ user.city }}</p>
+          <p class="phone">{{ user.phone }}</p>
+        </ion-label>
+        <ion-button fill="outline" color="success" (click)="callNumber(user.phone)">
+          <ion-icon name="call-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+  </div>
+</ion-content>

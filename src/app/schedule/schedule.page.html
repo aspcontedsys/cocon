@@ -1,39 +1,36 @@
-
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
-    
-    <!-- Left: Back icon + title -->
     <div class="toolbar-left">
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
       <span class="page-title">Scientific program</span>
     </div>
-
-    <!-- Right: Notification icon -->
     <ion-buttons slot="end">
-      <ion-button fill="clear">
-        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
-      </ion-button>
+      <ion-button fill="clear"></ion-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content class="scientific-content" fullscreen>
 
-  <!-- Date Tabs -->
+  <!-- 📅 Date Tabs -->
   <div class="date-tabs">
-    <div *ngFor="let day of eventDates" class="day-tab" [class.active]="day.active" (click)="selectDay(day)">
+    <div *ngFor="let day of eventDates"
+         class="day-tab"
+         [class.active]="day.active"
+         (click)="selectDay(day)">
       <div class="label">{{ day.label }}</div>
       <div class="date">{{ day.formattedDate }}</div>
     </div>
   </div>
 
-  <!-- Hall Tabs -->
+  <!-- 🏛 Hall Tabs -->
   <div class="hall-tabs">
-    <div *ngFor="let hall of halls" class="hall-tab" [class.active]="hall.active" (click)="selectHall(hall)">
+    <div *ngFor="let hall of halls"
+         class="hall-tab"
+         [class.active]="hall.active"
+         (click)="selectHall(hall)">
       {{ hall.name }}
     </div>
   </div>
@@ -47,48 +44,71 @@
   <!-- Schedule Timeline -->
   <div class="schedule-container">
     <div class="time-block" *ngFor="let slot of filteredSchedule">
+      
       <div class="time-col">
         <div class="main-time">
           {{ slot.time }}
           <span *ngIf="slot.time2" class="time2">– {{ slot.time2 }}</span>
         </div>
       </div>
+
+      <!-- Program -->
       <div class="programs-col">
-        <ng-container *ngIf="slot.roles && slot.roles.length > 0">
-        <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
-          <ion-accordion [value]="slot.time">
-            <ion-item slot="header" lines="none">
-              <ion-label class="session-title">{{ slot.title }}</ion-label>
-            </ion-item>
-            <div class="session-body" slot="content" [ngClass]="{'active': openedAccordion === slot.time}">
-              <!-- <div class="session-subtitle">{{ slot.session.subtitle }}</div>
-              <div class="speaker">
-                <img [src]="slot.session.speakerAvatar" class="avatar" />
-                <span>{{ slot.session.speaker }}</span>
-              </div> -->
-              <div *ngFor="let item of slot.roles" class="subsession">
-                <div class="sub-time">{{ item.role_name }}</div>
-                <div class="sub-details">
-                  <!-- <div class="sub-title">{{ item.title }}</div> -->
-                  <div *ngFor="let role of item.participants" class="sub-speaker">
-                    <!-- <img [src]="role.image" class="avatar" /> -->
-                    <span>{{ role.name }}</span>
-                    <span>{{ role.email }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ion-accordion>
-        </ion-accordion-group>
-        </ng-container>
-        <ng-container *ngIf="!slot.roles || slot.roles.length === 0">
-          <ion-item slot="header" style="border-radius: 16px;background: #fff;color: #000;font-weight: 600;font-size: 14px;" lines="none">
+
+        <!--  Break session -->
+        <div *ngIf="slot.isBreak" class="break-session">
+          <ion-item lines="none" class="break-item">
             <ion-label class="session-title">{{ slot.title }}</ion-label>
           </ion-item>
-        </ng-container>
+        </div>
+
+        <!--  Normal session -->
+        <div *ngIf="!slot.isBreak">
+          
+          <!-- Accordion if roles exist -->
+          <ng-container *ngIf="slot.roles && slot.roles.length > 0; else noRolesSession">
+            <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
+              <ion-accordion [value]="slot.time">
+                <ion-item slot="header" lines="none">
+                  <ion-label class="session-title">{{ slot.title }}</ion-label>
+
+                  <!-- ❤️ Favorite -->
+                  <ion-button fill="clear" class="favorite-btn" (click)="toggleFavorite(slot)">
+                    <ion-icon [name]="isFavorite(slot) ? 'heart' : 'heart-outline'"
+                              class="favorite-icon"></ion-icon>
+                  </ion-button>
+                </ion-item>
+                
+                <div class="session-body"
+                     slot="content"
+                     [ngClass]="{'active': openedAccordion === slot.time}">
+                  <div *ngFor="let item of slot.roles" class="subsession">
+                    <div class="sub-time">{{ item.role_name }}</div>
+                    <div class="sub-details">
+                      <div *ngFor="let role of item.participants" class="sub-speaker">
+                        <span>{{ role.name }}</span>
+                        <span>{{ role.email }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ng-container>
+
+         
+          <ng-template #noRolesSession>
+            <ion-item lines="none" class="simple-session">
+              <ion-label class="session-title">{{ slot.title }}</ion-label>
+              <ion-button fill="clear" class="favorite-btn" (click)="toggleFavorite(slot)">
+                <ion-icon [name]="isFavorite(slot) ? 'heart' : 'heart-outline'"
+                          class="favorite-icon"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ng-template>
+
+        </div>
       </div>
     </div>
   </div>
-
 </ion-content>
-

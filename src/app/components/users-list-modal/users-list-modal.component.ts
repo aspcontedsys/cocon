@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-// Modal options for the users list
+
 export const usersListModalOptions = {
   initialBreakpoint: 0.9,
   breakpoints: [0, 0.9],
@@ -14,7 +14,7 @@ export const usersListModalOptions = {
   canDismiss: true,
   backdropDismiss: true,
   animated: true,
-  mode: 'ios' as const  // Using 'as const' to ensure type safety
+  mode: 'ios' as const  
 };
 
 @Component({
@@ -37,7 +37,7 @@ export class UsersListModalComponent {
   }
   openChat(user: any) {
     this.modalController.dismiss();
-    //to be updated after fetching conversation id
+   
     this.router.navigate(['/home/chatpage', user.id,user.conversationid?user.conversationid:0]);
   }
 }

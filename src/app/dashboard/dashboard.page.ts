@@ -67,18 +67,19 @@ export class DashboardPage {
     await modal.present();
   }
 
-  // Carousel references
+  // Carousel 
   @ViewChild('programCarousel', { static: false }) programCarousel!: ElementRef;
   @ViewChild('badgeCarousel', { static: false }) badgeCarousel!: ElementRef;
   @ViewChild('conferenceCarousel', { static: false }) conferenceCarousel!: ElementRef;
   @ViewChild('venueCarousel', { static: false }) venueCarousel!: ElementRef;
+  @ViewChild('exhibitorsCarousel', { static: false }) exhibitorsCarousel!: ElementRef;
 
-  // Carousel scroll logic
+  // Carousel scroll 
   scrollCarousel(
-    section: 'program' | 'badge' | 'conference' | 'venue',
+    section: 'program' | 'badge' | 'conference' | 'venue' | 'exhibitors',
     direction: 'next' | 'prev'
   ) {
-    let scrollContainer: ElementRef;
+    let scrollContainer: ElementRef | undefined;
 
     switch (section) {
       case 'program':
@@ -93,6 +94,9 @@ export class DashboardPage {
       case 'venue':
         scrollContainer = this.venueCarousel;
         break;
+      case 'exhibitors':
+        scrollContainer = this.exhibitorsCarousel;
+        break; 
     }
 
     const scrollDistance = 250;
@@ -109,3 +113,7 @@ export class DashboardPage {
     return !this.authService.isLoggedIn();
   }
 }
+
+
+
+
