@@ -100,8 +100,9 @@ ion-toolbar {
     }
 
     .date {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     &.active {
@@ -159,7 +160,6 @@ ion-toolbar {
   max-height: 300px;
   overflow: auto;
 
-
   .time-block {
     display: flex;
     margin-bottom: 15px;
@@ -188,6 +188,23 @@ ion-toolbar {
 
     .programs-col {
       width: 80%;
+
+      /*  break-session styling */
+      .break-session {
+        background-color: rgb(75, 75, 75) !important;
+        color: #fff !important;
+        font-weight: bold;
+        padding: 5px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+
+      ion-item.break-session {
+        --background: rgb(30, 255, 0) !important;
+        --color: #fff !important;
+        font-weight: bold;
+      }
     }
 
     ion-accordion {
@@ -204,7 +221,6 @@ ion-toolbar {
         font-weight: 600;
         font-size: 14px;
 
-        /* Keep heart aligned */
         ion-icon.favorite-icon {
           margin-left: auto;
         }
@@ -349,10 +365,9 @@ ion-toolbar {
   }
 }
 
-/* ❤️ Favorite Heart */
 .favorite-icon {
   font-size: 22px;
-  color: #97C93C; 
+  color: #97C93C;
   transition: transform 0.2s ease, color 0.2s ease, filter 0.2s ease;
   margin-left: 8px;
 

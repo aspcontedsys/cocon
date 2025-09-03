@@ -14,8 +14,8 @@
 
 
     <div class="action-row">
-      <ion-datetime-button datetime="dateFilter"></ion-datetime-button>
-      <ion-modal [keepContentsMounted]="true">
+      <ion-datetime-button #dateButton datetime="dateFilter"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true" #dateModal>
         <ng-template>
           <ion-datetime
             id="dateFilter"

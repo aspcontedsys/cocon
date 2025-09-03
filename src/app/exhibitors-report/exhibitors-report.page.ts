@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicModule, NavController, ToastController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonicModule, NavController, ToastController, IonModal } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DelegateVisitorList } from 'src/app/models/cocon.models';
@@ -21,6 +21,8 @@ export class ExhibitorsReportPage implements OnInit {
   allowedDates: string[] = [];   //  valid exhibitor dates
   highlightedDates: any[] = [];  //  for calendar highlight
 
+  @ViewChild('dateModal') dateModal!: IonModal;
+
   constructor(
     private navCtrl: NavController,
     private toastCtrl: ToastController,
@@ -34,8 +36,7 @@ export class ExhibitorsReportPage implements OnInit {
   getDelegateList(){
     this.dataService.fetchDelegateVisitors().then((data) => {
       this.exhibitors = data;
-      this.filteredExhibitors = this.exhibitors;
-      this.allowedDates = this.exhibitors.map(e => e.created_at);
+      this.allowedDates = this.exhibitors.map(e => e.created_at.split('T')[0]);
       this.highlightedDates = this.allowedDates.map(d => ({
         date: d,
         textColor: '#fff',
@@ -55,16 +56,22 @@ export class ExhibitorsReportPage implements OnInit {
   //  Enable only exhibitor dates
   isDateEnabledFn = (dateIsoString: string) => {
     const date = dateIsoString.split('T')[0];
-    return this.allowedDates.includes(date);
+    if(this.allowedDates.includes(date)){
+      return true;
+    }
+    return false;
   };
 
   filterByDate(event: any) {
-    const picked = event.detail.value;
-    if (picked) {
-      const date = picked.split('T')[0];
-      if (this.allowedDates.includes(date)) {
-        this.selectedDate = date;
-        this.filteredExhibitors = this.exhibitors.filter(u => u.created_at === date);
+    if (event.detail && event.detail.value) {
+      this.selectedDate = event.detail.value.split('T')[0];
+      this.filteredExhibitors = this.exhibitors.filter(
+        exhibitor => exhibitor.created_at.split('T')[0] === this.selectedDate
+      );
+      
+      // Close the modal after selection
+      if (this.dateModal) {
+        this.dateModal.dismiss();
       }
     }
   }
