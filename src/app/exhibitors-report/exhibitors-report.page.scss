@@ -105,6 +105,7 @@ ion-toolbar {
 
 
   .exhibitors-list {
+    background: transparent;
     ion-item {
       --background: rgba(30, 30, 30, 0.9);
       --color: #fff;
@@ -155,6 +156,7 @@ ion-toolbar {
         font-size: 26px;
         color: #97C93C;
       }
+
     }
   }
 }
