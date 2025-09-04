@@ -156,8 +156,9 @@ ion-toolbar {
 
 .schedule-container {
   padding: 15px;
+  padding-bottom: 31%;
   height: 100%;
-  max-height: 300px;
+  //max-height: 300px;
   overflow: auto;
 
   .time-block {
