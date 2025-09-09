@@ -12,7 +12,7 @@
 <ion-content fullscreen class="exhibitors-content">
   <div class="exhibitors-wrapper">
 
-
+    <!-- Action Row -->
     <div class="action-row">
       <ion-datetime-button #dateButton datetime="dateFilter"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true" #dateModal>
@@ -27,7 +27,6 @@
         </ng-template>
       </ion-modal>
 
-    
       <ion-button fill="clear" (click)="exportCSV()">
         <ion-icon name="download-outline"></ion-icon>
       </ion-button>
@@ -40,7 +39,7 @@
     </div>
 
     <!-- Exhibitors List -->
-    <ion-list class="exhibitors-list">
+    <ion-list class="exhibitors-list" *ngIf="filteredExhibitors.length > 0">
       <ion-item *ngFor="let user of filteredExhibitors">
         <ion-avatar slot="start">
           <ion-icon name="person-circle-outline" class="avatar-icon"></ion-icon>
@@ -55,6 +54,12 @@
         </ion-button>
       </ion-item>
     </ion-list>
+
+    <!-- No Report Found Message -->
+    <div class="no-report" *ngIf="filteredExhibitors.length === 0">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>No report found for the selected date</p>
+    </div>
 
   </div>
 </ion-content>

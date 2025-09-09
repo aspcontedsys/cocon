@@ -4,7 +4,7 @@
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
-      <span class="page-title">Program Schedule</span>
+      <span class="page-title">Program Schedule</span>
     </div>
     <ion-buttons slot="end">
       <ion-button fill="clear"></ion-button>
@@ -68,15 +68,25 @@
           <!-- Accordion if roles exist -->
           <ng-container *ngIf="slot.roles && slot.roles.length > 0; else noRolesSession">
             <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
-              <ion-accordion [value]="slot.start_time">
+              <ion-accordion [value]="slot.start_time" toggle-icon="false">
                 <ion-item slot="header" lines="none">
                   <ion-label class="session-title">{{ slot.topic_name }}</ion-label>
 
-                  <!-- ❤️ Favorite -->
-                  <ion-button fill="clear" class="favorite-btn" *ngIf="isLoggedIn()" (click)="toggleFavorite(slot)">
-                    <ion-icon [name]="isFavorite(slot) ? 'heart' : 'heart-outline'"
-                              class="favorite-icon"></ion-icon>
-                  </ion-button>
+                  <!-- Custom Right Side: Chevron + Favorite -->
+                  <div slot="end" class="accordion-icons">
+                    <!-- ▼ Accordion Chevron -->
+                    <ion-icon name="chevron-down-outline" class="accordion-chevron"></ion-icon>
+
+                    <!-- ❤️ Favorite -->
+                    <ion-button *ngIf="isLoggedIn()" 
+                                fill="clear" 
+                                class="favorite-btn" 
+                                (click)="toggleFavorite(slot)">
+                      <ion-icon [name]="isFavorite(slot) ? 'heart' : 'heart-outline'"
+                                class="favorite-icon" ></ion-icon>
+                    </ion-button>
+                    
+                  </div>
                 </ion-item>
                 
                 <div class="session-body"
@@ -96,11 +106,11 @@
             </ion-accordion-group>
           </ng-container>
 
-         
+          <!-- Simple session without roles -->
           <ng-template #noRolesSession>
             <ion-item lines="none" class="simple-session">
               <ion-label class="session-title">{{ slot.topic_name }}</ion-label>
-              <ion-button *ngIf="isLoggedIn()" fill="clear" class="favorite-btn" (click)="toggleFavorite(slot)">
+              <ion-button *ngIf="isLoggedIn()" fill="clear" class="favorite-btn" (click)="toggleFavorite(slot)" slot="end">
                 <ion-icon [name]="isFavorite(slot) ? 'heart' : 'heart-outline'"
                           class="favorite-icon"></ion-icon>
               </ion-button>

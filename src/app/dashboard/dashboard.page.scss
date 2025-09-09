@@ -77,18 +77,16 @@
     }
   }
 
-
-  .main-content-container {
-    background: rgba(0, 0, 0, 0.85);
-    border-top-left-radius: 55px;
-    border-top-right-radius: 55px;
-    padding: 25px;
-    margin-top: 10%;
-    overflow: auto;
-    height: 350px;
-    min-height: 100%;
-    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.5);
-  }
+.main-content-container {
+  background: rgba(0, 0, 0, 0.85);
+  border-top-left-radius: 55px;
+  border-top-right-radius: 55px;
+  padding: 25px;
+  margin-top: 10%;
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.5);
+  max-height: calc(100vh - 380px); 
+  overflow-y: auto;
+}
 
   
   .section-box {
@@ -289,6 +287,10 @@
     .main-content-container {
       padding: 20px;
     }
+    .carousel .card {
+      min-width: 31%;
+      max-width: 31%;
+    }
   }
 }
 
@@ -314,8 +316,8 @@
     }
 
     .carousel .card {
-      min-width: 70%;
-      max-width: 70%;
+      min-width: 49%;
+      max-width: 49%;
     }
   }
 
@@ -368,3 +370,6 @@
     }
   }
 }
+
+
+

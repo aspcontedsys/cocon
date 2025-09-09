@@ -60,7 +60,7 @@
       </div>
       <div class="programs-col">
         <ion-accordion-group [value]="openedAccordion" (ionChange)="onAccordionChange($event)">
-          <ion-accordion [value]="slot.time">
+          <ion-accordion [toggleIcon]="slot.roles && slot.roles.length > 0 ? 'chevron-down' : undefined" [value]="slot.time">
             <ion-item slot="header" lines="none">
               <ion-label class="session-title">{{ slot.title }}</ion-label>
             </ion-item>

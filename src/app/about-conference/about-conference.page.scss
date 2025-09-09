@@ -13,6 +13,7 @@ ion-header,
 ion-toolbar {
   --ion-toolbar-background: #000 !important;
   color: #fff !important;
+  
 
   ion-title {
     color: #97C93C;
@@ -155,6 +156,9 @@ ion-content::part(background) {
       margin-bottom: 20px;
       color: #dddddd;
       text-align: left;
+      overflow: auto;
+      height: 350px;
+      max-height: 100%;
 
       p {
         margin-bottom: 250px;

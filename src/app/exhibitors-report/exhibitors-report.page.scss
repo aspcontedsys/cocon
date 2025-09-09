@@ -52,7 +52,6 @@ ion-toolbar {
     margin-bottom: 120px;
   }
 
-  
   .action-row {
     display: flex;
     justify-content: space-between;
@@ -78,7 +77,6 @@ ion-toolbar {
     }
   }
 
- 
   .date-info {
     display: flex;
     align-items: center;
@@ -99,13 +97,19 @@ ion-toolbar {
       height: 24px;
       --padding-start: 6px;
       --padding-end: 6px;
-      --color: #ffffff !important;
+      --ion-color-base: #bbbbbb !important;
+      color: #97C93C !important;
+
+      ion-icon {
+        color: #97C93C !important;
+        filter: drop-shadow(0 0 4px #98c93c4d);
+      }
     }
   }
 
-
   .exhibitors-list {
-    background: transparent;
+    background: rgba(255, 0, 0, 0);
+
     ion-item {
       --background: rgba(30, 30, 30, 0.9);
       --color: #fff;
@@ -156,7 +160,32 @@ ion-toolbar {
         font-size: 26px;
         color: #97C93C;
       }
-
     }
+  }
+
+  .no-report {
+    text-align: center;
+    margin-top: 60px;
+    opacity: 0.9;
+    animation: fadeIn 0.6s ease-in-out;
+
+    ion-icon {
+      font-size: 48px;
+      color: #97C93C;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 6px rgba(151, 201, 60, 0.6));
+    }
+
+    p {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
