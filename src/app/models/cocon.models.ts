@@ -4,6 +4,7 @@ export interface RegisteredUser {
     short_name: string;
     image: string;
     status: string;
+    category_code: string;
 }
 
 export interface ChatListUsers extends RegisteredUser {

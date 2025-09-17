@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import { CacheService } from '../cache/cache.service';
+import { RegisteredUser } from '../../app/models/cocon.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private authState = new BehaviorSubject<boolean>(false);
+  private exhibitorState = new BehaviorSubject<boolean>(false);
   private storageKey = 'auth_token';
   public redirectUrl: string | null = null;
+  public currentUser: RegisteredUser = {} as RegisteredUser;
 
   constructor(
     private router: Router,
@@ -50,6 +53,22 @@ export class AuthService {
   isAuthenticated(): Observable<boolean> {
     this.checkToken();
     return this.authState.asObservable();
+  }
+
+  async isExhibitor(): Promise<boolean> {
+    await this.checkExhibitorStatus();
+    return this.exhibitorState.value;
+  }
+
+  private async checkExhibitorStatus() {
+    try {
+      const user = await this.cacheService.get('userDetails');
+      this.currentUser = user as RegisteredUser;
+      this.exhibitorState.next(!!(user && user.category_code === 'Exhi'));
+    } catch (error) {
+      console.error('Error checking exhibitor status:', error);
+      this.exhibitorState.next(false);
+    }
   }
 
   async getToken(): Promise<string | null> {

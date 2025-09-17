@@ -143,11 +143,11 @@
   <p>Accommodation</p>
 </ion-card>
 
-    <ion-card class="card" (click)="openPdfPage(eventDetails.venue_layout,'venue-layout')">
+    <ion-card class="card" (click)="openPdfPage('/assets/files/venue_layout.pdf','venue-layout')">
       <ion-icon name="business-outline" class="caro-icon"></ion-icon>
       <p>Venue Layout</p>
     </ion-card>
-    <ion-card class="card" (click)="openPdfPage(eventDetails.stall_layout,'stall-layout')">
+    <ion-card class="card" (click)="openPdfPage('/assets/files/stall_layout.pdf','stall-layout')">
       <ion-icon name="cube-outline" class="caro-icon"></ion-icon>
       <p>Stall Layout</p>
     </ion-card>
@@ -171,24 +171,26 @@
 
  <!-- Exhibitors Section -->
     <div class="section-box" *ngIf="isLoggedIn()">
-      <h3>Exhibitors</h3>
-      <p>Facilities & support at Grand Hyatt</p>
+      <div *ngIf="isExhibitorStatus">
+        <h3>Exhibitors</h3>
+        <p>Facilities & support at Grand Hyatt</p>
 
-      <div class="carousel-nav">
-        <button (click)="scrollCarousel('exhibitors', 'prev')">‹</button>
-        <button (click)="scrollCarousel('exhibitors', 'next')">›</button>
-      </div>
+        <div class="carousel-nav">
+          <button (click)="scrollCarousel('exhibitors', 'prev')">‹</button>
+          <button (click)="scrollCarousel('exhibitors', 'next')">›</button>
+        </div>
 
-      
-      <div class="carousel" #exhibitorsCarousel>
-        <ion-card class="card" (click)="startScan()">
-          <ion-icon name="scan-outline" class="caro-icon"></ion-icon>
-          <p>Scan </p>
-        </ion-card>
-        <ion-card class="card" (click)="navigate('/home/exhibitors-report')">
-          <ion-icon name="document-text-outline" class="caro-icon"></ion-icon>
-          <p>Report</p>
-        </ion-card>
+        
+        <div class="carousel" #exhibitorsCarousel>
+          <ion-card class="card" (click)="startScan()">
+            <ion-icon name="scan-outline" class="caro-icon"></ion-icon>
+            <p>Scan </p>
+          </ion-card>
+          <ion-card class="card" (click)="navigate('/home/exhibitors-report')">
+            <ion-icon name="document-text-outline" class="caro-icon"></ion-icon>
+            <p>Report</p>
+          </ion-card>
+        </div>
       </div>
     </div>
 </div>
