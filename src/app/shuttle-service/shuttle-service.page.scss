@@ -8,6 +8,7 @@
   color: #fff;
 }
 
+/* ===== HEADER ===== */
 ion-header,
 ion-toolbar {
   --ion-toolbar-background: transparent !important;
@@ -25,21 +26,21 @@ ion-toolbar {
   align-items: center;
 
   ion-button {
-    --padding-start: 0;
+    --padding-start: 10px;
     --padding-end: 0;
     margin-right: 8px;
   }
 
   .page-title {
     color: #97C93C;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     margin: 0 auto;
     text-shadow: 0 0 6px rgba(151, 201, 60, 0.6);
   }
 }
 
-
+/* ===== CONTENT WRAPPER ===== */
 .shuttle-content {
   --background: rgba(0, 0, 0, 0.7);
   border-top-left-radius: 55px;
@@ -53,14 +54,14 @@ ion-toolbar {
     margin-bottom: 120px;
   }
 
-  /* Segment (Tabs) */
+  /* ===== SEGMENT (TABS) ===== */
   ion-segment {
     display: flex;
-    overflow-x: auto;     
-    flex-wrap: nowrap;   
+    overflow-x: auto;
+    flex-wrap: nowrap;
     white-space: nowrap;
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 25px;
     padding: 4px;
@@ -70,7 +71,7 @@ ion-toolbar {
   }
 
   ion-segment::-webkit-scrollbar {
-    display: none; 
+    display: none;
   }
 
   ion-segment-button {
@@ -82,12 +83,12 @@ ion-toolbar {
     text-transform: capitalize;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
-    flex: 0 0 auto;     
-    min-width: 120px;   
+    flex: 0 0 auto;
+    min-width: 120px;
   }
 
   ion-segment-button ion-label {
-    white-space: nowrap;   
+    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 14px;
@@ -96,12 +97,12 @@ ion-toolbar {
   }
 
   ion-segment-button.segment-button-checked {
-    background: linear-gradient(135deg, #97C93C, #51ff00);
-    color: #000 !important;
+    background: linear-gradient(135deg, #97C93C, #b4e35e);
+    color: #000000 !important;
     box-shadow: 0 0 10px rgba(151, 201, 60, 0.8);
   }
 
-
+  /* ===== CARDS ===== */
   ion-card {
     background: rgba(255, 0, 0, 0.08);
     border-radius: 20px;
@@ -134,7 +135,7 @@ ion-toolbar {
     }
   }
 
- 
+  /* ===== ITEM ===== */
   ion-item {
     border-radius: 20px;
     padding: 12px;
@@ -171,8 +172,9 @@ ion-toolbar {
     }
   }
 
+  /* ===== ACCORDION ===== */
   ion-accordion {
-    background: rgba(0, 0, 0, 0.12);
+    background: #eff3e8;
     border-radius: 16px;
     margin-bottom: 14px;
     overflow: hidden;
@@ -180,43 +182,54 @@ ion-toolbar {
     box-shadow: 0 4px 15px rgba(151, 201, 60, 0.2);
 
     ion-item {
-      --background: transparent;
+      --background: #eff3e8;
       box-shadow: none;
       margin-bottom: 0;
     }
-
     ion-label h2 {
       font-size: 16px;
       font-weight: 600;
       color: #97C93C;
     }
-
     ion-label p {
       font-size: 13px;
-      color: #bbb;
+      color: #474747;
+      font-weight: 700;
     }
   }
 
+  /* ✅ Fix: Accordion Toggle Icon Styling */
+  ion-accordion::part(toggle-icon) {
+    color: red !important;
+    fill: red !important;
+    font-size: 22px;
+    transition: transform 0.3s ease;
+  }
+  ion-accordion[aria-expanded="true"]::part(toggle-icon) {
+    transform: rotate(180deg);
+  }
 
+  /* ===== ACCORDION CONTENT ===== */
   .accordion-content {
     padding: 16px;
     position: relative;
+    background-color: rgb(140 183 64 / 51%);
   }
-
 
   .accordion-content::before {
     content: "";
     position: absolute;
-    top: 5;
+    top: 22px;
     left: 28px;
     width: 2px;
     height: 100%;
-    background: rgba(151, 201, 60, 0.25);
+    background: rgb(152, 201, 60);
   }
 
+  /* ===== TIMELINE ===== */
   .timeline {
     position: relative;
-    padding-left: 50px;
+    padding-left: 20px;
     margin-bottom: 24px;
 
     &:last-child {
@@ -242,7 +255,7 @@ ion-toolbar {
         background: #ff9800;
       }
       &.upcoming {
-        background: #97C93C;
+        background: #a5ff00;
         opacity: 0.7;
       }
     }
@@ -257,12 +270,12 @@ ion-toolbar {
         font-size: 15px;
         font-weight: 600;
         margin-bottom: 4px;
-        color: #fff;
+        color: #1e2023;
       }
 
       p {
         font-size: 13px;
-        color: #ccc;
+        color: #595959;
         margin: 2px 0;
       }
 

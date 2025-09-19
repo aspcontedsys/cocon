@@ -37,8 +37,7 @@
               <ion-label class="session-title">{{ directoryCategory.name }}</ion-label>
             </ion-item>
             <div class="session-body" slot="content" [ngClass]="{'active': openedAccordion === directoryCategory.id}">            
-              <div *ngFor="let directory of directoryList" class="subsession">
-               
+              <div *ngFor="let directory of directoryList" class="subsession">              
                 <div class="speaker">
                   <span class="person-name session-subtitle">{{ directory.name }}</span>
                   <a [href]="'tel:' + directory.phone" class="phone-link">

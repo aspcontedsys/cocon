@@ -25,14 +25,14 @@ ion-toolbar {
   align-items: center;
 
   ion-button {
-    --padding-start: 0;
+    --padding-start: 10px;
     --padding-end: 0;
     margin-right: 8px;
   }
 
   .page-title {
     color: #97C93C;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     margin: 0 auto;
     text-shadow: 0 0 6px rgba(151, 201, 60, 0.6);

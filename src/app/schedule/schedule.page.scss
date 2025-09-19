@@ -36,7 +36,7 @@ ion-toolbar {
   gap: 8px;
 
   ion-button {
-    --padding-start: 0;
+    --padding-start: 10px;
     --padding-end: 0;
     margin: 0;
     min-width: 32px;
@@ -44,7 +44,7 @@ ion-toolbar {
 
   .page-title {
     color: #97C93C;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     margin: 0 auto;
     line-height: 1;
@@ -351,5 +351,33 @@ ion-toolbar {
     font-size: 22px;
     color: #97C93C;
   }
+}
+@media (max-width:290px) {
+.schedule-container
+  .time-block
+   .programs-col
+    ion-accordion, 
+    .schedule-container
+     .time-block
+  .programs-col
+   .simple-session{
+    margin-left: 10px;
+    font-size: 14px;
+   }
+   .date-tabs .day-tab .date{
+    white-space: wrap;
+   }
+   .schedule-container{
+    height: 180px;
+    overflow: auto;
+    padding-bottom: 50px;
+   }
+}
+@media (max-width:490px){
+  .schedule-container{
+    height:170px;
+    overflow: auto;
+    padding-bottom: 50px;
+   }
 }
 
