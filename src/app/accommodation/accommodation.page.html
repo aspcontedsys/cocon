@@ -52,7 +52,7 @@
               <p><strong>Type:</strong> {{ room.room_name }}</p>
               <p><strong>Capacity:</strong> {{ room.capacity }}</p>
               <p><strong>Price:</strong> ₹{{ room.delegate_price }}/night</p>
-              <p>{{ room.description }}</p>
+              <p [innerHTML]="room.description"></p>
             </div>
           </div>
 
