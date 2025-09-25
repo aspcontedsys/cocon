@@ -32,17 +32,17 @@
         <ion-img [src]="hotel.image" [alt]="hotel.hotel_name"></ion-img>
         <ion-card-header>
           <ion-card-title>{{ hotel.hotel_name }}</ion-card-title>
-          <ion-card-subtitle>{{ hotel.location }}</ion-card-subtitle>
+          <ion-card-subtitle>{{ hotel.hotel_location }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          <p class="hotel-description">{{ hotel.description }}</p>
+          <p class="hotel-description" [innerHTML]="hotel.hotel_description"></p>
           
           <div class="distance-info">
-            <p *ngIf="hotel.distance_venue">
-              <ion-icon name="pin-outline"></ion-icon> {{ hotel.distance_venue }} from Venue
+            <p *ngIf="hotel.distance_from_venue">
+              <ion-icon name="pin-outline"></ion-icon> {{ hotel.distance_from_venue }} from Venue
             </p>
-            <p *ngIf="hotel.distance_airport">
-              <ion-icon name="airplane-outline"></ion-icon> {{ hotel.distance_airport }} from Airport
+            <p *ngIf="hotel.distance_from_airport">
+              <ion-icon name="airplane-outline"></ion-icon> {{ hotel.distance_from_airport }} from Airport
             </p>
           </div>
 
@@ -57,7 +57,7 @@
           </div>
 
           <div class="card-actions">
-            <ion-button size="small" fill="outline" color="success" (click)="viewOnMap(hotel)" *ngIf="hotel.map_url">
+            <ion-button size="small" fill="outline" color="success" (click)="viewOnMap(hotel)" *ngIf="hotel.hotel_google_map">
               View on Map
             </ion-button>
           </div>

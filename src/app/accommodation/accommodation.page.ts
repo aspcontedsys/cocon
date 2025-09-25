@@ -40,8 +40,8 @@ export class AccommodationPage {
     this.accommodations.forEach(categoryGroup => {
       const filteredHotels = categoryGroup.hotel.filter((hotel : any) => 
         hotel.hotel_name?.toLowerCase().includes(term) ||
-        hotel.location?.toLowerCase().includes(term) ||
-        hotel.description?.toLowerCase().includes(term)
+        hotel.hotel_location?.toLowerCase().includes(term) ||
+        hotel.hotel_description?.toLowerCase().includes(term)
       );
       
       if (filteredHotels.length > 0) {
@@ -65,8 +65,8 @@ export class AccommodationPage {
   }
 
   viewOnMap(hotel: any) {
-    if (hotel?.map_url) {
-      window.open(hotel.map_url, '_blank');
+    if (hotel?.hotel_google_map) {
+      window.open(hotel.hotel_google_map, '_blank');
     }
   }
 
