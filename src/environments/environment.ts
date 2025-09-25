@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  loginServer: 'https://cocon2.tedsys.in/cocon-counter-version/public',
+  loginServer: 'https://cocon3.tedsys.in',
   appKey: 'ABCD0001',  
   // API Endpoints
   endpoints: {
