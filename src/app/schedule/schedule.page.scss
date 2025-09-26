@@ -177,7 +177,7 @@ ion-toolbar {
     margin-bottom: 15px;
 
     .time-col {
-      width: 20%;
+      width: 25%;
       color: #97C93C;
       font-weight: bold;
       font-size: 13px;
@@ -199,7 +199,7 @@ ion-toolbar {
     }
 
     .programs-col {
-      width: 80%;
+      width: 75%;
 
       /* BREAK SESSION */
       .break-session {
@@ -375,9 +375,15 @@ ion-toolbar {
 }
 @media (max-width:490px){
   .schedule-container{
-    height:170px;
+    height:300px;
     overflow: auto;
     padding-bottom: 50px;
    }
+   .date-tabs
+   .day-tab
+    .date
+    {
+      white-space: wrap;
+    }
 }
 
