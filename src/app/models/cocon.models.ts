@@ -251,3 +251,25 @@ export interface DelegateVisitorList{
   phone: string 
   created_at :string
 }
+
+export interface notification{
+  status: string, 
+  messages: notificationMessages[],
+  notifications: notificationNotifications[],
+}
+
+export interface notificationMessages{
+  id: number,
+  subject: string,
+  message: string,
+  created_at: string,
+  status: string
+}
+
+export interface notificationNotifications{
+  id: number,
+  subject: string,
+  message: string,
+  created_at: string,
+  status: string
+}

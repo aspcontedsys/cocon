@@ -13,15 +13,15 @@
     <span>Schedule</span>
   </div>
   <div class="tab-button" (click)="router.navigate(['/home/delegates'])">
-    <!-- <ion-icon name="information-circle-outline"></ion-icon> -->
-    <img src="assets/icon/info.svg" class="custom-tab-icon" />
+    <ion-icon name="information-circle-outline"></ion-icon>
+    <!-- <img src="assets/icon/info.svg" class="custom-tab-icon" /> -->
     <span>Info</span>
   </div>
   <div class="tab-button" (click)="router.navigate(['/home/profile'])">
     <ion-icon name="person-outline"></ion-icon>
     <span>Profile</span>
   </div>
-  <div class="tab-button" (click)="router.navigate(['/home/notification'])">
+  <div class="tab-button" *ngIf="isloggedin()" (click)="router.navigate(['/home/notification'])">
     <ion-icon name="notifications-outline"></ion-icon>
     <span>Notification</span>
   </div>

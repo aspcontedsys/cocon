@@ -3,7 +3,7 @@ import { ApiService, ApiResponse } from '../api/api.service';
 import { environment } from 'src/environments/environment';
 import { Speaker,EventDetails,DelegateProfile,VirtualBadge,
   Schedule,SponsorsList,FeedbackQuestion,Exhibitor,DirectoryList,
-  Attractions,AppHelp,AboutConference,Accommodation,itinery,DelegateVisitorList } from '../../app/models/cocon.models';
+  Attractions,AppHelp,AboutConference,Accommodation,itinery,DelegateVisitorList,notification } from '../../app/models/cocon.models';
 import { CacheService } from '../cache/cache.service';
 
 
@@ -138,6 +138,10 @@ export class DataService {
   }
   async fetchDelegateVisitors(){
     let response :ApiResponse<DelegateVisitorList[]> = await this.apiService.get<DelegateVisitorList[]>(environment.endpoints.fetchDelegateVisitors.api,environment.endpoints.fetchDelegateVisitors.authenticationType );
+    return response.data;
+  }
+  async getNotifications(){
+    let response :ApiResponse<notification[]> = await this.apiService.get<notification[]>(environment.endpoints.fetchnotifiation.api,environment.endpoints.fetchnotifiation.authenticationType,undefined,true );
     return response.data;
   }
 

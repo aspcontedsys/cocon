@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { DataService } from '../../services/data/data.service';
+import { notificationNotifications,notificationMessages } from '../models/cocon.models';
 
 @Component({
   selector: 'app-notification',
@@ -10,7 +11,9 @@ import { DataService } from '../../services/data/data.service';
 })
 export class NotificationPage implements OnInit {
 
-  notifications: any[] = [];
+  notifications: notificationNotifications[] = [];
+  messages: notificationMessages[] = [];
+
   filteredNotifications: any[] = [];
   searchTerm: string = '';
   isSearchVisible: boolean = false;
@@ -27,16 +30,11 @@ export class NotificationPage implements OnInit {
   }
 
   loadNotifications() {
-    // Demo data
-    this.notifications = [
-      { title: 'Welcome!', body: 'Thanks for joining us.', time: 'Just now', type: 'default' },
-      { title: 'Update Available', body: 'Version 2.1 released.', time: '2h ago', type: 'default' },
-      { title: 'Event Reminder', body: 'Don’t miss tomorrow’s meeting.', time: '1d ago', type: 'default' },
-      { title: 'New Message', body: 'You have a message from Alex.', time: '3d ago', type: 'messages' },
-      { title: 'Message from John', body: 'Please check your tasks.', time: '5d ago', type: 'messages' },
-    ];
-
-    this.filterByTab();
+    this.dataService.getNotifications().then((response: any) => {
+      this.notifications = response.data.notifications;
+      this.messages = response.data.messages;
+      this.filterByTab();
+    });
   }
 
   toggleSearch() {
@@ -49,9 +47,9 @@ export class NotificationPage implements OnInit {
 
   filterByTab() {
     if (this.selectedTab === 'default') {
-      this.filteredNotifications = this.notifications.filter(n => n.type === 'default');
+      this.filteredNotifications = this.notifications;
     } else {
-      this.filteredNotifications = this.notifications.filter(n => n.type === 'messages');
+      this.filteredNotifications = this.messages;
     }
 
     if (this.searchTerm.trim() !== '') {

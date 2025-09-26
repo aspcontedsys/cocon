@@ -37,7 +37,8 @@ export const environment = {
     storeDelegateFavouriteSchedule:{api:'api/store-delegate-favourite-schedule',method:'post',authenticationType:'OAuth'},
     fetchFavouriteSchedules:{api:'api/fetch-favourite-schedules',method:'get',authenticationType:'OAuth'},                                                                   
     fetchDelegateVisitors:{api:'api/fetch-favourite-exhibitors',method:'get',authenticationType:'OAuth'},
-    addExhibitorFavourite:{api:'api/store-delegate-favourite-exhibitor',method:'post',authenticationType:'OAuth'}
+    addExhibitorFavourite:{api:'api/store-delegate-favourite-exhibitor',method:'post',authenticationType:'OAuth'},
+    fetchnotifiation:{api:'api/fetch-delegate-notifications',method:'get',authenticationType:'OAuth'},
   }
 };
 

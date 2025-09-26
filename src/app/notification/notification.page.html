@@ -64,12 +64,12 @@
       <div class="note-header">
         <div class="note-title">
           <ion-icon name="notifications-outline" style="margin-right:6px; font-size:18px;"></ion-icon>
-          {{ note.title }}
+          {{ note.subject }}
         </div>
-        <div class="note-time">{{ note.time }}</div>
+        <div class="note-time">{{ note.created_at }}</div>
       </div>
 
-      <p class="note-body">{{ note.body }}</p>
+      <p class="note-body">{{ note.message }}</p>
     </div>
   </section>
 </ion-content>
