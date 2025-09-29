@@ -344,7 +344,7 @@
     .carousel .card {
       min-width: 48%;
       max-width: 48%;
-      padding: 1rem;
+      padding: .9rem;
 
       ion-icon,
       .caro-icon {
@@ -354,7 +354,8 @@
       }
 
       p {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
       }
     }
   }

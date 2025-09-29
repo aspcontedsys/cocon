@@ -25,14 +25,14 @@ export class ChatService {
     
     try {
       // Try to get from cache first
-      const cached = await this.cacheService.get(CACHE_KEY);
-      if (cached && cached.timestamp && (Date.now() - cached.timestamp < this.CACHE_EXPIRY)) {
-        console.log('Returning cached users list');
-        return cached.data;
-      }
+      // const cached = await this.cacheService.get(CACHE_KEY);
+      // if (cached && cached.timestamp && (Date.now() - cached.timestamp < this.CACHE_EXPIRY)) {
+      //   console.log('Returning cached users list');
+      //   return cached.data;
+      // }
 
       // If not in cache or expired, fetch from API
-      this.currentUser = await this.cacheService.get('userDetails');
+      //this.currentUser = await this.cacheService.get('userDetails');
       const response = await this.apiService.get<ChatListUsers[]>(
         environment.endpoints.networkingDelegates.api,
         environment.endpoints.networkingDelegates.authenticationType
@@ -40,18 +40,18 @@ export class ChatService {
 
       if (response?.status && response.data) {
         // Cache the response with a timestamp
-        await this.cacheService.set(CACHE_KEY, {
-          data: response.data,
-          timestamp: Date.now()
-        });
+        // await this.cacheService.set(CACHE_KEY, {
+        //   data: response.data,
+        //   timestamp: Date.now()
+        // });
         return response.data;
       }
       
       // If API call fails but we have cached data, return that
-      if (cached?.data) {
-        console.warn('Using cached data due to API error');
-        return cached.data;
-      }
+      // if (cached?.data) {
+      //   console.warn('Using cached data due to API error');
+      //   return cached.data;
+      // }
       
       return [];
     } catch (error) {
@@ -137,7 +137,7 @@ export class ChatService {
     try {
       let data = {
         "receiver_id":receiver_id,
-        "status":requested?'pending':'canceled'
+        "status":requested?'pending':'cancelled'
     }
     
       const response = await this.apiService.post<any>(environment.endpoints.addChatRequest.api,environment.endpoints.addChatRequest.authenticationType,data);
@@ -150,11 +150,11 @@ export class ChatService {
       throw error;
     }
   }
-  async updateChatRequest(conversation_id:number,requested:boolean){
+  async updateChatRequest(conversation_id:number,accepted:boolean){
     try {
       let data = {
         "conversation_id":conversation_id,
-        "status":requested?'accepted':'canceled'
+        "status":accepted?'accepted':'rejected'
     } 
       const response = await this.apiService.post<any>(environment.endpoints.updateChatRequest.api,environment.endpoints.updateChatRequest.authenticationType,data);
       if(response.status){

@@ -70,7 +70,10 @@
          
           <div class="dropdown" *ngIf="dropdownIndex === i">
             <div *ngIf="user.status == 'open'" (click)="sendRequest(user)">Send Request</div>
-            <div *ngIf="user.status == 'requested'" class="cancel-option" (click)="cancelRequest(user)">❌ Cancel Request</div>
+            <div *ngIf="user.status == 'rejected'" >Chat Request is rejected</div>
+            <div *ngIf="user.status == 'pending' && user.initiator" >Chat Request is pending</div>
+            <div *ngIf="user.status == 'pending' && user.initiator === false" (click)="acceptRequest(user.conversation_id)">Accept Request</div>
+            <div *ngIf="user.status == 'pending' && user.initiator === false" (click)="rejectRequest(user.conversation_id)">Reject Request</div>
           </div>
         </div>
       </div>

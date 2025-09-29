@@ -1,7 +1,10 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DelegateProfile } from 'src/app/models/cocon.models';
 import { DataService } from '../../services/data/data.service';
+import { AuthService } from '../../services/Auth/auth.service';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -11,15 +14,25 @@ import { DataService } from '../../services/data/data.service';
 export class ProfilePage implements OnInit {
   user: DelegateProfile = {} as DelegateProfile;
 
-  constructor(private navCtrl: NavController,private dataService: DataService) { }
+  constructor(
+    private navCtrl: NavController,
+    private dataService: DataService,
+     private authService: AuthService,
+     private router: Router,
+  ) {}
 
   ngOnInit() {
     this.dataService.getDelegateProfile().then((user: DelegateProfile) => {
       this.user = user;
     });
   }
+
   goBack() {
     this.navCtrl.back();
   }
 
+  // Logout function
+  logout() {       
+    this.authService.logout();  
+  }
 }

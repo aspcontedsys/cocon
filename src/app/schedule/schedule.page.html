@@ -72,9 +72,9 @@
                 <ion-item slot="header" lines="none">
                   <ion-label class="session-title">{{ slot.topic_name }}</ion-label>
 
-                  <!-- Custom Right Side: Chevron + Favorite -->
+                 
                   <div slot="end" class="accordion-icons">
-                    <!-- ▼ Accordion Chevron -->
+                   
                     <ion-icon name="chevron-down-outline" class="accordion-chevron"></ion-icon>
 
                     <!-- ❤️ Favorite -->
@@ -86,7 +86,7 @@
                                 class="favorite-icon" ></ion-icon>
                     </ion-button>
                     
-                  </div>
+                  </div> 
                 </ion-item>
                 
                 <div class="session-body"
@@ -106,7 +106,7 @@
             </ion-accordion-group>
           </ng-container>
 
-          <!-- Simple session without roles -->
+          
           <ng-template #noRolesSession>
             <ion-item lines="none" class="simple-session">
               <ion-label class="session-title">{{ slot.topic_name }}</ion-label>

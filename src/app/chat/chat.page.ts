@@ -54,14 +54,16 @@ export class ChatPage implements OnInit {
   async sendRequest(user: any): Promise<void> {
     user.requestSent = true;
     this.dropdownIndex = null;
-    this.chatService.updateChatRequest(user.id, user.requestSent);
+    this.chatService.addChatRequest(user.id, user.requestSent);
+    this.getUserList();
     this.notificationService.showNotification(`Request sent to ${user.name}`);
   }
 
   async cancelRequest(user: any): Promise<void> {
     user.requestSent = false;
     this.dropdownIndex = null;
-    this.chatService.updateChatRequest(user.id, user.requestSent);
+    this.chatService.addChatRequest(user.id, user.requestSent);
+    this.getUserList();
     this.notificationService.showNotification(`Request to ${user.name} has been canceled`);
   }
 
@@ -86,7 +88,7 @@ export class ChatPage implements OnInit {
     this.allUsers = await this.chatService.getUsers();
 
     this.acceptedUsers = this.allUsers.filter(user => user.status == 'accepted');
-    this.openUsers = this.allUsers.filter(user => user.status == 'open');
+    this.openUsers = this.allUsers.filter(user => user.status == 'open' || user.status == 'pending' || user.status == 'rejected');
     this.activeTab = this.acceptedUsers.length > 0 ? 'accepted' : 'users';
   }
 
@@ -104,5 +106,13 @@ export class ChatPage implements OnInit {
   //  Only opens LinkedIn in new tab
   openLinkedIn(url: string): void {
     window.open(url, '_blank');
+  }
+  acceptRequest(conversationId :any) {    
+    this.chatService.updateChatRequest(conversationId, true);   
+    this.getUserList();
+  }
+  rejectRequest(conversationId :any) {
+    this.chatService.updateChatRequest(conversationId, false); 
+    this.getUserList();   
   }
 }

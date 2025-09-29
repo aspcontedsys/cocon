@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { DataService } from '../../services/data/data.service';
 import { notificationNotifications,notificationMessages } from '../models/cocon.models';
+import { ChatService } from '../../services/chat/chat.service';
 
 @Component({
   selector: 'app-notification',
@@ -18,11 +19,12 @@ export class NotificationPage implements OnInit {
   searchTerm: string = '';
   isSearchVisible: boolean = false;
 
-  selectedTab: 'default' | 'messages' = 'default';
+  selectedTab: 'appnotifications' | 'messages' = 'appnotifications';
 
   constructor(
     private location: Location,
-    private dataService: DataService
+    private dataService: DataService,
+    private chatService: ChatService,
   ) {}
 
   ngOnInit() {
@@ -30,9 +32,9 @@ export class NotificationPage implements OnInit {
   }
 
   loadNotifications() {
-    this.dataService.getNotifications().then((response: any) => {
-      this.notifications = response.data.notifications;
-      this.messages = response.data.messages;
+    this.dataService.getNotifications().then((response: any) => {      
+      this.notifications = response.notifications;
+      this.messages = response.messages;
       this.filterByTab();
     });
   }
@@ -46,7 +48,7 @@ export class NotificationPage implements OnInit {
   }
 
   filterByTab() {
-    if (this.selectedTab === 'default') {
+    if (this.selectedTab === 'appnotifications') {
       this.filteredNotifications = this.notifications;
     } else {
       this.filteredNotifications = this.messages;
@@ -68,5 +70,13 @@ export class NotificationPage implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+  accept(conversationId :any) {    
+    this.chatService.updateChatRequest(conversationId, true);
+    this.loadNotifications();
+  }
+   reject(conversationId :any) {
+    this.chatService.updateChatRequest(conversationId, false);
+    this.loadNotifications();
   }
 }

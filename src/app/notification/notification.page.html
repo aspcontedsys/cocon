@@ -22,7 +22,7 @@
 
   <!-- Segment below header -->
   <ion-segment [(ngModel)]="selectedTab" (ionChange)="filterByTab()" class="custom-segment">
-    <ion-segment-button value="default">
+    <ion-segment-button value="appnotifications">
       <ion-label>App Notifications</ion-label>
     </ion-segment-button>
     <ion-segment-button value="messages">
@@ -47,7 +47,7 @@
 <ion-content [fullscreen]="true" class="app-page">
   <section class="app-content">
     <h2 class="section-title">
-      {{ selectedTab === 'default' ? 'All Notifications' : 'Messages' }}
+      {{ selectedTab === 'appnotifications' ? 'App Notifications' : 'Messages' }}
     </h2>
 
     
@@ -66,10 +66,22 @@
           <ion-icon name="notifications-outline" style="margin-right:6px; font-size:18px;"></ion-icon>
           {{ note.subject }}
         </div>
-        <div class="note-time">{{ note.created_at }}</div>
+        
       </div>
 
       <p class="note-body">{{ note.message }}</p>
+      <div class="note-time">{{ note.created_at | date:'MMM d, y, h:mm a'  }}</div>
+      <div class="action-button" *ngIf="selectedTab === 'appnotifications' && note.subject === 'New Chat Request' ">
+        <ion-button size="small" color="success" fill="solid" (click)="accept(note.conversation_id)">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Accept
+        </ion-button>
+
+        <ion-button size="small" color="danger" fill="solid" (click)="reject(note.conversation_id)">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          Reject
+        </ion-button>
+      </div>
     </div>
   </section>
 </ion-content>

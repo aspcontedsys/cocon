@@ -13,6 +13,7 @@ export interface ChatListUsers extends RegisteredUser {
   // 🔹 New optional fields
   linkedin_url?: string;     // LinkedIn profile URL
   requestSent?: boolean; // Local state for request toggle
+  initiator?:boolean;
 }
 
 export interface OpenListUsers extends ChatListUsers {
@@ -271,5 +272,6 @@ export interface notificationNotifications{
   subject: string,
   message: string,
   created_at: string,
-  status: string
+  status: string,
+  conversation_id?: number
 }
