@@ -121,7 +121,7 @@ export class UserChatPage implements OnInit, OnDestroy {
       }
     });
     
-    this.chatService.getUsers().then(users => {
+    this.chatService.getUsersCached().then(users => {
       const user = users.find(u => u.id === this.recipientId);
       this.recipient = user;
       if (user) {
