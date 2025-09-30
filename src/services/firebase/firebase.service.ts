@@ -8,6 +8,7 @@ import { CacheService } from '../cache/cache.service';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { FirebaseMessaging } from '@capacitor-firebase/messaging';
 
 export enum NotificationPermissionStatus {
   GRANTED = 'granted',
@@ -52,10 +53,12 @@ export class FirebaseMessagingService {
         await this.checkAndRequestNotificationPermission();
 
         // On registration success, get FCM token
-        PushNotifications.addListener('registration', token => {
+        PushNotifications.addListener('registration',async( token) => {
           console.log('Push registration success, token: ', token.value);
-          if (token.value) {
-            this.sendTokenToServer(token.value);
+          const fcmToken = await FirebaseMessaging.getToken();
+          console.log('FCM token:', fcmToken.token);
+          if (fcmToken) {
+            this.sendTokenToServer(fcmToken.token);
           }
         });
 
@@ -80,16 +83,14 @@ export class FirebaseMessagingService {
             if (currentRoute.endsWith(`/${data.conversation_id}`)) {
               console.log("is same conversation", data.conversation_id);
               const newMessage = {
-                sender_id: data.senduser_id,
+                sender_id: Number(data.senduser_id),
                 message: notification.body,
-                created_at: new Date(),
-                read_at: new Date(),
+                created_at: new Date().toISOString(),
+                read_at: null,
                 message_type: 'text',
-                attachment_path: '',
-                attachment_type: '',
-                conversation_id: data.conversation_id,
-                id: 0
+                conversation_id: Number(data.conversation_id),
               };
+
               this.messageReceived.emit(newMessage);
               return; // Skip showing notification
             } else {

@@ -116,8 +116,7 @@ export class UserChatPage implements OnInit, OnDestroy {
     this.messageSubscription = this.firebaseService.messageReceived.subscribe((message:any) => {
       console.log("Event received"+message.conversation_id +"_" + message.message)
       if (message.conversation_id == this.conversationid) {
-        console.log("Message added to UI");
-        this.updateMessageUI(message,false);
+        this.updateMessageUI(message);
       }
     });
     

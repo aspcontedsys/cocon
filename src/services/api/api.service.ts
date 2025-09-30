@@ -126,9 +126,11 @@ export class ApiService {
   }
 
   // POST request with proper typing
-  async post<T>(endpoint: string, authType: string,body: any,returnAllResponse: boolean = false): Promise<ApiResponse<T>> {
+  async post<T>(endpoint: string, authType: string,body: any,returnAllResponse: boolean = false,hideLoading: boolean = false): Promise<ApiResponse<T>> {
     try {
-      this.loadingService.showLoadingForApiCall();
+      if(!hideLoading){
+        this.loadingService.showLoadingForApiCall();
+      }
       
       const url = `${this.API_URL}/${endpoint}`;
       const options = {
@@ -138,12 +140,15 @@ export class ApiService {
 
       const response = await this.http.post<T>(url, body, options).pipe(
         catchError(error => {
-          this.loadingService.hideLoadingForApiCall();
+          if(!hideLoading){
+            this.loadingService.hideLoadingForApiCall();
+          }
           return throwError(() => error);
         })
       ).toPromise();
-
+      if(!hideLoading){
       this.loadingService.hideLoadingForApiCall();
+      }
       return this.handleApiResponse<T>(response?.body, response?.status || 200,returnAllResponse);
     } catch (error: any) {
       if (error.status && [401, 404, 500].includes(error.status)) {

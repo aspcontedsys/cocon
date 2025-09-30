@@ -85,7 +85,7 @@ export class ChatService {
       const response = await this.apiService.post<any>(
         environment.endpoints.addChatMessage.api,
         environment.endpoints.addChatMessage.authenticationType,
-        message
+        message,false,true
       );
       if(response.status){
         return response.data;
