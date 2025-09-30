@@ -22,13 +22,20 @@ export class SplashPage implements OnInit {
     private dataService:DataService) { }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.openLoginModal();
-    }, 3000); 
+      setTimeout(() => {
+        this.openLoginModal();
+      }, 3000); 
   }
 
   async openLoginModal() {
     await this.dataService.getEventDetails();
+    // Get current route 
+    const currentRoute = this.router.url;
+    
+    // Check if we're on a notification-related page
+    if (currentRoute.includes('/home/notification')) {
+      return;
+    }
     if(this.authService.isLoggedIn()) {
       this.router.navigate(['/home/dashboard']);
       return;
