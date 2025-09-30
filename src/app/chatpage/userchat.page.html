@@ -2,16 +2,17 @@
 
   <ion-header>
   <ion-toolbar> 
-    <ion-avatar slot="start">
-      <ion-img *ngIf="recipient?.image" [src]="recipient?.image" alt="{{recipient?.name}}"></ion-img>
-      <ion-img *ngIf="!recipient?.image" src="assets/icon/usericon.png" alt="User Icon"></ion-img>
-    </ion-avatar>
+   
     <h1>{{recipient?.name}}</h1>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button fill="clear" (click)="goBack()" slot="icon-only">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+     <ion-avatar slot="start">
+      <ion-img *ngIf="recipient?.image" [src]="recipient?.image" alt="{{recipient?.name}}"></ion-img>
+      <ion-img *ngIf="!recipient?.image" src="assets/icon/usericon.png" alt="User Icon"></ion-img>
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 

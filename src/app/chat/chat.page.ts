@@ -21,6 +21,7 @@ export class ChatPage implements OnInit {
   dropdownIndex: number | null = null;
 
   linkedinUrl: string = '';
+  showLinkedInInput: boolean = false; // NEW: toggle input visibility
 
   constructor(
     private router: Router,
@@ -75,7 +76,8 @@ export class ChatPage implements OnInit {
     this.isNetworkingOpen = event.detail.checked;
     this.chatService.updateNetworkingStatus(this.isNetworkingOpen);
     if (!this.isNetworkingOpen) {
-      this.linkedinUrl = ''; 
+      this.linkedinUrl = '';
+      this.showLinkedInInput = false; // reset when networking off
       this.cacheService.remove('linkedin_url');
     }
   }
@@ -88,31 +90,44 @@ export class ChatPage implements OnInit {
     this.allUsers = await this.chatService.getUsers();
 
     this.acceptedUsers = this.allUsers.filter(user => user.status == 'accepted');
-    this.openUsers = this.allUsers.filter(user => user.status == 'open' || user.status == 'pending' || user.status == 'rejected');
+    this.openUsers = this.allUsers.filter(user =>
+      user.status == 'open' || user.status == 'pending' || user.status == 'rejected'
+    );
     this.activeTab = this.acceptedUsers.length > 0 ? 'accepted' : 'users';
   }
 
   async saveLinkedIn(): Promise<void> {
-    this.chatService.updateLinkedinUrl(this.linkedinUrl).then((res)=>{
+    if (!this.linkedinUrl) {
+      this.notificationService.showNotification('Please enter a valid LinkedIn URL');
+      return;
+    }
+
+    this.chatService.updateLinkedinUrl(this.linkedinUrl).then(() => {
       this.cacheService.set('linkedin_url', this.linkedinUrl);
       this.notificationService.showNotification('LinkedIn profile saved');
-    })
+      this.showLinkedInInput = false; // hide input after save
+    });
   }
 
   async loadLinkedIn(): Promise<void> {
-    this.linkedinUrl = await this.cacheService.get('linkedin_url') || '';
+    this.linkedinUrl = (await this.cacheService.get('linkedin_url')) || '';
+    // if a saved URL exists, we show "Edit LinkedIn" button
+    this.showLinkedInInput = false;
   }
 
-  //  Only opens LinkedIn in new tab
   openLinkedIn(url: string): void {
-    window.open(url, '_blank');
+    if (url) {
+      window.open(url, '_blank');
+    }
   }
-  acceptRequest(conversationId :any) {    
-    this.chatService.updateChatRequest(conversationId, true);   
+
+  acceptRequest(conversationId: any): void {
+    this.chatService.updateChatRequest(conversationId, true);
     this.getUserList();
   }
-  rejectRequest(conversationId :any) {
-    this.chatService.updateChatRequest(conversationId, false); 
-    this.getUserList();   
+
+  rejectRequest(conversationId: any): void {
+    this.chatService.updateChatRequest(conversationId, false);
+    this.getUserList();
   }
 }

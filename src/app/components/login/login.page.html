@@ -51,7 +51,7 @@
         class="tab" 
         [class.active]="activeTab === 'delegates'" 
         (click)="setActiveTab('delegates')">
-        Registered Delegates
+        Reg. Delegates
       </div>
       <div 
         class="tab" 
@@ -75,7 +75,7 @@
     <form *ngIf="activeTab === 'delegates'" [formGroup]="loginForm" (ngSubmit)="onSubmit()">  
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input name="email" type="email" formControlName="email" required></ion-input>
+        <ion-input name="email" type="email" formControlName="email" required ></ion-input>
       </ion-item>
       <div class="error-message" *ngIf="emailError">  
         {{ emailError }}

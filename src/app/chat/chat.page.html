@@ -21,13 +21,25 @@
       Are you open to networking with other delegates?
     </p>
 
+    <!-- Toggle + Add LinkedIn button in same row -->
     <div class="toggle-wrapper">
-      <ion-toggle [(ngModel)]="isNetworkingOpen" color="success" (ionChange)="toggleNetworking($event)"></ion-toggle>
+      <ion-toggle [(ngModel)]="isNetworkingOpen" color="success" (ionChange)="toggleNetworking($event)">
+        
+      </ion-toggle>
+
+      <!-- Show Add LinkedIn button only when networking is enabled and input hidden -->
+      <ion-button *ngIf="isNetworkingOpen && !showLinkedInInput"
+            fill="clear"
+            class="linkedin-btn"
+            (click)="showLinkedInInput = true">
+   Add <ion-icon name="logo-linkedin"></ion-icon>
+</ion-button>
+
     </div>
-    
+
     <div *ngIf="isNetworkingOpen">
-      
-      <div class="linkedin-section">
+      <!-- LinkedIn Section (input + save) -->
+      <div class="linkedin-section" *ngIf="showLinkedInInput">
         <ion-item lines="none">
           <ion-input 
             placeholder="Enter your LinkedIn profile URL"
@@ -40,65 +52,56 @@
         </ion-button>
       </div>
 
-    
+      <!-- Tabs -->
       <div class="tab-header">   
         <div class="tab-btn" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">Users List</div>
         <div class="tab-btn" [class.active]="activeTab === 'accepted'" (click)="activeTab = 'accepted'">Request Accepted</div>
       </div>
 
-    
+      <!-- Users List -->
       <div class="user-list" *ngIf="activeTab === 'users'">
         <div class="user-item" *ngFor="let user of openUsers; let i = index">
           <img [src]="user.image" class="avatar" alt="User photo" />
           <div class="user-name">{{ user.name }}</div>
 
-        
           <div class="linkedin-wrapper" *ngIf="user.linkedin_url">
             <ion-icon
               name="logo-linkedin"
               class="linkedin-icon"
               (click)="openLinkedIn(user.linkedin_url)">
             </ion-icon>
-            <!-- <span class="linkedin-text" (click)="openLinkedIn(user.linkedin)">
-              {{ user.linkedin }}
-            </span> -->
           </div>
 
-       
           <ion-icon name="ellipsis-vertical" class="options-icon" (click)="toggleDropdown(i)"></ion-icon>
 
-         
           <div class="dropdown" *ngIf="dropdownIndex === i">
             <div *ngIf="user.status == 'open'" (click)="sendRequest(user)">Send Request</div>
-            <div *ngIf="user.status == 'rejected'" >Chat Request is rejected</div>
-            <div *ngIf="user.status == 'pending' && user.initiator" >Chat Request is pending</div>
+            <div *ngIf="user.status == 'rejected'">Chat Request is rejected</div>
+            <div *ngIf="user.status == 'pending' && user.initiator">Chat Request is pending</div>
             <div *ngIf="user.status == 'pending' && user.initiator === false" (click)="acceptRequest(user.conversation_id)">Accept Request</div>
             <div *ngIf="user.status == 'pending' && user.initiator === false" (click)="rejectRequest(user.conversation_id)">Reject Request</div>
           </div>
         </div>
       </div>
 
-   
+      <!-- Accepted Users -->
       <div class="user-list" *ngIf="activeTab === 'accepted'">
         <div class="user-item" *ngFor="let user of acceptedUsers" (click)="openChat(user)">
           <img [src]="user.image" class="avatar" alt="User photo" />
           <div class="user-name">{{ user.name }}</div>
 
-        
           <div class="linkedin-wrapper" *ngIf="user.linkedin_url">
             <ion-icon
               name="logo-linkedin"
               class="linkedin-icon"
               (click)="openLinkedIn(user.linkedin_url)">
             </ion-icon>
-            <!-- <span class="linkedin-text" (click)="openLinkedIn(user.linkedin)">
-              {{ user.linkedin }}
-            </span> -->
           </div>
         </div>
       </div>
     </div>
 
+    <!-- If networking is disabled -->
     <div *ngIf="!isNetworkingOpen">
       <p class="network-noenabled">
         You are not open to networking with other delegates. To start networking, please enable it.

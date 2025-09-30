@@ -22,8 +22,9 @@ ion-header ion-toolbar {
   // background: rgba(0, 0, 0, 0.4);
   // border-bottom: 1px solid rgba(0, 255, 170, 0.2);
   // box-shadow: 0 4px 10px rgba(0, 255, 170, 0.15);
-  padding: 0 8px;
+  padding: 10px 15px;
   animation: fadeInDown 0.5s ease;
+   background-color: transparent;
 
   ion-avatar {
     width: 40px;
