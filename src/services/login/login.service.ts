@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { loginResponse } from '../../app/models/cocon.models';
 import { CacheService } from '../../services/cache/cache.service';
 import { FirebaseMessagingService } from '../firebase/firebase.service';
-
+import { Platform } from '@ionic/angular';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +18,8 @@ export class LoginService {
     private notificationService: NotificationService,
     private authService: AuthService,
     private cacheService: CacheService,
-    private firebaseMessagingService: FirebaseMessagingService
+    private firebaseMessagingService: FirebaseMessagingService,
+    private platform: Platform
   ) {}
   public async getOtp<Boolean>(loginForm: any) {
     try {
@@ -58,7 +59,9 @@ export class LoginService {
           this.authService.login(response.data.token);
           this.cacheService.set('userDetails', response.data.data);
           // Initialize Firebase after successful login
-          await this.firebaseMessagingService.initializePushNotifications();
+          if(this.platform.is('android') || this.platform.is('ios')){
+            await this.firebaseMessagingService.initializePushNotifications();
+          }
           return true;
         }
         else{

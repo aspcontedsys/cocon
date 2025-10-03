@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
-import { PushNotifications } from '@capacitor/push-notifications';
+import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { ApiService } from '../api/api.service';
 import { CacheService } from '../cache/cache.service';
@@ -26,6 +26,8 @@ export class FirebaseMessagingService {
   private deviceId: string | null = null;
   private STORAGE_KEY = 'device_id';
   private readonly ANDROID_13_SDK = 33;
+  private isInitialized = false;  // Add this flag
+  private listenersAdded = false; // Add this flag
   
   @Output() messageReceived = new EventEmitter<any>();
   private currentConversationId: number | null = null;
@@ -38,6 +40,11 @@ export class FirebaseMessagingService {
   ) { }
 
   async initializePushNotifications() {
+     // Prevent multiple initializations
+     if (this.isInitialized) {
+      console.log('Push notifications already initialized');
+      return;
+    }
     try {
       // Initialize local notifications first
       await LocalNotifications.requestPermissions();
@@ -51,80 +58,130 @@ export class FirebaseMessagingService {
         await PushNotifications.register();
         console.log('Push notifications registered successfully');
         await this.checkAndRequestNotificationPermission();
-
-        // On registration success, get FCM token
-        PushNotifications.addListener('registration',async( token) => {
-          console.log('Push registration success, token: ', token.value);
-          const fcmToken = await FirebaseMessaging.getToken();
-          console.log('FCM token:', fcmToken.token);
-          if (fcmToken) {
-            this.sendTokenToServer(fcmToken.token);
-          }
-        });
-
-        // On registration error
-        PushNotifications.addListener('registrationError', error => {
-          console.error('Push registration error: ', error);
-        });
-
-        // On receiving a push notification
-        PushNotifications.addListener('pushNotificationReceived', async (notification) => {
-          console.log('Push received: ', notification);
-          
-          // Get current route and notification data
-          const currentRoute = this.router.url;
-          const data = notification.data || {};
-          
-          // Check if we're on a chat-related page
-          if (currentRoute.includes('/home/chat')) {
-
-            console.log("Current route: ", currentRoute);
-            // If we're in the specific chat where the message was sent
-            if (currentRoute.endsWith(`/${data.conversation_id}`)) {
-              console.log("is same conversation", data.conversation_id);
-              const newMessage = {
-                sender_id: Number(data.senduser_id),
-                message: notification.body,
-                created_at: new Date().toISOString(),
-                read_at: null,
-                message_type: 'text',
-                conversation_id: Number(data.conversation_id),
-              };
-
-              this.messageReceived.emit(newMessage);
-              return; // Skip showing notification
-            } else {
-              // TODO: Update unread count for this conversation
-              console.log('New message in another conversation:', data.conversation_id);
-            }
-          }
-          
-          // Show local notification if not in the chat where message was sent
-          await this.showLocalNotification(
-            notification.title || 'New Message',
-            notification.body || 'You have a new message',
-            data
-          );
-        });
-
-        // When notification is tapped
-        PushNotifications.addListener('pushNotificationActionPerformed', async (notification) => {
-          console.log('Notification tapped:', notification);
-          const data = notification.notification.data;
-          
-          if (data?.senduser_id && data?.conversation_id) {
-            // Navigate to chat page with user and conversation IDs
-            await this.router.navigate(['/home/chatpage', data.senduser_id, data.conversation_id]);
-          } else {
-            await this.router.navigate(['/home/notification']);
-          }
-        });
+        // Add listeners only once
+        if (!this.listenersAdded) {
+          this.setupListeners();
+          this.listenersAdded = true;
+          this.isInitialized = true;
+        }
       } else {
         console.warn('User denied push notification permission');
       }
     } catch (error) {
       console.error('Error initializing push notifications:', error);
     }
+  }
+
+  private setupListeners(){
+    // On registration success, get FCM token
+    PushNotifications.addListener('registration',async( token) => {
+      console.log('Push registration success, token: ', token.value);
+      let fcmToken = token.value;
+      if(this.platform.is('ios')){
+        fcmToken = (await FirebaseMessaging.getToken()).token;
+        console.log('FCM token:', fcmToken);
+      }
+      if (fcmToken) {
+        this.sendTokenToServer(fcmToken);
+      }
+    });
+
+    // On registration error
+    PushNotifications.addListener('registrationError', error => {
+      console.error('Push registration error: ', error);
+    });
+
+    // On receiving a push notification
+    console.log('pushNotificationReceived listener');
+    PushNotifications.addListener('pushNotificationReceived', async (notification) => {
+      console.log('Push received: ', notification);
+      
+      this.addnotificaitonorUpdateMessage(notification);
+    });
+
+    LocalNotifications.addListener('localNotificationActionPerformed', async (message) => {
+      console.log('Notification action performed:', message);
+      const notification: PushNotificationSchema = {
+        id: String(message.notification.id ?? ''),
+        title: message.notification?.title ?? '',
+        body: message.notification?.body ?? '',
+        data: message.notification?.extra ?? {}
+      };
+      const data = notification.data;
+      
+      if (data?.senduser_id && data?.conversation_id) {
+        await this.router.navigate(['/home/chatpage', data.senduser_id, data.conversation_id]);
+      } else {
+        await this.router.navigate(['/home/notification']);
+      }
+    });
+
+    FirebaseMessaging.addListener('notificationReceived', (message) => {
+      console.log('Message received:', message);
+      const notification: PushNotificationSchema = {
+        id: message.notification.id ?? "",
+        title: message.notification?.title || '',
+        body: message.notification?.body || '',
+        data: message.notification?.data || {}
+      };
+      console.log('Message updating to ui:', message);
+      this.addnotificaitonorUpdateMessage(notification);
+    });
+
+    // When notification is tapped
+    console.log('pushNotificationActionPerformed listener');
+    PushNotifications.addListener('pushNotificationActionPerformed', async (notification) => {
+      console.log('Notification tapped:', notification);
+      const data = notification.notification.data;
+      
+      if (data?.senduser_id && data?.conversation_id) {
+        // Navigate to chat page with user and conversation IDs
+        //this.addnotificaitonorUpdateMessage(notification.notification);
+        await this.router.navigate(['/home/chatpage', data.senduser_id, data.conversation_id]);
+      } else {
+        await this.router.navigate(['/home/notification']);
+      }
+    });
+  }
+
+  private async addnotificaitonorUpdateMessage(notification:PushNotificationSchema,showNotification: boolean = true){
+      // Get current route and notification data
+      const currentRoute = this.router.url;
+      const data = notification.data || {};
+      console.log("Current route: ", currentRoute);
+
+      // Check if we're on a chat-related page
+      if (currentRoute.includes('/home/chatpage')) {
+
+        console.log("Current route: ", currentRoute);
+        // If we're in the specific chat where the message was sent
+        if (currentRoute.endsWith(`/${data.conversation_id}`)) {
+          console.log("is same conversation", data.conversation_id);
+          const newMessage = {
+            sender_id: data.senduser_id,
+            message: data.body,
+            created_at: new Date().toISOString(),
+            read_at: null,
+            message_type: 'text',
+            conversation_id: data.conversation_id,
+          };
+
+          this.messageReceived.emit(newMessage);
+          return; // Skip showing notification
+        } else {
+          // TODO: Update unread count for this conversation
+          console.log('New message in another conversation:', data.conversation_id);
+        }
+      }
+      console.log('New message in conversation:', notification);
+      //Show local notification if not in the chat where message was sent
+      if(showNotification){
+        await this.showLocalNotification(
+          notification.title || 'New Message',
+          notification.body || 'You have a new message',
+          data
+        );
+      }
   }
 
   private async createNotificationChannel() {
@@ -147,11 +204,11 @@ export class FirebaseMessagingService {
         notifications: [{
           title: title,
           body: body,
-          id: 199586,
-          schedule: { at: new Date(Date.now() + 100) },
+          id:  Math.floor(Math.random() * 10000),
+          schedule: { at: new Date(Date.now() + 1000) },
           extra: data,
           channelId: 'cocon_messages',
-          smallIcon: 'ic_stat_icon',
+          smallIcon: 'ic_notification',
           iconColor: '#488AFF',
           largeIcon: 'ic_launcher',
           group: 'cocon_messages',

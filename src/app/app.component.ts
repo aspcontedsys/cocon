@@ -28,7 +28,9 @@ async initializePushNotifications() {
     if (isAuthenticated) {
       console.log("User is authenticated - Initializing Firebase");
       try {
-        await this.firebaseMessagingService.initializePushNotifications();
+        if(this.platform.is('android') || this.platform.is('ios')){
+          await this.firebaseMessagingService.initializePushNotifications();
+        }
         console.log("Firebase initialization completed");
       } catch (error) {
         console.error("Error initializing Firebase:", error);

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../../services/chat/chat.service';
 import { CommonModule } from '@angular/common';
@@ -33,7 +33,8 @@ export class UserChatPage implements OnInit, OnDestroy {
     private chatService: ChatService,
     private cacheService: CacheService,
     private router: Router,
-    private firebaseService: FirebaseMessagingService
+    private firebaseService: FirebaseMessagingService,
+    private ngZone: NgZone
   ) {
     // Initialize currentUser
     this.cacheService.get('userDetails').then(user => this.currentUser = user as RegisteredUser);
@@ -116,7 +117,9 @@ export class UserChatPage implements OnInit, OnDestroy {
     this.messageSubscription = this.firebaseService.messageReceived.subscribe((message:any) => {
       console.log("Event received"+message.conversation_id +"_" + message.message)
       if (message.conversation_id == this.conversationid) {
-        this.updateMessageUI(message);
+        this.ngZone.run(() => {
+          this.updateMessageUI(message);
+        });
       }
     });
     
@@ -169,8 +172,8 @@ export class UserChatPage implements OnInit, OnDestroy {
         conversation_id: this.conversationid,
         id: 0
       };
-      this.chatService.sendMessage(this.conversationid, this.recipientId, this.message).then((message:any) => {
-        this.updateMessageUI(newMessage);
+      this.updateMessageUI(newMessage);
+      this.chatService.sendMessage(this.conversationid, this.recipientId, newMessage.message).then((message:any) => {
       }).catch((error:any) => {
       });
     }
