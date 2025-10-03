@@ -43,6 +43,7 @@ ion-toolbar {
     font-size: 16px;
     font-weight: 600;
     margin: 0 auto;
+    text-shadow: 0 0 6px #97C93C;
   }
 }
 
@@ -83,7 +84,7 @@ ion-toolbar {
   .intro-section {
     position: relative;
     width: 100%;
-    height: 130px;
+    height: 13vh;
     margin-bottom: 20px;
     margin-top: 20px;
     background-color: rgb(26, 23, 23);
@@ -161,7 +162,7 @@ ion-toolbar {
       color: #dddddd;
       text-align: left;
       overflow: auto;
-      height: 350px;
+      height: 35vh;
       max-height: 100%;
     }
     h3 {

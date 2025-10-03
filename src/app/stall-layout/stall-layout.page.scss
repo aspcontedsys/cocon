@@ -7,6 +7,9 @@
   background-position: center center;
   color: #fff;
 }
+ion-content::part(background) {
+  display: none !important;
+}
 
 ion-header,
 ion-toolbar {
@@ -41,6 +44,7 @@ ion-toolbar {
     font-size: 16px;
     font-weight: 600;
     margin: 0 auto;
+    text-shadow: 0 0 6px #97C93C;
   }
 }
 
