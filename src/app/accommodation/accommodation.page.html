@@ -66,3 +66,30 @@
     </ng-container>
   </div>
 </ion-content>
+
+<!-- Map Modal -->
+<ion-modal [isOpen]="isMapModalOpen" (didDismiss)="closeMapModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeMapModal()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <div class="map-container" style="height: 80vh;">
+        <iframe 
+          *ngIf="selectedMapUrl" 
+          [src]="selectedMapUrl" 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

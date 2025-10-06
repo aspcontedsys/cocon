@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../services/data/data.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-accommodation',
@@ -15,8 +16,10 @@ export class AccommodationPage {
   searchTerm = '';
   categories : string[] = [];
   accommodations: any[] = [];
+  selectedMapUrl: SafeResourceUrl | null = null;
+  isMapModalOpen: boolean = false;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService,private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     this.dataService.getHotels().then(data => {
@@ -65,8 +68,15 @@ export class AccommodationPage {
 
   viewOnMap(hotel: any) {
     if (hotel?.hotel_google_map) {
-      window.open(hotel.hotel_google_map, '_blank');
+      //window.open(hotel.hotel_google_map, '_blank');
+      this.selectedMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(hotel.hotel_google_map);
+      this.isMapModalOpen = true;
     }
+  }
+
+  closeMapModal() {
+    this.isMapModalOpen = false;
+    this.selectedMapUrl = null;
   }
 
   getCategories(): string[] {
