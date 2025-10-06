@@ -25,8 +25,8 @@
      
       <div class="exhibitor-header">
         <!-- <img [src]="exhibitor.logo" alt="{{ exhibitor.name }}" class="exhibitor-logo" /> -->
-         <img src="assets/exhibitors-logo/zindagitechnologies.jpg" class="exhibitor-logo"> 
-        <h2 class="exhibitor-name">{{ exhibitor.name }}</h2>
+        <img src="{{exhibitor.image}}" class="exhibitor-logo" (click)="openExhibitorWebsite(exhibitor)" /> 
+        <h2 class="exhibitor-name" (click)="openExhibitorWebsite(exhibitor)">{{ exhibitor.name }}</h2>
       </div>
 
      
@@ -39,7 +39,7 @@
       </div>
 
      
-      <ion-item lines="full" class="divider" *ngIf="i !== exhibitors.length - 1"></ion-item>
+      <!-- <ion-item lines="full" class="divider" *ngIf="i !== exhibitors.length - 1"></ion-item> -->
     </div>
   </div>
 </ion-content>

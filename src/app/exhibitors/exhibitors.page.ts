@@ -24,6 +24,13 @@ export class ExhibitorsPage implements OnInit {
     this.exhibitors = await this.dataService.getExhibitorsList();
   }
 
+  openExhibitorWebsite(exhibitor:Exhibitor){
+    console.log("websiteclicked")
+    if(exhibitor.website_url){
+      window.open(exhibitor.website_url, '_blank');
+    }
+  }
+
   goBack() {
     this.location.back();
   }

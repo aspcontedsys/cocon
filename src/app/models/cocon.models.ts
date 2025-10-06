@@ -164,6 +164,8 @@ export interface Exhibitor {
   address: string;
   phone: string;
   products: string;
+  website_url: string;
+  image: string;
 }
 
 export interface DirectoryList {
