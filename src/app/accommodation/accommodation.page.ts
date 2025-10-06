@@ -61,7 +61,6 @@ export class AccommodationPage {
         item => item.hotel_category === category
       );
     }
-    this.applyFilter();
   }
 
   viewOnMap(hotel: any) {
