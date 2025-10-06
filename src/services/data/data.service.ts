@@ -98,7 +98,7 @@ export class DataService {
     let response :ApiResponse<FeedbackQuestion[]> = await this.apiService.get<FeedbackQuestion[]>(environment.endpoints.feedbackQuestionList.api,environment.endpoints.feedbackQuestionList.authenticationType,requestdata );
     return response.data;
   }
-  async saveFeedbackSubmit(data :{[key:string]:string}[]){
+  async saveFeedbackSubmit(data :{[key:string]:string}){
     let response :ApiResponse<FeedbackQuestion> = await this.apiService.post<FeedbackQuestion>(environment.endpoints.feedbackSubmit.api,environment.endpoints.feedbackSubmit.authenticationType,data );
     return response.data;
   }

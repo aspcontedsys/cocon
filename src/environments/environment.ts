@@ -24,7 +24,7 @@ export const environment = {
     participants: { api: 'api/participants', method: 'get', authenticationType: 'appkey' },
     sponserWithCategoriesAndList: { api: 'api/category-wise-sponsors', method: 'get', authenticationType: 'appkey' },
     feedbackQuestionList: { api: 'api/feedback-questions', method: 'get', authenticationType: 'OAuth' },
-    feedbackSubmit: { api: 'api/store_delegate_feedback', method: 'post', authenticationType: 'OAuth' },
+    feedbackSubmit: { api: 'api/store-delegate-feedback', method: 'post', authenticationType: 'OAuth' },
     exhibitorsList: { api: 'api/exhibitors', method: 'get', authenticationType: 'appkey' },
     directorywithCategoriesAndList: { api: 'api/category-wise-directories', method: 'get', authenticationType: 'appkey' },
     attractionWithCategoryAndList:{api:'api/category-wise-attractions',method:'get',authenticationType:'appkey'},

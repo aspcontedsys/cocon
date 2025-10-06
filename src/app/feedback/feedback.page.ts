@@ -16,7 +16,11 @@ export class FeedbackPage implements OnInit {
   questions: FeedbackQuestion[] = [];
   isLoading = true;
   topic_id: string = '';
-  options: string[] = ['Excellent', 'Good', 'Average', 'Poor', 'Very Poor'];
+  options = [ { key: 5, value: 'Very Satisfied' },
+     { key: 4, value: 'Good' },
+     { key: 3, value: 'Average' },
+     { key: 2, value: 'Poor' },
+     { key: 1, value: 'Very Dissatisfied' } ];
 
   constructor(
     private fb: FormBuilder,
@@ -93,11 +97,11 @@ export class FeedbackPage implements OnInit {
       await loading.present();
       
      
-      const formResponses: { [key: string]: string }[] = [];
+      const formResponses: { [key: string]: string } = {};
       this.responses.value.forEach((response: any, index: number) => {
-        formResponses.push({[`question_${index + 1}`]: response});
+        formResponses[`question_${this.questions[index].id}`] = response;
       });
-      formResponses.push({[`badge_number`]: this.topic_id});
+      formResponses['badge_number'] = this.topic_id;
       // Submit the feedback
       await this.dataService.saveFeedbackSubmit(formResponses);
       
@@ -112,7 +116,7 @@ export class FeedbackPage implements OnInit {
       // Reset the form
       this.feedbackForm.reset();
       this.responses.clear();
-      await this.loadFeedbackQuestions();
+      this.router.navigate(['/home/dashboard']);
       
     } catch (error) {
       console.error('Error submitting feedback:', error);

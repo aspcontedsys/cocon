@@ -62,8 +62,8 @@
               <div *ngIf="getQuestionType(i) === '1'" class="radio-group">
                 <ion-radio-group [formControlName]="i">
                   <ion-item *ngFor="let option of options" lines="none">
-                    <ion-radio [value]="option" slot="start"></ion-radio>
-                    <ion-label>{{ option }}</ion-label>
+                    <ion-radio [value]="option.key" slot="start"></ion-radio>
+                    <ion-label>{{ option.value }}</ion-label>
                   </ion-item>
                 </ion-radio-group>
               </div>
