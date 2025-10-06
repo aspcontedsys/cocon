@@ -1,8 +1,5 @@
-
 <ion-header>
   <ion-toolbar style="--background: #00000000; --ion-toolbar-background: #00000000; color: #fff;">
-    
-  
     <div class="toolbar-left">
       <ion-button fill="clear" (click)="goBack()" slot="start">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -10,26 +7,38 @@
       <span class="page-title">Exhibitors</span>
     </div>
 
-  
     <ion-buttons slot="end">
       <ion-button fill="clear">
         <!-- <ion-icon name="notifications-outline"></ion-icon> -->
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="exhibitors-content">
   <div class="exhibitors-wrapper">
     <div
-      *ngFor="let exhibitor of exhibitors; let i = index" class="exhibitor-card"[style.animationDelay]="(i * 0.1) + 's'">
-      <h2 class="exhibitor-name">{{ exhibitor.name }}</h2>
+      *ngFor="let exhibitor of exhibitors; let i = index"
+      class="exhibitor-card"
+      [style.animationDelay]="(i * 0.1) + 's'"
+    >
+     
+      <div class="exhibitor-header">
+        <!-- <img [src]="exhibitor.logo" alt="{{ exhibitor.name }}" class="exhibitor-logo" /> -->
+         <img src="assets/exhibitors-logo/zindagitechnologies.jpg" class="exhibitor-logo"> 
+        <h2 class="exhibitor-name">{{ exhibitor.name }}</h2>
+      </div>
+
+     
       <p class="exhibitor-desc">{{ exhibitor.products }}</p>
+
+     
       <div class="exhibitor-location">
         <span>{{ exhibitor.address }}</span>
         <span>{{ exhibitor.phone }}</span>
       </div>
+
+     
       <ion-item lines="full" class="divider" *ngIf="i !== exhibitors.length - 1"></ion-item>
     </div>
   </div>
