@@ -5,6 +5,10 @@ ion-content.c0c0n-page {
   height: 100%;
 }
 
+ion-content::part(background) {
+  display: none !important;
+}
+
 ion-header ion-toolbar {
   backdrop-filter: blur(12px);
   --background:rgba(0, 19, 2, 0.74) 
@@ -15,6 +19,7 @@ ion-header ion-toolbar {
   display: flex;
   align-items: center;
   padding-top: 5%;
+  
 
   ion-avatar {
     width: 40px;

@@ -125,9 +125,9 @@ ion-toolbar {
 
     .user-list {
       margin-top: 10px;
-      height: 330px;
+      height: 45vh;
       overflow: auto;
-      padding-bottom: 15px;
+      padding-bottom: 60px;
 
       .user-item {
         display: flex;
@@ -246,6 +246,7 @@ ion-toolbar {
     margin-top: 20px;
     height: 500px;
     overflow: auto;
+    padding-bottom: 35%;
 
     h3 {
       font-size: 1rem;
