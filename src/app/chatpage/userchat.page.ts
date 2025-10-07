@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../../services/chat/chat.service';
 import { CommonModule } from '@angular/common';
@@ -19,6 +19,8 @@ import { FirebaseMessagingService } from '../../services/firebase/firebase.servi
   standalone: false
 })
 export class UserChatPage implements OnInit, OnDestroy {
+
+  @ViewChild('chatContent', { static: false, read: ElementRef }) chatContent!: ElementRef;
   recipientId: number | null = null;
   conversationid: number = 0;
   messages: ChatHistory[] = [];
@@ -76,22 +78,13 @@ export class UserChatPage implements OnInit, OnDestroy {
     }
   }
 
+
   private scrollToBottom() {
     try {
-      // Try to find the scrollable ion-content element
-      const ionContent = document.querySelector('ion-content.chat-content');
-      if (ionContent) {
-        // Use shadowRoot to access the scroll container
-        const scrollElement = ionContent.shadowRoot?.querySelector('.inner-scroll');
-        if (scrollElement) {
-          // Use setTimeout to ensure the DOM has been updated
-          setTimeout(() => {
-            scrollElement.scrollTop = scrollElement.scrollHeight;
-          }, 50);
-        }
-      }
-    } catch (error) {
-      console.error('Error scrolling to bottom:', error);
+      const el = this.chatContent.nativeElement;
+      el.scrollTop = el.scrollHeight;
+    } catch (err) {
+      console.error('Scroll error:', err);
     }
   }
 
@@ -102,6 +95,17 @@ export class UserChatPage implements OnInit, OnDestroy {
       this.groupMessagesByDate();
       this.scrollToBottom();
     }
+  }
+
+  // Add this method to your UserChatPage class
+  ionViewWillEnter() {
+    this.chatService.getUsersCached().then(users => {
+      const user = users.find(u => u.id === this.recipientId);
+      this.recipient = user;
+      if (user) {
+        this.loadMessages();
+      }
+    });
   }
 
   ngOnInit() {
@@ -120,14 +124,6 @@ export class UserChatPage implements OnInit, OnDestroy {
         this.ngZone.run(() => {
           this.updateMessageUI(message);
         });
-      }
-    });
-    
-    this.chatService.getUsersCached().then(users => {
-      const user = users.find(u => u.id === this.recipientId);
-      this.recipient = user;
-      if (user) {
-        this.loadMessages();
       }
     });
   }

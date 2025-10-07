@@ -109,6 +109,10 @@ const routes: Routes = [
       {
         path: 'exhibitors-report',
         loadChildren:() => import ('../exhibitors-report/exhibitors-report-routing.module').then (m => m.ExhibitorsReportPageRoutingModule)
+      },
+      {
+        path:'genericfeedback',
+        loadChildren: () => import('../generic-feedback/genericfeedback.module').then(m => m.GenericFeedbackPageModule)
       }
       
       

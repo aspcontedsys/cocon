@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { FirebaseMessaging } from '@capacitor-firebase/messaging';
+import { App } from '@capacitor/app';
 
 export enum NotificationPermissionStatus {
   GRANTED = 'granted',
@@ -21,8 +22,6 @@ export enum NotificationPermissionStatus {
 })
 export class FirebaseMessagingService {
   private isNative = Capacitor.isNativePlatform();
-  private token: string | null = null;
-  private tokenRefreshListeners: ((token: string) => void)[] = [];
   private deviceId: string | null = null;
   private STORAGE_KEY = 'device_id';
   private readonly ANDROID_13_SDK = 33;
@@ -49,41 +48,44 @@ export class FirebaseMessagingService {
       // Initialize local notifications first
       await LocalNotifications.requestPermissions();
       await this.createNotificationChannel();
-
-      // Request push notification permissions
-      const permissionStatus = await PushNotifications.requestPermissions();
-      
-      if (permissionStatus.receive === 'granted') {
-        // Register for push notifications
-        await PushNotifications.register();
-        console.log('Push notifications registered successfully');
-        await this.checkAndRequestNotificationPermission();
-        // Add listeners only once
-        if (!this.listenersAdded) {
-          this.setupListeners();
-          this.listenersAdded = true;
-          this.isInitialized = true;
-        }
-      } else {
-        console.warn('User denied push notification permission');
+      if (this.platform.is('ios')) {
+        await this.initializeIOSMessaging();
+      } else if (this.platform.is('android')) {
+        await this.initializeFirebaseAndriod();
       }
-    } catch (error) {
+
+      this.isInitialized = true;
+      console.log('Push notifications initialized successfully');
+    }catch (error) {
       console.error('Error initializing push notifications:', error);
     }
   }
 
-  private setupListeners(){
+  private async initializeFirebaseAndriod(){
+     // Request push notification permissions
+     const permissionStatus = await PushNotifications.requestPermissions();
+      
+     if (permissionStatus.receive === 'granted') {
+       // Register for push notifications
+       await PushNotifications.register();
+       console.log('Push notifications registered successfully');
+       await this.checkAndRequestNotificationPermission();
+       // Add listeners only once
+       if (!this.listenersAdded) {
+         this.setuplistenerforandroid();
+         this.listenersAdded = true;
+         this.isInitialized = true;
+       }
+     } else {
+       console.warn('User denied push notification permission');
+     }
+  }
+
+  private setuplistenerforandroid(){
     // On registration success, get FCM token
     PushNotifications.addListener('registration',async( token) => {
       console.log('Push registration success, token: ', token.value);
-      let fcmToken = token.value;
-      if(this.platform.is('ios')){
-        fcmToken = (await FirebaseMessaging.getToken()).token;
-        console.log('FCM token:', fcmToken);
-      }
-      if (fcmToken) {
-        this.sendTokenToServer(fcmToken);
-      }
+      this.sendTokenToServer(token.value);
     });
 
     // On registration error
@@ -91,32 +93,24 @@ export class FirebaseMessagingService {
       console.error('Push registration error: ', error);
     });
 
-    // On receiving a push notification
-    console.log('pushNotificationReceived listener');
-    PushNotifications.addListener('pushNotificationReceived', async (notification) => {
-      console.log('Push received: ', notification);
-      
-      this.addnotificaitonorUpdateMessage(notification);
-    });
+     // On receiving a push notification
+     console.log('pushNotificationReceived listener');
+     PushNotifications.addListener('pushNotificationReceived', async (notification) => {
+       console.log('Push received: ', notification);
+       
+       this.addnotificaitonorUpdateMessage(notification);
+     });
+ 
 
-    LocalNotifications.addListener('localNotificationActionPerformed', async (message) => {
-      console.log('Notification action performed:', message);
-      const notification: PushNotificationSchema = {
-        id: String(message.notification.id ?? ''),
-        title: message.notification?.title ?? '',
-        body: message.notification?.body ?? '',
-        data: message.notification?.extra ?? {}
-      };
-      const data = notification.data;
-      
-      if (data?.senduser_id && data?.conversation_id) {
-        await this.router.navigate(['/home/chatpage', data.senduser_id, data.conversation_id]);
-      } else {
-        await this.router.navigate(['/home/notification']);
-      }
-    });
+     // When notification is tapped
+     console.log('pushNotificationActionPerformed listener');
+     PushNotifications.addListener('pushNotificationActionPerformed', async (notification) => {
+       console.log('Notification tapped:', notification);
+       const data = notification.notification.data;
+       this.handleNotificationAction(data);
+     });
 
-    FirebaseMessaging.addListener('notificationReceived', (message) => {
+     FirebaseMessaging.addListener('notificationReceived', (message) => {
       console.log('Message received:', message);
       const notification: PushNotificationSchema = {
         id: message.notification.id ?? "",
@@ -128,20 +122,60 @@ export class FirebaseMessagingService {
       this.addnotificaitonorUpdateMessage(notification);
     });
 
-    // When notification is tapped
-    console.log('pushNotificationActionPerformed listener');
-    PushNotifications.addListener('pushNotificationActionPerformed', async (notification) => {
-      console.log('Notification tapped:', notification);
-      const data = notification.notification.data;
-      
-      if (data?.senduser_id && data?.conversation_id) {
-        // Navigate to chat page with user and conversation IDs
-        //this.addnotificaitonorUpdateMessage(notification.notification);
-        await this.router.navigate(['/home/chatpage', data.senduser_id, data.conversation_id]);
-      } else {
-        await this.router.navigate(['/home/notification']);
+    LocalNotifications.addListener('localNotificationActionPerformed', async (message) => {
+      console.log('Notification action performed:', message);
+      const data = message.notification?.extra ?? {}
+      this.handleNotificationAction(data);
+    });
+  }
+
+  private async initializeIOSMessaging(){
+    const permissionStatus = await FirebaseMessaging.requestPermissions();
+    await PushNotifications.register();
+    if (permissionStatus.receive === 'granted') {
+      const fcmToken = (await FirebaseMessaging.getToken()).token;
+      if (fcmToken) await this.sendTokenToServer(fcmToken);
+      this.setuplistenerforios();
+    } else {
+      console.warn('User denied iOS notification permission');
+    }
+  }
+
+  private setuplistenerforios(){
+    FirebaseMessaging.addListener('notificationReceived', async (message) => {
+      console.log('FCM message received (iOS):', message);
+      const appState = await App.getState();
+
+      // Only show a local notification if the app is in foreground
+      if (appState.isActive) {
+        const notification: PushNotificationSchema = {
+          id: message.notification?.id ?? '',
+          title: message.notification?.title || '',
+          body: message.notification?.body || '',
+          data: message.notification?.data || {},
+        };
+        await this.addnotificaitonorUpdateMessage(notification);
       }
     });
+
+    FirebaseMessaging.addListener('notificationActionPerformed', async (response) => {
+      console.log('Firebase notification action performed (iOS):', response);
+      const data = response.notification?.data || {};
+      await this.handleNotificationAction(data);
+    });
+
+    FirebaseMessaging.addListener('tokenReceived', async (token) => {
+      console.log('New FCM token (iOS):', token.token);
+      await this.sendTokenToServer(token.token);
+    });
+  }
+
+  private async handleNotificationAction(data: any) {
+    if (data?.senduser_id && data?.conversation_id) {
+      await this.router.navigate(['/home/chatpage', data.senduser_id, data.conversation_id]);
+    } else {
+      await this.router.navigate(['/home/notification']);
+    }
   }
 
   private async addnotificaitonorUpdateMessage(notification:PushNotificationSchema,showNotification: boolean = true){

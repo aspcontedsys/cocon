@@ -3,15 +3,15 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../services/data/data.service';
 import { FeedbackQuestion } from '../models/cocon.models';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 
 @Component({
-  selector: 'app-feedback',
-  templateUrl: './feedback.page.html',
-  styleUrls: ['./feedback.page.scss'],
+  selector: 'app-genericfeedback',
+  templateUrl: './genericfeedback.page.html',
+  styleUrls: ['./genericfeedback.page.scss'],
   standalone: false
 })
-export class FeedbackPage implements OnInit {
+export class Genericfeedback implements OnInit {
   feedbackForm: FormGroup;
   questions: FeedbackQuestion[] = [];
   isLoading = true;
@@ -27,8 +27,7 @@ export class FeedbackPage implements OnInit {
     private dataService: DataService,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {
     this.feedbackForm = this.fb.group({
       responses: this.fb.array([])
@@ -36,20 +35,17 @@ export class FeedbackPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.topic_id = params['topic_id'] || '';
-      this.loadFeedbackQuestions();
-    });
+      this.loadGenericFeedbackQuestions();
   }
 
   get responses() {
     return this.feedbackForm.get('responses') as FormArray;
   }
 
-  async loadFeedbackQuestions() {
+  async loadGenericFeedbackQuestions() {
     this.isLoading = true;
     try {
-      this.questions = await this.dataService.getFeedbackQuestionList(this.topic_id);
+      this.questions = await this.dataService.getGenericFeedbackQuestionList();
       if(this.questions.length == 0){
         this.router.navigate(['/home/dashboard']);
       }
@@ -105,7 +101,6 @@ export class FeedbackPage implements OnInit {
       this.responses.value.forEach((response: any, index: number) => {
         formResponses[`question_${this.questions[index].id}`] = response;
       });
-      formResponses['badge_number'] = this.topic_id;
       // Submit the feedback
       await this.dataService.saveFeedbackSubmit(formResponses);
       

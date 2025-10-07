@@ -5,13 +5,16 @@ import { Speaker,EventDetails,DelegateProfile,VirtualBadge,
   Schedule,SponsorsList,FeedbackQuestion,Exhibitor,DirectoryList,
   Attractions,AppHelp,AboutConference,Accommodation,itinery,DelegateVisitorList,notification } from '../../app/models/cocon.models';
 import { CacheService } from '../cache/cache.service';
+import { NotificationService } from '../notification/notification.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private apiService: ApiService,private cacheService: CacheService) {}
+  constructor(private apiService: ApiService,
+    private cacheService: CacheService,
+    private notificationService: NotificationService) {}
 
   async getEventDetails(): Promise<EventDetails> {
     const CACHE_KEY = 'event_details';
@@ -96,7 +99,23 @@ export class DataService {
       "badge_number":topic_id
     }
     let response :ApiResponse<FeedbackQuestion[]> = await this.apiService.get<FeedbackQuestion[]>(environment.endpoints.feedbackQuestionList.api,environment.endpoints.feedbackQuestionList.authenticationType,requestdata );
-    return response.data;
+    if(response.status){
+      return response.data;
+    }
+    else{
+     this.notificationService.showNotification(response.message || 'Failed to fetch feedback questions','error',5000);
+     return [];
+    }
+  }
+  async getGenericFeedbackQuestionList(){
+    let response :ApiResponse<FeedbackQuestion[]> = await this.apiService.get<FeedbackQuestion[]>(environment.endpoints.feedbackQuestionList.api,environment.endpoints.feedbackQuestionList.authenticationType );
+    if(response.status){
+      return response.data;
+    }
+    else{
+     this.notificationService.showNotification(response.message || 'Failed to fetch feedback questions. Please try again later','error',5000);
+     return [];
+    }
   }
   async saveFeedbackSubmit(data :{[key:string]:string}){
     let response :ApiResponse<FeedbackQuestion> = await this.apiService.post<FeedbackQuestion>(environment.endpoints.feedbackSubmit.api,environment.endpoints.feedbackSubmit.authenticationType,data );

@@ -45,7 +45,7 @@ export class ApiService {
     // For successful responses (2xx)
     if (status >= 200 && status < 300) {
       return {
-        status: true,
+        status: response.status,
         statusCode: status,
         data: returnAllResponse ? response : response.data,
         message: response?.message
