@@ -46,12 +46,9 @@
         </ion-avatar>
         <ion-label>
           <h2>{{ user.name }}</h2>
-          <p>{{ user.address }}</p>
-          <p class="phone">{{ user.phone }}</p>
+          <p>{{ user.company_name }}</p>
+          <p class="phone">{{ user.email }}</p>
         </ion-label>
-        <ion-button fill="outline" color="success" (click)="callNumber(user.phone)">
-          <ion-icon name="call-outline"></ion-icon>
-        </ion-button>
       </ion-item>
     </ion-list>
 

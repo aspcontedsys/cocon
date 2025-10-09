@@ -42,6 +42,7 @@ export class ExhibitorsReportPage implements OnInit {
         textColor: '#fff',
         backgroundColor: '#97C93C'
       }));
+      this.filterData(new Date().toISOString().split('T')[0]);
     });
   }
 
@@ -65,15 +66,18 @@ export class ExhibitorsReportPage implements OnInit {
   filterByDate(event: any) {
     if (event.detail && event.detail.value) {
       this.selectedDate = event.detail.value.split('T')[0];
-      this.filteredExhibitors = this.exhibitors.filter(
-        exhibitor => exhibitor.created_at.split('T')[0] === this.selectedDate
-      );
-      
+      this.filterData(this.selectedDate);     
       // Close the modal after selection
       if (this.dateModal) {
         this.dateModal.dismiss();
       }
     }
+  }
+
+  filterData(selectedDate:string|null){
+    this.filteredExhibitors = this.exhibitors.filter(
+      exhibitor => exhibitor.created_at.split('T')[0] === selectedDate
+    );
   }
 
   clearFilter() {

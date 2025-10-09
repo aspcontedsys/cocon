@@ -252,7 +252,9 @@ export interface DelegateVisitorList{
   name: string,
   address: string,
   phone: string 
-  created_at :string
+  created_at :string,
+  company_name: string,
+  email: string
 }
 
 export interface notification{
