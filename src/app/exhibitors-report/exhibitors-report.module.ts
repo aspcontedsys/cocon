@@ -14,7 +14,6 @@ import { ExhibitorsReportPage } from './exhibitors-report.page';
     FormsModule,
     IonicModule,
     ExhibitorsReportPageRoutingModule
-  ],
-  declarations: [ExhibitorsReportPage]
+  ]
 })
 export class ExhibitorsReportPageModule {}

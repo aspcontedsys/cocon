@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DelegateVisitorList } from 'src/app/models/cocon.models';
 import { DataService } from '../../services/data/data.service';
+import { Encoding } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-exhibitors-report',
@@ -85,30 +86,57 @@ export class ExhibitorsReportPage implements OnInit {
     this.filteredExhibitors = this.exhibitors;
   }
 
+  
   async exportCSV() {
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Full Name,City,Phone,Date\n";
+    // Create CSV content
+    let csvContent = "Full Name,Company Name,Email\n";
     this.filteredExhibitors.forEach(user => {
-      csvContent += `${user.name},${user.address},${user.phone},${user.created_at}\n`;
+      csvContent += `"${user.name}","${user.company_name || ''}","${user.email}"\n`;
     });
 
     const fileName = this.selectedDate
       ? `exhibitors_report_${this.selectedDate}.csv`
       : "exhibitors_report.csv";
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", fileName);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      // Write the file to the cache directory
+      const { Filesystem, Directory } = await import('@capacitor/filesystem');
+      
+      // Create a temporary file
+      const result = await Filesystem.writeFile({
+        path: fileName,
+        data: csvContent,
+        directory: Directory.Cache,
+        encoding: Encoding.UTF8
+      });
 
-    const toast = await this.toastCtrl.create({
-      message: `Report downloaded: ${fileName}`,
-      duration: 2000,
-      color: 'success'
-    });
-    toast.present();
+      // Get the file URI
+      const fileUri = result.uri;
+      
+      // Share the file (this will use the system's share dialog)
+      const { Share } = await import('@capacitor/share');
+      await Share.share({
+        title: 'Export Exhibitors',
+        text: 'Exhibitors Report',
+        url: fileUri,
+        dialogTitle: 'Share Exhibitors Report',
+      });
+
+      const toast = await this.toastCtrl.create({
+        message: 'Report generated and ready to share',
+        duration: 2000,
+        color: 'success'
+      });
+      toast.present();
+      
+    } catch (error) {
+      console.error('Error exporting CSV:', error);
+      const toast = await this.toastCtrl.create({
+        message: 'Error exporting report. Please try again.',
+        duration: 2000,
+        color: 'danger'
+      });
+      toast.present();
+    }
   }
 }
